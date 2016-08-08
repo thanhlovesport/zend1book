@@ -2,8 +2,8 @@
 class Zendvn_Controller_Action extends Zend_Controller_Action{
     
     public function init(){
-        $templatePath = TEMPLATE_PATH."/admin/system";
-        $this->loadTemplate(TEMPLATE_PATH."/admin/system",'template.ini','template');
+        //$templatePath = TEMPLATE_PATH."/admin/system";
+        //$this->loadTemplate(TEMPLATE_PATH."/admin/system",'template.ini','template');
        
     }
     protected function loadTemplate($template_Path, $fileConfig = 'template.ini',$sectionconfig = 'template'){
@@ -17,7 +17,8 @@ class Zendvn_Controller_Action extends Zend_Controller_Action{
         $section = $sectionconfig;
         $config = new Zend_Config_Ini($filename,$section);
         $config = $config->toArray();
-        $baseURL = $this->_request->getBaseUrl();
+        
+        $baseURL = $this->_request->getBaseUrl();   
         //echo'<br>'.$templateURL = $baseURL."/".$config['url'];
         $templateURL = $baseURL."/".$config['url'];
         $CssURL = $templateURL.$config['dirCss'];
@@ -48,7 +49,7 @@ class Zendvn_Controller_Action extends Zend_Controller_Action{
              }
          }
          
-         // Nạp file js
+         // Nạp file js 
          if(count($config['fileJs']) > 0){
              foreach ($config['fileJs'] as $key => $js){
                  $this->view->headScript()->appendFile($JsURL.$js,'text/javascript');

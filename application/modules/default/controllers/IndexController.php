@@ -3,6 +3,7 @@
         public function init(){
             // Lấy các thông số mudule,controller,action trên URL
             $params = $this->_request->getParams();
+           
             $templatePath = TEMPLATE_PATH."/admin/system";
             $this->loadTemplate(TEMPLATE_PATH."/admin/system",'template.ini','template');
             /* echo "<pre>";
@@ -17,7 +18,7 @@
             echo '<br>'.__METHOD__;
         }
         public function viewAction(){
-           
+            
             $templatePath = TEMPLATE_PATH."/public/system";
             $this->loadTemplate(TEMPLATE_PATH."/public/system",'template.ini','template');
             /* echo "<br>".__METHOD__;
@@ -29,3 +30,4 @@
             $modelshopping->getItem(); */
         }
     }
+    

@@ -1,0 +1,57 @@
+<<style>
+<!--
+    .button{
+	   font-weight: bold;
+       padding: 3px;
+       border: solid 1px #999999;
+    }
+    .errors{
+	   border: solid 1px red;
+       padding: 3px;
+    }
+-->
+</style>
+
+<?php 
+    
+    $file = 'shopping/index/add/Catid/15';
+    echo'<br><br>'.$this->baseUrl($file);
+    $serverUrl = $this->serverUrl();
+    echo'<br><br>'.$serverUrl;
+    
+    $UrlOption = array(
+        'module'=>'default',
+        'controller'=>'index',
+        'action'=>'index',
+        'shopid'=> 2 ,
+        'productid'=> 3
+    );
+    
+    echo $ImageURL = $this->baseUrl('/public/templates/system/images/toolbar/icon-32-edit.png');
+    echo'<br><br>'.$this->formImage('MyImage','MyImage',array('src'=>$ImageURL));
+    echo'<br><br>'.$this->formFile('picture',array('style'=>'width: 150px')); 
+    
+    $option = array('admin'=>'Admin','member'=>'Member','guess'=>'Guess','Sport'=>'Sport');
+    
+    echo'<br><br>'.$this->formRadio('Group member',1,null,$option,'');
+    echo'<br><br>'.$this->formSelect('group','admin',null,$option);
+    echo'<br><br>'.$this->formText('email',null,array('style'=>'width: 300px'));
+    echo '<br><br>'.$this->formTextarea('text area','',array('rows'=>18,'cols'=>80));
+    echo '<br><br>'.$this->formMultiCheckbox('multycheck',array('admin','member','Sport'),null,$option);
+    
+    $arrErrors = array(
+                        'Username is not incorrect',
+                        'Password is not incorrect',
+                        'Picture not same'
+                        );
+    echo '<br><br>'.$this->formErrors($arrErrors);
+    echo '<br>'.$this->url($UrlOption);
+    echo '<br><br>'.$this->formCheckbox('admin',1).'Admin'.
+                    $this->formCheckbox('member',2).'Member'.
+                    $this->formCheckbox('user',1).'User';
+    echo '<br><br>'.$this->formButton('send data','Send Data',
+                                        array('class'=>'button','sytle'=>'width: 150px','onClick'=>'gotoURL()')
+                                        );
+    echo '<br><br>'.$this->formSubmit('submit Form','Submit',array('class'=>'button','style: width: 200px'));
+    echo '<br><br>'.$this->formReset('resetbutton','Clear Form',array('class'=>'button','style'=>'width: 150px'));
+?>
