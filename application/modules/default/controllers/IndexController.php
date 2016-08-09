@@ -15,7 +15,8 @@
         public function indexAction(){
            //var_dump(123);exit;
             //$this->test();
-            echo '<br>'.__METHOD__;
+            $templatePath = TEMPLATE_PATH."/public/system";
+            $this->loadTemplate(TEMPLATE_PATH."/public/system",'template.ini','template');
         }
         public function viewAction(){
             

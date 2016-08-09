@@ -1,5 +1,6 @@
 eclipse.preferences.version=1
 encoding//application/configs/application.ini=UTF-8
+encoding//application/modules/default/controllers/AdminGroupController.php=UTF-8
 encoding//application/modules/training/models/UserGroup.php=UTF-8
 encoding//library/Zendvn/Controller/Action.php=UTF-8
 encoding//public/templates/admin/system/template.ini=UTF-8

@@ -12,13 +12,18 @@ class Zendvn_Controller_Action extends Zend_Controller_Action{
         $this->view->headMeta()->getContainer()->exchangeArray(array());
         $this->view->headLink()->getContainer()->exchangeArray(array());
         $this->view->headScript()->getContainer()->exchangeArray(array());
-        
+       
         $filename = $template_Path."/".$fileConfig;
         $section = $sectionconfig;
         $config = new Zend_Config_Ini($filename,$section);
         $config = $config->toArray();
         
-        $baseURL = $this->_request->getBaseUrl();   
+//         $request = $this->_request;
+//         echo "<pre>";
+//         print_r($request);
+//         echo "</pre>";
+        echo $baseURL = $this->_request->getBaseUrl();   
+        
         //echo'<br>'.$templateURL = $baseURL."/".$config['url'];
         $templateURL = $baseURL."/".$config['url'];
         $CssURL = $templateURL.$config['dirCss'];

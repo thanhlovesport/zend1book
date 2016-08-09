@@ -25,16 +25,16 @@
                 <ul class="menuTiny" id="menuTiny">
                     <li><a href="#" class="menuTinyLink">Main</a>
                         <ul>
-                            <li><a href="#">Front End</a></li>
-                            <li><a href="#">Back End</a></li>
+                            <li><a href="<?php echo $this->baseUrl('/default/index/index');?>">Front End</a></li>
+                            <li><a href="<?php echo $this->baseUrl('/default/admin/index');?>">Back End</a></li>
 
                         </ul>
                     </li>
                     <li><a href="#" class="menuTinyLink">Member</a>
                         <ul>
-                            <li><a href="#">Group manager</a></li>
-                            <li><a href="#">User manager</a></li>
-                            <li><a href="#">Permission</a></li>
+                            <li><a href="<?php echo $this->baseUrl('/default/admin-group/index');?>">Group manager</a></li>
+                            <li><a href="<?php echo $this->baseUrl('/default/admin-user/index');?>">User manager</a></li>
+                            <li><a href="<?php echo $this->baseUrl('/default/admin-permission/index');?>">Permission</a></li>
                         </ul>
                     </li>
                     <li>
