@@ -1,3 +1,4 @@
+<?php //$linkInfo = $this->baseUrl($this->currentControlle.'/info/id/'.$id);?>
 <form name="appForm" method="post" action="">
 
         <?php echo $this->render('toolbar/index.php') ?>
@@ -49,7 +50,7 @@
 
                                         <td align="center">3</td>
                                         <td align="center">
-                                        <a href="#">
+                                        <a href="<?php echo $this->baseUrl($this->currentControlle.'/info/id/'.$id)?>">
                                         	<img src="<?php echo $this->ImageURL?>/icon_info.png" width="16" height="16"> 
                                         </a>
                                         <a href="#">
