@@ -38,6 +38,10 @@
                                         $groupacp  = $value['group_acp'];
                                         $order     = $this->formText('order',$value['order'],array('style'=>'width: 30px; text-align: center;'));
                                         $id        = $value['id'];
+                                        $linkinfogroup      = $this->baseUrl($this->currentControlle.'/info/id/'.$id);
+                                        $linkEditGroup      = $this->baseUrl($this->currentControlle.'/edit/id/'.$id);
+                                        $linkDeleteGroup    = $this->baseUrl($this->currentControlle.'/delete/id/'.$id);
+                                        
                                     ?>
                                     <tr class="even">						
                                         <td align="center"><input type="checkbox" name="checkbox2" id="checkbox2"></td>
@@ -50,14 +54,14 @@
 
                                         <td align="center">3</td>
                                         <td align="center">
-                                        <a href="<?php echo $this->baseUrl($this->currentControlle.'/info/id/'.$id)?>">
-                                        	<img src="<?php echo $this->ImageURL?>/icon_info.png" width="16" height="16"> 
+                                        <a href="<?php echo $linkinfogroup;?>">
+                                        	<img src="<?php echo $this->ImageURL?>/icon_info.png" title="View Info"> 
                                         </a>
-                                        <a href="#">
-                                            <img src="<?php echo $this->ImageURL?>/icon_edit.png" width="16" height="16"> 
+                                        <a href="<?php echo $linkEditGroup;?>">
+                                            <img src="<?php echo $this->ImageURL?>/icon_edit.png" title="Edit Group"> 
                                         </a>
-                                        <a href="#">
-                                            <img src="<?php echo $this->ImageURL?>/icon_del.png" width="16" height="16"> 
+                                        <a href="<?php echo $linkDeleteGroup;?>">
+                                            <img src="<?php echo $this->ImageURL?>/icon_del.png" title="Delete Group"> 
                                          </a></td>
                                         <td align="center"><?php echo $id;?></td>
                                     </tr>

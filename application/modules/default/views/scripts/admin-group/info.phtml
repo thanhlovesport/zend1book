@@ -1,19 +1,23 @@
 <?php 
-	$group_name = $this->formText('group_name','',array('class'=>'txtmedium'));
-	$avatar = $this->formFile('avatar',array('style'=>'width: 250px'));
-	$ranking = $this->formFile('ranking',array('style'=>'width: 250px'));
-	$options = array('No','Yes');
-	$group_acp = $this->formRadio('group_acp',0,null,$options, ' ');
-	$group_default = $this->formRadio('group_default',0,null,$options, ' ');
-	$options = array('Inactive','Active');
-	$status = $this->formRadio('status',0,null,$options, ' ');
-	$order = $this->formText('order',10,array('class'=>'txtshort'));
+	$group_name    = $this->Item['group_name'];
+	$avatar        = $this->Item['avatar'];
+	$ranking       = $this->Item['ranking'];
 	
+	$group_acp     = $this->Item['group_acp'];
+	$group_default = $this->Item['group_default'];
+	
+	$created       = $this->Item['created'];
+	$created_by    = $this->Item['created_by'];
+	
+	$modified      = $this->Item['modified'];
+	$modifiedby    = $this->Item['modified_by'];
+	
+	$status        = $this->Item['status'];
+	$order         = $this->Item['order'];
 ?>
 <form name="appForm" method="post" action="">
 
-
-        <?php echo $this->render('toolbar/add.php') ?>
+        <?php echo $this->render('toolbar/info.php') ?>
                         <div class="clr"></div>
                       
                 <?php echo $this->render('submenu/index.php') ?>
@@ -61,6 +65,29 @@
                                 </div>
                                 <div class="clr"></div>
                                 
+                                 <div id="row">
+                                    <div class="label">Created:</div>
+                                    <?php echo $created;?>			
+                                </div>
+                                <div class="clr"></div>
+                                
+                                 <div id="row">
+                                    <div class="label">Created_by:</div>
+                                    <?php echo $created_by;?>			
+                                </div>
+                                <div class="clr"></div>
+                                
+                                 <div id="row">
+                                    <div class="label">Modified:</div>
+                                    <?php echo $modified;?>			
+                                </div>
+                                <div class="clr"></div>
+                                
+                                 <div id="row">
+                                    <div class="label">Modified_by:</div>
+                                    <?php echo $modifiedby;?>			
+                                </div>
+                                <div class="clr"></div>
                                 <div id="row">
                                     <div class="label">Status:</div>
                                     <?php echo $status;?>			

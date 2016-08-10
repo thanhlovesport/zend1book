@@ -1,5 +1,6 @@
 <?php 
-    echo $linkAdd = $this->baseUrl($this->currentControlle.'/add');
+    $linkAdd = $this->baseUrl($this->currentControlle.'/add');
+       
 ?>
 <div id="toolbar-box">
 	<div class="t">
@@ -9,12 +10,19 @@
 	</div>
 	<div class="m">
 		<div id="toolbar" class="toolbar">
-            
+                       
             <div class="toolbar-button">
 				<a href="#"> <img
 					src="<?php echo $this->ImageURL?>/toolbar/icon-32-sort.png"> <br> Sort
 				</a>
 			</div>
+			<!-- 
+			     <div class="toolbar-button">
+				<a href="#"> <img
+					src="<?php //echo $this->ImageURL?>/toolbar/icon-32-sort.png"> <br> Sort
+				</a>
+			</div>
+			 -->
 			<div class="toolbar-button">
 				<a href="#"> <img
 					src="<?php echo $this->ImageURL?>/toolbar/icon-32-active.png"> <br> Active Item

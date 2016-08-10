@@ -1,0 +1,6 @@
+Ham nguyen ban cac button
+<div class="toolbar-button">
+				<a href="#"> <img
+					src="<?php echo $this->ImageURL?>/toolbar/icon-32-sort.png"> <br> Sort
+				</a>
+			</div>

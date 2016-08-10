@@ -1,19 +1,17 @@
 <?php 
-	$group_name = $this->formText('group_name','',array('class'=>'txtmedium'));
+	$group_name = $this->formText('group_name',$this->Item['group_name'],array('class'=>'txtmedium'));
 	$avatar = $this->formFile('avatar',array('style'=>'width: 250px'));
 	$ranking = $this->formFile('ranking',array('style'=>'width: 250px'));
 	$options = array('No','Yes');
-	$group_acp = $this->formRadio('group_acp',0,null,$options, ' ');
-	$group_default = $this->formRadio('group_default',0,null,$options, ' ');
+	$group_acp = $this->formRadio('group_acp',$this->Item['group_acp'],null,$options, ' ');
+	$group_default = $this->formRadio('group_default',$this->Item['group_default'],null,$options, ' ');
 	$options = array('Inactive','Active');
-	$status = $this->formRadio('status',0,null,$options, ' ');
-	$order = $this->formText('order',10,array('class'=>'txtshort'));
-	
+	$status = $this->formRadio('status',$this->Item['status'],null,$options, ' ');
+	$order = $this->formText('order',$this->Item['order'],array('class'=>'txtshort'));
 ?>
 <form name="appForm" method="post" action="">
 
-
-        <?php echo $this->render('toolbar/add.php') ?>
+        <?php echo $this->render('toolbar/edit.php') ?>
                         <div class="clr"></div>
                       
                 <?php echo $this->render('submenu/index.php') ?>

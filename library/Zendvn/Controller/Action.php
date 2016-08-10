@@ -18,6 +18,7 @@ class Zendvn_Controller_Action extends Zend_Controller_Action{
         $config = new Zend_Config_Ini($filename,$section);
         $config = $config->toArray();
         
+        
 //         $request = $this->_request;
 //         echo "<pre>";
 //         print_r($request);
