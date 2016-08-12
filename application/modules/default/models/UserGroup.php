@@ -4,11 +4,18 @@ class Default_Model_UserGroup extends Zend_Db_Table{
     protected $_primary = 'id';
     
     public function listItem($arrParam = null,$option = null){
+        $db = Zend_Registry::get('connectDb');
+        //$db = Zend_Db::factory($adapter,$config);
         if ($option['task'] == 'admin-list'){
-            $result = $this->fetchAll()->toArray();
-            return $result;
+            
+            $select = $db->select()
+                           ->from('user_group AS g',array('id','group_name','status','group_acp','order'))
+                           ->joinLeft('users AS u','g.id = u.group_id','COUNT(u.id) AS members')
+                           ->group('g.id');
+            echo $select;
+            $result = $db->fetchAll($select);
         }
-        
+        return $result;
     }
     
     public function addItem($arrParam = null,$option = null){

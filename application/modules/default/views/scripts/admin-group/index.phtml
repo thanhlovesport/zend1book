@@ -37,7 +37,18 @@
                                         $status    = $value['status'];
                                         $groupacp  = $value['group_acp'];
                                         $order     = $this->formText('order',$value['order'],array('style'=>'width: 30px; text-align: center;'));
+                                        $member    = $value['members'];
                                         $id        = $value['id'];
+                                        if ($status == 1){
+                                            $status = '<img src="'.$this->ImageURL.'/icon/active.png">';
+                                        }else{
+                                            $status = '<img src="'.$this->ImageURL.'/icon/inactive.png">';
+                                        }
+                                        if ($groupacp == 1){
+                                            $groupacp = '<img src="'.$this->ImageURL.'/icon/active.png">';
+                                        }else{
+                                            $groupacp = '<img src="'.$this->ImageURL.'/icon/inactive.png">';
+                                        }
                                         $linkinfogroup      = $this->baseUrl($this->currentControlle.'/info/id/'.$id);
                                         $linkEditGroup      = $this->baseUrl($this->currentControlle.'/edit/id/'.$id);
                                         $linkDeleteGroup    = $this->baseUrl($this->currentControlle.'/delete/id/'.$id);
@@ -53,7 +64,7 @@
                                         <?php echo $order;?>
                                         </td>
 
-                                        <td align="center">3</td>
+                                        <td align="center"><?php echo $member;?></td>
                                         <td align="center">
                                         <a href="<?php echo $linkinfogroup;?>">
                                         	<img src="<?php echo $this->ImageURL?>/icon_info.png" title="View Info"> 

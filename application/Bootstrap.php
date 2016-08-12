@@ -8,6 +8,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
         $language = array('English','France','American');
         Zend_Registry::set('language', $language);
     } */
+    
     protected function _initDb(){
         $optionResource = $this->getOption('resources');
 //         echo "<pre>";
@@ -24,7 +25,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
         echo "</pre>"; */
         $adapter = $dbOption['adapter'];
         $config  = $dbOption['params'];
-        //
+        ///////
         $db = Zend_Db::factory($adapter,$config);
         $db->setFetchMode(Zend_Db::FETCH_ASSOC);
         $db->query("SET NAMES 'utf8'");

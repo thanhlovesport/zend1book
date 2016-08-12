@@ -15,7 +15,11 @@
 //             print_r($info);
 //             echo "</pre>";
             //$this->view->Items = $tablegroup->getItemPosition(3);
-            $this->view->Items = $tablegroup->listItem();
+            $this->view->Items = $tablegroup->getItem5();
+           /*  echo "<pre>";
+            print_r( $this->view->Items );
+            echo "</pre>";; */
+            
         }
         
     }

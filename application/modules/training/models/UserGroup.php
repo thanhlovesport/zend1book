@@ -4,6 +4,34 @@ class Training_Model_UserGroup extends Zend_Db_Table{
     protected $_name = 'user_group';
     protected $_primary = 'id';
     
+    public function getItem3(){
+        $select = $this->select()
+                       ->from('user_group',array('id','group_name','group_acp'))
+                       ->where('group_acp = ?',1,INTEGER);
+        echo $select;
+        $result = $this->fetchAll($select)->toArray();
+        return $result;
+    }
+    public function getItem4(){
+        
+       
+        $select = $this->select(Zend_Db_Table::SELECT_WITHOUT_FROM_PART)
+                       ->setIntegrityCheck(false) // Cho phép kết nối giữa nhiều bảng
+                        ->from('user_group AS g',array('id','group_name','group_acp'))
+                        ->join('users AS u','u.group_id = g.id',array('user_name'));
+        echo $select;
+        $result = $this->fetchAll($select)->toArray();
+        return $result;
+    }
+    public function getItem5(){
+    
+        $db = Zend_Registry::get('connectDb');
+        
+        $select = $db->select()
+                     ->from('users');
+        $result = $db->fetchALl($select);
+        return $result;
+    }
     public function getItemPosition($position = null){
         $where = 'group_acp = 1';
         $order = 'id DESC';
