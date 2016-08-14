@@ -15,8 +15,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
 //         print_r($optionResource);
 //         echo "</pre>";
         $dbOption = $optionResource['db'];
-        $dbOption['params']['username'] = 'thanhpham';
-        $dbOption['params']['password'] = '123456';
+        $dbOption['params']['username'] = 'root';
+        $dbOption['params']['password'] = '';
         $dbOption['params']['dbname'] = 'shop';
         
         

@@ -1,5 +1,10 @@
 <?php 
-    $linkAdd = $this->baseUrl($this->currentControlle.'/add');
+    $linkAdd        = $this->baseUrl($this->currentControlle.'/add');
+    $linkActive     = $this->baseUrl($this->currentControlle.'/status/type/1');
+    $linkInActive   = $this->baseUrl($this->currentControlle.'/status/type/0');
+    $linkmultyDelete = $this->baseUrl($this->currentControlle.'/multy-delete/');
+    $linkSort        = $this->baseUrl($this->currentControlle.'/sort');
+    
        
 ?>
 <div id="toolbar-box">
@@ -12,7 +17,7 @@
 		<div id="toolbar" class="toolbar">
                        
             <div class="toolbar-button">
-				<a href="#"> <img
+				<a href="#"  onclick="OnSubmitForm('<?php echo $linkSort;?>')"> <img
 					src="<?php echo $this->ImageURL?>/toolbar/icon-32-sort.png"> <br> Sort
 				</a>
 			</div>
@@ -24,12 +29,12 @@
 			</div>
 			 -->
 			<div class="toolbar-button">
-				<a href="#"> <img
+				<a href="#" onclick="OnSubmitForm('<?php echo $linkActive;?>')"> <img
 					src="<?php echo $this->ImageURL?>/toolbar/icon-32-active.png"> <br> Active Item
 				</a>
 			</div>
 			<div class="toolbar-button">
-				<a href="#"> <img
+				<a href="#" onclick="OnSubmitForm('<?php echo $linkInActive;?>')"> <img
 					src="<?php echo $this->ImageURL?>/toolbar/icon-32-inactive.png"> <br> InActive Item
 				</a>
 			</div>
@@ -39,7 +44,7 @@
 				</a>
 			</div>
 			<div class="toolbar-button">
-				<a href="#"> <img
+				<a href="#"onclick="OnSubmitForm('<?php echo $linkmultyDelete;?>')" > <img
 					src="<?php echo $this->ImageURL?>/toolbar/icon-32-delete.png"> <br>
 					Delete
 				</a>

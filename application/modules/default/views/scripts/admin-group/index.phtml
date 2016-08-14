@@ -21,7 +21,7 @@
                                 <table class="adminlist">
                                     <thead>
                                         <tr>
-                                            <th width="43" ><input type="checkbox" name="checkbox" id="checkbox"></th>
+                                            <th width="43" ><input type="checkbox" name="checkbox" id="checkbox" onclick="checkedAll()"></th>
                                             <th>Group name</th>
                                             <th width="89">Status</th>
                                             <th width="83">ACP</th>
@@ -36,30 +36,43 @@
                                         $groupname = $value['group_name'];
                                         $status    = $value['status'];
                                         $groupacp  = $value['group_acp'];
-                                        $order     = $this->formText('order',$value['order'],array('style'=>'width: 30px; text-align: center;'));
+                                        $order     = $this->formText('order['.$value['id'].']',$value['order'],array('style'=>'width: 30px; text-align: center;'));
                                         $member    = $value['members'];
                                         $id        = $value['id'];
                                         if ($status == 1){
+                                            $linkstatus =  $this->baseUrl($this->currentControlle.'/status/type/0/id/'.$id);
                                             $status = '<img src="'.$this->ImageURL.'/icon/active.png">';
                                         }else{
+                                            $linkstatus =  $this->baseUrl($this->currentControlle.'/status/type/1/id/'.$id);
                                             $status = '<img src="'.$this->ImageURL.'/icon/inactive.png">';
                                         }
                                         if ($groupacp == 1){
+                                            $linkgroupacp =  $this->baseUrl($this->currentControlle.'/status/type/0/idacp/'.$id);
                                             $groupacp = '<img src="'.$this->ImageURL.'/icon/active.png">';
                                         }else{
+                                            $linkgroupacp =  $this->baseUrl($this->currentControlle.'/status/type/1/idacp/'.$id);
                                             $groupacp = '<img src="'.$this->ImageURL.'/icon/inactive.png">';
                                         }
                                         $linkinfogroup      = $this->baseUrl($this->currentControlle.'/info/id/'.$id);
                                         $linkEditGroup      = $this->baseUrl($this->currentControlle.'/edit/id/'.$id);
                                         $linkDeleteGroup    = $this->baseUrl($this->currentControlle.'/delete/id/'.$id);
-                                        
+                                        $checkbox           = $this->formCheckbox('cid[]',$id);
                                         
                                     ?>
                                     <tr class="even">						
-                                        <td align="center"><input type="checkbox" name="checkbox2" id="checkbox2"></td>
-                                        <td align="left"><?php echo $groupname;?></td>
-                                        <td align="center"><?php echo $status;?></td>
-                                        <td align="center"><?php echo $groupacp;?></td>
+                                        <td align="center"><?php echo $checkbox;?></td>
+                                        <td align="left"><?php  echo $groupname;?></td>
+                                        <td align="center">
+                                            <a href="<?php echo $linkstatus;?>">
+                                        	   <?php echo $status;?>
+                                            </a>
+                                        </td>
+                                        <td align="center">
+                                            <a href="<?php echo $linkgroupacp;?>">
+                                        	   <?php echo $groupacp;?>
+                                            </a>
+                                        </td>
+                                        
                                         <td align="center">
                                         <?php echo $order;?>
                                         </td>

@@ -3,8 +3,22 @@ class Default_Model_UserGroup extends Zend_Db_Table{
     protected $_name = 'user_group';
     protected $_primary = 'id';
     
+    
+    public function countItem($arrParam = null,$option = null){
+        $db = Zend_Registry::get('connectDb');
+        
+        $select = $db->select()
+                     ->from('user_group AS g',array('COUNT(g.id) AS TotalItem'));
+        //echo $select;
+        $result = $db->fetchOne($select);
+        return $result;
+    }
+    
     public function listItem($arrParam = null,$option = null){
         $db = Zend_Registry::get('connectDb');
+        
+        $paginator = $arrParam['paginator'];
+        
         //$db = Zend_Db::factory($adapter,$config);
         if ($option['task'] == 'admin-list'){
             
@@ -12,12 +26,32 @@ class Default_Model_UserGroup extends Zend_Db_Table{
                            ->from('user_group AS g',array('id','group_name','status','group_acp','order'))
                            ->joinLeft('users AS u','g.id = u.group_id','COUNT(u.id) AS members')
                            ->group('g.id');
-            echo $select;
+            
+            if ($paginator['itemCountPerPage'] > 0){
+                $page = $paginator['currentPage'];
+                $rowCount = $paginator['itemCountPerPage'];
+                $select->limitPage($page,$rowCount);
+            }
+                        
+            
             $result = $db->fetchAll($select);
         }
         return $result;
     }
-    
+    public function sortItem($arrParam = null,$option = null){
+        echo '<h3 style = "color:red;font-weight:bold">'. __METHOD__.'</h3>';
+        $cid = $arrParam['cid'];
+        $order = $arrParam['order'];
+        if(count($cid) > 0){
+            foreach ($cid as $key=>$value){
+                $data = array('order'=>$order[$value]);
+                $where = 'id ='.$value;
+                $this->update($data, $where);
+            }
+        }
+        
+        
+    }
     public function addItem($arrParam = null,$option = null){
         if ($option['task'] == 'admin-add'){
             $row = $this->fetchNew();
@@ -76,5 +110,54 @@ class Default_Model_UserGroup extends Zend_Db_Table{
             $where = 'id = '.$arrParam['id'];
             $this->delete($where);
         }
+        if($option['task'] == 'multy-delete'){
+            $cid = $arrParam['cid'];
+            if (count($cid) > 0){
+                $dayid = implode(',', $cid);
+                $where = 'id IN ('.$dayid.') ';
+                $this->delete($where);
+            }
+            
+        }
     }
+    public function statusItem($arrParam = null,$option = null){
+            $cid = $arrParam['cid'];
+            if (count($cid) > 0){
+                if ($arrParam['type'] == 1){
+                    $status = 1;
+                }else{
+                    $status = 0;
+                }
+                
+                $dayid  = implode(',', $cid);
+                $data   = array('status'=>$status);
+                $where  = 'id IN ('.$dayid.')';
+                $this->update($data, $where);
+                // update from user_group set status = 1 whe id in (day id)
+            }
+            
+            if (count($arrParam['id']) > 0) {
+                if ($arrParam['type'] == 1){
+                    $status = 1;
+                }else{
+                    $status = 0;
+                }
+                
+                $data   = array('status'=>$status);
+                $where  = 'id ='.$arrParam['id'];
+                $this->update($data, $where);
+            }
+            if (count($arrParam['idacp']) > 0) {
+                if ($arrParam['type'] == 1){
+                   $group_acp = 1;
+                }else{
+                    $group_acp = 0;
+                }
+            
+                $data   = array('group_acp'=>$group_acp);
+                $where  = 'id ='.$arrParam['idacp'];
+                $this->update($data, $where);
+            }
+    }
+    
 }

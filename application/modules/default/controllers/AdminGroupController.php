@@ -9,6 +9,11 @@ class AdminGroupController extends Zendvn_Controller_Action{
     
     // Đường dẫn của Action chính
     protected $_actionMain;
+    
+    protected $_paginator = array(
+        'itemCountPerPage' => 5,
+        'pageRange' => 3,
+    );
      
     public function init(){
         // Mảng tham số nhận được ở mỗi Action
@@ -23,6 +28,9 @@ class AdminGroupController extends Zendvn_Controller_Action{
         $this->_actionMain = '/'.$this->_arrParam['module'].
                                     '/'.$this->_arrParam['controller'].
                                     '/index';
+        
+        $this->_paginator['currentPage'] = $this->_request->getParam('page',1); // neu khong co mac dinh se la 1
+        $this->_arrParam['paginator']    = $this->_paginator; // them phan tu cho mang tham so _arrParam
         
         // Truyền ra view
         
@@ -42,6 +50,14 @@ class AdminGroupController extends Zendvn_Controller_Action{
         $this->view->Items = $tablegroup->listItem($this->_arrParam,array('task'=>'admin-list'));
         $this->view->Title = 'Member :: Group manager :: List';
         $this->view->headTitle($this->view->Title,true);
+        
+        // Phan trang
+        $totalItems = $tablegroup->countItem();
+        $paginator = new Zendvn_Paginator();
+        $paginator = $paginator->createPaginator($totalItems,$this->_paginator);
+        echo '<pre>';
+        print_r($paginator);
+        echo '</pre>';
         
     }
     public function addAction(){
@@ -84,6 +100,30 @@ class AdminGroupController extends Zendvn_Controller_Action{
         if ($this->_request->isPost()){
             $tablegroup = new Default_Model_UserGroup();
             $tablegroup->deleteItem($this->_arrParam,array('task'=>'admin-delete'));
+            $this->redirect($this->_actionMain);
+        }
+    }
+    public function statusAction(){
+        $this->_helper->viewRenderer->setNoRender(true);
+        $tablegroup = new Default_Model_UserGroup();
+        $tablegroup->statusItem($this->_arrParam,null);
+        $this->redirect($this->_actionMain);   
+       
+    }
+    public function multyDeleteAction(){
+        $this->_helper->viewRenderer->setNoRender(true);
+        if ($this->_request->isPost()){
+            $tablegroup = new Default_Model_UserGroup();
+            $tablegroup->deleteItem($this->_arrParam,array('task'=>'multy-delete'));
+            $this->redirect($this->_actionMain);
+        }
+        
+    }
+    public function sortAction(){
+        $this->_helper->viewRenderer->setNoRender(true);
+        if ($this->_request->isPost()){
+            $tablegroup = new Default_Model_UserGroup();
+            $tablegroup->sortItem($this->_arrParam,null);
             $this->redirect($this->_actionMain);
         }
     }
