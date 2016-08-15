@@ -14,6 +14,9 @@ class AdminGroupController extends Zendvn_Controller_Action{
         'itemCountPerPage' => 5,
         'pageRange' => 3,
     );
+    
+    // Khai báo namespace chứa Session
+    protected $_namespace;
      
     public function init(){
         // Mảng tham số nhận được ở mỗi Action
@@ -32,6 +35,19 @@ class AdminGroupController extends Zendvn_Controller_Action{
         $this->_paginator['currentPage'] = $this->_request->getParam('page',1); // neu khong co mac dinh se la 1
         $this->_arrParam['paginator']    = $this->_paginator; // them phan tu cho mang tham so _arrParam
         
+        // Lưu các dữ liệu Filter vào Session
+        // Đặt tên SESSION
+        $this->_namespace = $this->_arrParam['module'].'-'.$this->_arrParam['controller'];
+        $sessionfilte = new Zend_Session_Namespace($this->_namespace);
+        if (empty($sessionfilte->searchbox)){
+            $sessionfilte->searchbox = '';
+        }
+        
+        $this->_arrParam['sessionfilter']['searchbox'] = $sessionfilte->searchbox;
+        echo '<pre>';
+        print_r($sessionfilte->getIterator());
+        echo '</pre>';
+        
         // Truyền ra view
         
         $this->view->arrParam = $this->_arrParam;
@@ -46,6 +62,9 @@ class AdminGroupController extends Zendvn_Controller_Action{
         //echo '<br>'.$this->_currentController ;
         //echo '<br>'.$this->_actionMain;
         //var_dump(123);
+        echo '<pre>';
+        print_r($this->_arrParam);
+        echo '</pre>';
         $tablegroup = new Default_Model_UserGroup();
         $this->view->Items = $tablegroup->listItem($this->_arrParam,array('task'=>'admin-list'));
         $this->view->Title = 'Member :: Group manager :: List';
@@ -62,6 +81,19 @@ class AdminGroupController extends Zendvn_Controller_Action{
     public function filterAction(){
         //$this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
+        
+        $sessionfilter = new Zend_Session_Namespace($this->_namespace);
+        if ($this->_arrParam['type'] == 'search'){
+            if ($this->_arrParam['key'] == 1){
+                $sessionfilter->searchbox = $this->_arrParam['searchbox'];
+            }else {
+                $sessionfilter->searchbox = '';
+            }
+        }
+        
+        echo '<pre>';
+        print_r($sessionfilter->getIterator());
+        echo '</pre>';
         echo "<pre>";
         print_r($this->_arrParam);
         echo "</pre>";
@@ -92,8 +124,8 @@ class AdminGroupController extends Zendvn_Controller_Action{
         $this->view->Title = 'Member :: Group manager :: Edit';
         $this->view->headTitle($this->view->Title,true);
         $tablegroup = new Default_Model_UserGroup();
-        $this->view->Item = $tablegroup->getItem($this->_arrParam,array('task'=>'admin-edit'));
-        if ($this->_request->isPost()){
+        $this->view->Item = $tablegroup->getItem($this->_arrParam,array('task'=>'admin-edit')); // Cho cái button edit thông tin một group
+        if ($this->_request->isPost()){ // Cho cái nút submit form tên là Edit
             $tablegroup = new Default_Model_UserGroup();
             $tablegroup->addItem($this->_arrParam,array('task'=>'admin-edit'));
             $this->redirect($this->_actionMain);
