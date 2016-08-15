@@ -38,6 +38,10 @@ class Default_Model_UserGroup extends Zend_Db_Table{
         }
         return $result;
     }
+    public function filterItem($arrParam = null,$option = null){
+        $db = Zend_Registry::get('connectDb');
+        
+    }
     public function sortItem($arrParam = null,$option = null){
         echo '<h3 style = "color:red;font-weight:bold">'. __METHOD__.'</h3>';
         $cid = $arrParam['cid'];

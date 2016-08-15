@@ -1,6 +1,6 @@
 <?php 
 	$group_name = $this->formText('group_name',$this->Item['group_name'],array('class'=>'txtmedium'));
-	$avatar = $this->formFile('avatar',array('style'=>'width: 250px'));
+	$avatar = $this->formFile('avatar',$this->Item['avatar'],array('style'=>'width: 250px'));
 	$ranking = $this->formFile('ranking',array('style'=>'width: 250px'));
 	$options = array('No','Yes');
 	$group_acp = $this->formRadio('group_acp',$this->Item['group_acp'],null,$options, ' ');

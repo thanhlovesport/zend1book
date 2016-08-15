@@ -53,12 +53,18 @@ class AdminGroupController extends Zendvn_Controller_Action{
         
         // Phan trang
         $totalItems = $tablegroup->countItem();
+        echo $totalItems;
         $paginator = new Zendvn_Paginator();
-        $paginator = $paginator->createPaginator($totalItems,$this->_paginator);
-        echo '<pre>';
-        print_r($paginator);
-        echo '</pre>';
+        $this->view->paginator = $paginator->createPaginator($totalItems,$this->_paginator);
+       
         
+    }
+    public function filterAction(){
+        //$this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+        echo "<pre>";
+        print_r($this->_arrParam);
+        echo "</pre>";
     }
     public function addAction(){
         $this->view->Title = 'Member :: Group manager :: Add';

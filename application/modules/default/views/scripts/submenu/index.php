@@ -1,6 +1,9 @@
 <?php 
     $linkMembeManage =  $this->baseUrl('/default/admin-user/index');
     $linkPermission  =  $this->baseUrl('/default/admin-permission/index');
+    $searchbox       = 	$this->formText('searchbox','',array('class'=>'txtmedium'));
+   
+    
 ?>
 <div id="submenu-box">
 	<div style="border: 1px solid #CCCCCC; padding: 5px">
@@ -11,4 +14,5 @@
 		</ul>
 		<div class="clr"></div>
 	</div>
+	<?php echo $searchbox;?>
 </div>

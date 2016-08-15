@@ -1,4 +1,15 @@
-<?php //$linkInfo = $this->baseUrl($this->currentControlle.'/info/id/'.$id);?>
+<?php //$linkInfo = $this->baseUrl($this->currentControlle.'/info/id/'.$id)
+    $keysearch  = $this->formText('searchbox','',array('class'=>'txtsearch'));
+    
+    // Tìm Kiếm
+    $linksearch = $this->baseUrl($this->currentControlle.'/filter/type/search/key/1');
+    $btnsearch  = $this->formButton('search-button','Tìm Kiếm',array('onclick'=>"OnSubmitForm('". $linksearch ."')"));
+    
+    // Xóa Tìm kiếm
+    $linkclearsearch = $this->baseUrl($this->currentControlle.'/filter/type/search/key/0');
+    $btnclearsearch  = $this->formButton('clear-button','Xóa tìm kiếm',array('onclick'=>"OnSubmitForm('". $linkclearsearch ."')"));
+    
+?>
 <form name="appForm" method="post" action="">
 
         <?php echo $this->render('toolbar/index.php') ?>
@@ -15,8 +26,12 @@
                             </div>
                             <div class="m">
                                 <!-- BEGIN: ELEMENT BOX -->
-
-
+                                <div id="search">
+                                    <div>
+                                        <?php echo $keysearch . ' ' . $btnsearch . ' ' .$btnclearsearch;?>
+                                    </div>
+                                </div>
+                                
                                 <!-- Area 4: In du lieu lay tu database -->
                                 <table class="adminlist">
                                     <thead>
@@ -97,10 +112,10 @@
                                             <td colspan="9">
                                                 <div class="container">
                                                     <div class="pagination">
-                                                        <div class="limit">Display #
-                                                            <select onchange="submitform();" size="1" class="inputbox" id="limit" name="limit">
-                                                                <option value="5">5</option></select>
-                                                        </div>
+                                                       <?php 
+                                                           $currentUrl = $this->baseUrl($this->currentControlle . '/index');
+                                                           echo $this->paginationControl($this->panigator,'Sliding','pagination.phtml',array('currentUrl'=>$currentUrl));
+                                                       ?>
                                                         <div class="limit"></div>
                                                     </div>
                                                 </div>
