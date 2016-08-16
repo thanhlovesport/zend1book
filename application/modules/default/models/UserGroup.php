@@ -3,12 +3,20 @@ class Default_Model_UserGroup extends Zend_Db_Table{
     protected $_name = 'user_group';
     protected $_primary = 'id';
     
-    
     public function countItem($arrParam = null,$option = null){
         $db = Zend_Registry::get('connectDb');
         
+        $ssfilte = $arrParam['sessionfilter'];
+        
+        
         $select = $db->select()
                      ->from('user_group AS g',array('COUNT(g.id) AS TotalItem'));
+        
+        if(!empty($ssfilte['searchbox'])){
+            //var_dump(123);exit;
+            $keywords = '%'.$ssfilte['searchbox'].'%';
+            @$select->where('g.group_name LIKE ?',$keywords,STRING);
+        }
         //echo $select;
         $result = $db->fetchOne($select);
         return $result;
@@ -19,6 +27,8 @@ class Default_Model_UserGroup extends Zend_Db_Table{
         
         $paginator = $arrParam['paginator'];
         
+        $ssfilte = $arrParam['sessionfilter'];
+        
         //$db = Zend_Db::factory($adapter,$config);
         if ($option['task'] == 'admin-list'){
             
@@ -26,14 +36,23 @@ class Default_Model_UserGroup extends Zend_Db_Table{
                            ->from('user_group AS g',array('id','group_name','status','group_acp','order'))
                            ->joinLeft('users AS u','g.id = u.group_id','COUNT(u.id) AS members')
                            ->group('g.id');
-            
+            if (!empty($ssfilte['col']) && !empty($ssfilte['order'])){
+                @$select->order($ssfilte['col'],$ssfilte['order']);
+                
+            }
             if ($paginator['itemCountPerPage'] > 0){
                 $page = $paginator['currentPage'];
                 $rowCount = $paginator['itemCountPerPage'];
                 $select->limitPage($page,$rowCount);
             }
                         
-            
+            if(!empty($ssfilte['searchbox'])){
+                //var_dump(123);exit;
+                $keywords = '%'.$ssfilte['searchbox'].'%';
+                @$select->where('g.group_name LIKE ?',$keywords);
+            }
+            echo $select;
+            echo '<br>';
             $result = $db->fetchAll($select);
         }
         return $result;

@@ -39,16 +39,21 @@ class AdminGroupController extends Zendvn_Controller_Action{
         // Đặt tên SESSION
         $this->_namespace = $this->_arrParam['module'].'-'.$this->_arrParam['controller'];
         $sessionfilte = new Zend_Session_Namespace($this->_namespace);
-        if (empty($sessionfilte->searchbox)){
-            $sessionfilte->searchbox = '';
+        $sessionfilte->unsetAll();
+        if (empty($sessionfilte->order)){
+            $sessionfilte->searchbox = ''; // Kieu truyen trong session, khai bao cac session
+            $sessionfilte->col = 'g.id';
+            $sessionfilte->order = 'DESC';
         }
         
-        $this->_arrParam['sessionfilter']['searchbox'] = $sessionfilte->searchbox;
-        echo '<pre>';
+        $this->_arrParam['sessionfilter']['searchbox']  = $sessionfilte->searchbox;
+        $this->_arrParam['sessionfilter']['col']        = $sessionfilte->col;
+        $this->_arrParam['sessionfilter']['order']      = $sessionfilte->order;
+        /* echo '<pre>';
         print_r($sessionfilte->getIterator());
         echo '</pre>';
-        
-        // Truyền ra view
+         */
+        // Truyền ra view   
         
         $this->view->arrParam = $this->_arrParam;
         $this->view->currentControlle =  $this->_currentController;
@@ -56,22 +61,22 @@ class AdminGroupController extends Zendvn_Controller_Action{
         
         $templatePath = TEMPLATE_PATH."/admin/system";
         $this->loadTemplate(TEMPLATE_PATH."/admin/system",'template.ini','template');
+        
+       
        
     }
     public function indexAction(){
         //echo '<br>'.$this->_currentController ;
         //echo '<br>'.$this->_actionMain;
         //var_dump(123);
-        echo '<pre>';
-        print_r($this->_arrParam);
-        echo '</pre>';
+        
         $tablegroup = new Default_Model_UserGroup();
         $this->view->Items = $tablegroup->listItem($this->_arrParam,array('task'=>'admin-list'));
         $this->view->Title = 'Member :: Group manager :: List';
         $this->view->headTitle($this->view->Title,true);
         
         // Phan trang
-        $totalItems = $tablegroup->countItem();
+        $totalItems = $tablegroup->countItem($this->_arrParam,null);
         echo $totalItems;
         $paginator = new Zendvn_Paginator();
         $this->view->paginator = $paginator->createPaginator($totalItems,$this->_paginator);
@@ -90,13 +95,20 @@ class AdminGroupController extends Zendvn_Controller_Action{
                 $sessionfilter->searchbox = '';
             }
         }
+         if ($this->_arrParam['type'] == 'order'){
+           $sessionfilter->col      = $this->_arrParam['col'];
+           $sessionfilter->order    = $this->_arrParam['by'];
+        } 
+       
         
-        echo '<pre>';
+        
+      /*   echo '<pre>';
         print_r($sessionfilter->getIterator());
         echo '</pre>';
         echo "<pre>";
         print_r($this->_arrParam);
-        echo "</pre>";
+        echo "</pre>";*/
+        $this->redirect($this->_actionMain); 
     }
     public function addAction(){
         $this->view->Title = 'Member :: Group manager :: Add';

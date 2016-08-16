@@ -14,5 +14,5 @@
 		</ul>
 		<div class="clr"></div>
 	</div>
-	<?php echo $searchbox;?>
+	<?php //echo $searchbox;?>
 </div>
