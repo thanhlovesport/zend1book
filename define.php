@@ -20,6 +20,9 @@ get_include_path(),
 define('PUBLIC_PATH', realpath(dirname(__FILE__) . '/public'));
 //Duong dan den thu muc /templates
 define('TEMPLATE_PATH', PUBLIC_PATH . '/templates');
+define('TEMP_PATH', PUBLIC_PATH . '/tmp');
+define('FILE_PATH', PUBLIC_PATH . '/files');
+
 
 //Duong dan den thu muc /templates
 define('TEMPLATE_URL',  'public/templates');

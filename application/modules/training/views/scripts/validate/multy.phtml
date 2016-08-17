@@ -1,0 +1,10 @@
+<?php 
+	$user_name = $this->formText('user_name','',array());
+	$submit  = $this->formSubmit('submit','Check username');
+?>
+<form action="" method="post" enctype="application/x-www-form-urlencoded">
+	<?php 
+		echo  $user_name . '<br><br>' . $submit;
+		
+	?>
+</form>

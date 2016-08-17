@@ -1,0 +1,16 @@
+<?php 
+    $picture = $this->formFile('picture');
+    $filerar = $this->formFile('filerar');
+    $submit  = $this->formSubmit('submit','Upload File');
+    
+?>
+
+<form action="#" method="post" enctype="multipart/form-data">
+    <?php 
+        echo'Picture'.$picture;
+        echo '<br>';
+        echo'FileRar'.$filerar;
+        echo '<br>';
+        echo $submit;
+    ?>
+</form>

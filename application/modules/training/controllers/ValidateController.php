@@ -2,7 +2,7 @@
 class Training_ValidateController extends Zend_Controller_Action{
     public function init(){
         $this->_helper->layout()->disableLayout();
-        $this->_helper->viewRenderer->setNoRender();
+        //$this->_helper->viewRenderer->setNoRender();
     }
     public function indexAction(){
         $validate = new Zend_Validate_StringLength(19); // Chiều dài tối thiểu của một chuỗi
@@ -263,5 +263,53 @@ class Training_ValidateController extends Zend_Controller_Action{
             echo current($messages);
         }
     }
-    
+    public function multyAction(){
+        //1. Textbox khong duoc rong
+        //2. Do dai tu 3-32 ki tu
+        //3. Tap hop ky tu cho phep [a-zA-Z0-9\-_\.]
+        //4. user_name khong duoc ton tai trong database
+        
+        if($this->_request->isPost()){
+            $pattern =  '#^[a-zA-Z0-9\-_\.]+$#';
+            echo '<br>' . $input = $this->_request->getParam('user_name','');
+            	
+            $options = array('table'=>'users','field'=>'user_name');
+        
+            $validator = new Zend_Validate();
+            $validator->addValidator(new Zend_Validate_NotEmpty(),true)
+            ->addValidator(new Zend_Validate_StringLength(3,32),true)
+            ->addValidator(new Zend_Validate_Regex($pattern),true)
+            ->addValidator(new Zend_Validate_Db_NoRecordExists($options),true);
+            	
+            if(!$validator->isValid($input)){
+                $messages = $validator->getMessages();
+                echo current($messages);
+                /*	echo '<pre>';
+                 print_r($messages);
+                echo '</pre>';*/
+            }
+        
+        }
+        
+    }
+    public function passAction(){
+        if($this->_request->isPost()){
+            $password = $this->_request->getParam('password','');
+            $confirmpassword = $this->_request->getParam('passConfirm','');
+            $validate = new Zendvn_Validate_ConfirmPassword($password);
+            if(!$validate->isValid($confirmpassword)){
+                $messages = $validate->getMessages();
+                echo current($messages);
+                
+            }
+        }
+    }
+    public function phoneAction(){
+        $validator = new Zendvn_Validate_Phone();
+        $input = '084-08-38.111333123213'; //XXX-XX-XX.XXXXXX
+        if(!$validator->isValid($input)){
+            $messages = $validator->getMessages();
+            echo current($messages);
+        }
+    }
 }

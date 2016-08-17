@@ -1,0 +1,14 @@
+<?php 
+	$password = $this->formText('password','',array());
+	$passConfirm = $this->formText('passConfirm','',array());
+	
+	$submit  = $this->formSubmit('submit','Check username');
+?>
+<form action="" method="post" enctype="application/x-www-form-urlencoded">
+	<?php 
+		echo  'Password: ' . $password . '<br>';
+		echo  'Confirm password: ' . $passConfirm . '<br>';
+		echo  $submit . '<br>';
+		
+	?>
+</form>
