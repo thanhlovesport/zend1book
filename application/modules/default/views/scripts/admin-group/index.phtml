@@ -20,12 +20,12 @@
     $btnclearsearch  = $this->formButton('clear-button','Xóa tìm kiếm',array('onclick'=>"OnSubmitForm('". $linkclearsearch ."')"));
     
     // Sap xep
-  
+     
     if($ssfilter['col'] != 'g.group_name'){
         $linkOder =  $this->baseUrl($this->currentControlle . '/filter/type/order/col/g.group_name/by/DESC');
         $iconSort = $this->ImageURL . '/icon/arrow_down.png';
     }else{
-        if($ssfilter['order'] == 'DESC'){
+        if($ssfilter['order'] == 'DESC'){ 
             $by = 'ASC';
             $iconSort = $this->ImageURL . '/icon/arrow_down.png';
         }else{

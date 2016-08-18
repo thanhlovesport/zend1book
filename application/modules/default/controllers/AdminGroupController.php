@@ -39,7 +39,7 @@ class AdminGroupController extends Zendvn_Controller_Action{
         // Đặt tên SESSION
         $this->_namespace = $this->_arrParam['module'].'-'.$this->_arrParam['controller'];
         $sessionfilte = new Zend_Session_Namespace($this->_namespace);
-        $sessionfilte->unsetAll();
+        //$sessionfilte->unsetAll();
         if (empty($sessionfilte->order)){
             $sessionfilte->searchbox = ''; // Kieu truyen trong session, khai bao cac session
             $sessionfilte->col = 'g.id';
@@ -90,7 +90,7 @@ class AdminGroupController extends Zendvn_Controller_Action{
         $sessionfilter = new Zend_Session_Namespace($this->_namespace);
         if ($this->_arrParam['type'] == 'search'){
             if ($this->_arrParam['key'] == 1){
-                $sessionfilter->searchbox = $this->_arrParam['searchbox'];
+                $sessionfilter->searchbox = $this->_arrParam['searchbox'];  // searchbox đây tên phần từ ô textbox
             }else {
                 $sessionfilter->searchbox = '';
             }
