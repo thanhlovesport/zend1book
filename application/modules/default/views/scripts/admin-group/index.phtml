@@ -8,6 +8,17 @@
     print_r($ssfilter);
     echo "</pre>";
     
+    
+    // Phan sap xep cua cac nhan
+    $actionLink = $this->baseUrl($this->currentControlle.'/filter/type/order');
+    
+    $lblID 	= $this->cmsLinkSort('ID','g.id',$ssfilter,
+        $this->ImageURL . '/icon',$actionLink);
+    
+    $lblMember	= $this->cmsLinkSort('Member','members',$ssfilter,
+        $this->ImageURL . '/icon',$actionLink);
+    
+    // Key sau khi tim kiem, neu khong co se rong
     $keyaftersearch = $ssfilter['searchbox'];
     $keysearch  = $this->formText('searchbox',$keyaftersearch,array('class'=>'txtsearch'));
     
@@ -20,12 +31,12 @@
     $btnclearsearch  = $this->formButton('clear-button','Xóa tìm kiếm',array('onclick'=>"OnSubmitForm('". $linkclearsearch ."')"));
     
     // Sap xep
-  
+     
     if($ssfilter['col'] != 'g.group_name'){
         $linkOder =  $this->baseUrl($this->currentControlle . '/filter/type/order/col/g.group_name/by/DESC');
         $iconSort = $this->ImageURL . '/icon/arrow_down.png';
     }else{
-        if($ssfilter['order'] == 'DESC'){
+        if($ssfilter['order'] == 'DESC'){ 
             $by = 'ASC';
             $iconSort = $this->ImageURL . '/icon/arrow_down.png';
         }else{
@@ -74,10 +85,10 @@
                                             <th width="89">Status</th>
                                             <th width="83">ACP</th>
                                             <th width="86">Order</th>						
-                                            <th width="77">Member</th>
+                                            <th width="77"><?php echo $lblMember;?></th>
                                             <th width="90">Control</th>
 
-                                            <th width="34">ID</th>
+                                            <th width="34"><?php echo $lblID;?></th>
                                         </tr>
                                     </thead>
                                     <?php foreach ($this->Items as $key=>$value){
