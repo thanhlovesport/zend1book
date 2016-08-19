@@ -4,3 +4,5 @@ Ham nguyen ban cac button
 					src="<?php echo $this->ImageURL?>/toolbar/icon-32-sort.png"> <br> Sort
 				</a>
 			</div>
+
+			Thu muc scripts chua cac thu vien mo rong

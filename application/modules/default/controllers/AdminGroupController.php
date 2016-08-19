@@ -22,7 +22,9 @@ class AdminGroupController extends Zendvn_Controller_Action{
         // Mảng tham số nhận được ở mỗi Action
         $this->_arrParam = $this->_request->getParams();
         
-        
+        echo "<pre>";
+        print_r( $this->_arrParam);
+        echo "</pre>";
         // Đường dẫn của Controller
         $this->_currentController = '/'.$this->_arrParam['module'].
                                     '/'.$this->_arrParam['controller'];
@@ -35,12 +37,12 @@ class AdminGroupController extends Zendvn_Controller_Action{
         $this->_paginator['currentPage'] = $this->_request->getParam('page',1); // neu khong co mac dinh se la 1
         $this->_arrParam['paginator']    = $this->_paginator; // them phan tu cho mang tham so _arrParam
         
-        // Lưu các dữ liệu Filter vào Session
+        // Lưu các dữ liệu Filter vào Session , namespace lưu trữ tên session 
         // Đặt tên SESSION
         $this->_namespace = $this->_arrParam['module'].'-'.$this->_arrParam['controller'];
         $sessionfilte = new Zend_Session_Namespace($this->_namespace);
         //$sessionfilte->unsetAll();
-        if (empty($sessionfilte->order)){
+        if (empty($sessionfilte->col)){
             $sessionfilte->searchbox = ''; // Kieu truyen trong session, khai bao cac session
             $sessionfilte->col = 'g.id';
             $sessionfilte->order = 'DESC';
@@ -74,7 +76,7 @@ class AdminGroupController extends Zendvn_Controller_Action{
         $this->view->Items = $tablegroup->listItem($this->_arrParam,array('task'=>'admin-list'));
         $this->view->Title = 'Member :: Group manager :: List';
         $this->view->headTitle($this->view->Title,true);
-        
+                                                            
         // Phan trang
         $totalItems = $tablegroup->countItem($this->_arrParam,null);
         echo $totalItems;
