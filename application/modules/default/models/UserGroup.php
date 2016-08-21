@@ -3,6 +3,18 @@ class Default_Model_UserGroup extends Zend_Db_Table{
     protected $_name = 'user_group';
     protected $_primary = 'id';
     
+    public function itemInSelectbox($arrParam = null,$option = null){
+        $db = Zend_Registry::get('connectDb');
+        if ($option == null){
+            $select  = $db->select()
+                         ->from('user_group',array('id','group_name'));
+            
+            $result = $db->fetchPairs($select); // fetchParis trả về một mảng, cột đầu tiên là khóa, cột thứ 2 là value
+            $result['0'] = '--Select a item--';
+            ksort($result); // Sắp xếp các phần tử trong mảng theo chiều tăng dần của keys
+        }
+        return $result;
+    }
     public function countItem($arrParam = null,$option = null){
         $db = Zend_Registry::get('connectDb');
         

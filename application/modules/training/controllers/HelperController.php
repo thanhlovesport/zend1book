@@ -18,4 +18,12 @@ class Training_HelperController extends Zend_Controller_Action{
 		$thumb->save(FILE_PATH . '/images/abcd.png');
 		$this->_helper->viewRenderer->setNoRender();
 	}
+	
+	public function partialAction(){
+	    echo '<br>' . __METHOD__;
+	}
+	
+	public function partial2Action(){
+	    echo '<br>' . __METHOD__;
+	}
 }

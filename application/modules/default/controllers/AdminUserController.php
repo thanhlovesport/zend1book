@@ -40,18 +40,21 @@ class AdminUserController extends Zendvn_Controller_Action{
         $this->_namespace = $this->_arrParam['module'].'-'.$this->_arrParam['controller'];
         $sessionfilte = new Zend_Session_Namespace($this->_namespace);
         //$sessionfilte->unsetAll();
-       /*  if (empty($sessionfilte->col)){
+        if (empty($sessionfilte->col)){
             $sessionfilte->searchbox = ''; // Kieu truyen trong session, khai bao cac session
-            $sessionfilte->col = 'g.id';
+            $sessionfilte->col = 'u.id';
             $sessionfilte->order = 'DESC';
+            $sessionfilte->group_id = 0;
+            
         }
-    
+        
         $this->_arrParam['sessionfilter']['searchbox']  = $sessionfilte->searchbox;
         $this->_arrParam['sessionfilter']['col']        = $sessionfilte->col;
-        $this->_arrParam['sessionfilter']['order']      = $sessionfilte->order; */
+        $this->_arrParam['sessionfilter']['order']      = $sessionfilte->order; 
+        $this->_arrParam['sessionfilter']['group_id']   = $sessionfilte->group_id;
         /* echo '<pre>';
-         print_r($sessionfilte->getIterator());
-         echo '</pre>';
+        print_r($sessionfilte->getIterator());
+        echo '</pre>';
          */
         // Truyền ra view
     
@@ -71,14 +74,70 @@ class AdminUserController extends Zendvn_Controller_Action{
         
         $tableuser = new Default_Model_User();
         $this->view->Items = $tableuser->listItem($this->_arrParam,array('task'=>'admin-list'));
-            
+        
+        $tablegroup = new Default_Model_UserGroup();
+        $this->view->selectboxgroup = $tablegroup->itemInSelectbox();
+        
         // Phan trang
         $totalItems = $tableuser->countItem($this->_arrParam,null);
         echo $totalItems;
+       
         $paginator = new Zendvn_Paginator();
         $this->view->paginator = $paginator->createPaginator($totalItems,$this->_paginator); 
          
+     
+    }
+    public function addAction(){
+        $this->view->Title = 'Member :: User manager :: Add';
+        $this->view->headTitle($this->view->Title,true);
+        
+
+        $tablegroup = new Default_Model_UserGroup();
+        $this->view->selectboxgroup = $tablegroup->itemInSelectbox();
+        
+        
+        /* if ($this->_request->isPost()){
+            $tablegroup = new Default_Model_UserGroup();
+            $this->view->Items = $tablegroup->addItem($this->_arrParam,array('task'=>'admin-add'));
+            $this->redirect($this->_actionMain);
+        } */
+         
+        /* if ($this->_request->isPost()){
+         echo "<pre>";
+         print_r($this->_arrParam);
+         echo "</pre>";
+         } */
+    }
+    public function filterAction(){
+        //$this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
     
+        $sessionfilter = new Zend_Session_Namespace($this->_namespace);
+        if ($this->_arrParam['type'] == 'search'){
+            if ($this->_arrParam['key'] == 1){
+                $sessionfilter->searchbox = $this->_arrParam['searchbox'];  // searchbox đây tên phần từ ô textbox
+            }else {
+                $sessionfilter->searchbox = '';
+            }
+        }
+        if ($this->_arrParam['type'] == 'order'){
+            $sessionfilter->col      = $this->_arrParam['col'];
+            $sessionfilter->order    = $this->_arrParam['by'];
+        }
+         
+        if ($this->_arrParam['type'] == 'slbgroup'){
+            $sessionfilter->group_id     = $this->_arrParam['group_id']; // arrParam phần tử group_id ở đây là do mình nhấn select chọn, hk phải là gán
+        } 
+        echo '<pre>';
+        print_r($this->_arrParam);
+        echo '</pre>';
+        /*   echo '<pre>';
+         print_r($sessionfilter->getIterator());
+         echo '</pre>';
+         echo "<pre>";
+         print_r($this->_arrParam);
+         echo "</pre>";*/
+         $this->redirect($this->_actionMain);
     }
     
 }

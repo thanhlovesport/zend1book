@@ -12,13 +12,18 @@ class Default_Model_User extends Zend_Db_Table{
     
     
         $select = $db->select()
-        ->from('user_group AS g',array('COUNT(g.id) AS TotalItem'));
+        ->from('users AS u',array('COUNT(u.id) AS TotalItem'));
     
         if(!empty($ssfilte['searchbox'])){
             //var_dump(123);exit;
             $keywords = '%'.$ssfilte['searchbox'].'%';
-            @$select->where('g.group_name LIKE ?',$keywords,STRING);
+            @$select->where('u.user_name LIKE ?',$keywords,STRING);
         }
+        
+        if($ssfilte['group_id'] > 0){
+            @$select->where('u.group_id = ?', $ssfilte['group_id'],INTEGER);
+        }
+        
         //echo $select;
         $result = $db->fetchOne($select);
         return $result;
@@ -29,32 +34,36 @@ class Default_Model_User extends Zend_Db_Table{
     
         $paginator = $arrParam['paginator'];
     
-        //$ssfilte = $arrParam['sessionfilter'];
-    
+        $ssfilte = $arrParam['sessionfilter'];
+        
+        
         //$db = Zend_Db::factory($adapter,$config);
         if ($option['task'] == 'admin-list'){
         
             $select = $db->select()
-            ->from('users',array('id','user_name','email','group_acp','order'))
-            ->joinLeft('users AS u','g.id = u.group_id','COUNT(u.id) AS members')
-            ->group('g.id');
-            /* if (!empty($ssfilte['col']) && !empty($ssfilte['order'])){
+            ->from('users AS u',array('id','user_name','status','email','register_date'))
+            ->joinLeft('user_group AS g','g.id = u.group_id','group_name');
+            //->group('g.id');
+           if (!empty($ssfilte['col']) && !empty($ssfilte['order'])){
                 @$select->order($ssfilte['col'],$ssfilte['order']);
     
-            } */
+            } 
             if ($paginator['itemCountPerPage'] > 0){
                 $page = $paginator['currentPage'];
                 $rowCount = $paginator['itemCountPerPage'];
                 $select->limitPage($page,$rowCount);
-            }
-    /* 
+            }  
+  
             if(!empty($ssfilte['searchbox'])){
                 //var_dump(123);exit;
                 $keywords = '%'.$ssfilte['searchbox'].'%';
-                @$select->where('g.group_name LIKE ?',$keywords);
-            } */
+                @$select->where('u.user_name LIKE ?',$keywords,STRING);
+            } 
+            if($ssfilte['group_id'] > 0){
+                @$select->where('u.group_id = ?', $ssfilte['group_id'],INTEGER);
+            }
             echo $select;
-            echo '<br>';
+           /* echo '<br>'; */
             $result = $db->fetchAll($select);
         }
         return $result;

@@ -1,20 +1,23 @@
 <?php //$linkInfo = $this->baseUrl($this->currentControlle.'/info/id/'.$id)
-       
-    $ssfilter = $this->arrParam['sessionfilter'];
     
+    
+    $ssfilter = $this->arrParam['sessionfilter'];
+    echo '<pre>';
+    print_r($ssfilter);
+    echo '</pre>';
     // Phan sap xep cua cac nhan
     $actionLink = $this->baseUrl($this->currentControlle.'/filter/type/order');
     
-    $lblID 	= $this->cmsLinkSort('ID','g.id',$ssfilter,
+    $lblID 	= $this->cmsLinkSort('ID','u.id',$ssfilter,
         $this->ImageURL . '/icon',$actionLink);
     
-    $lblMember	= $this->cmsLinkSort('Member','members',$ssfilter,
+    $lblMember	= $this->cmsLinkSort('Group Name','groupname',$ssfilter,
         $this->ImageURL . '/icon',$actionLink);
     
     // Key sau khi tim kiem, neu khong co se rong
     $keyaftersearch = $ssfilter['searchbox'];
     $keysearch  = $this->formText('searchbox',$keyaftersearch,array('class'=>'txtsearch'));
-    
+
     // Tìm Kiếm
     $linksearch = $this->baseUrl($this->currentControlle.'/filter/type/search/key/1');
     $btnsearch  = $this->formButton('search-button','Tìm Kiếm',array('onclick'=>"OnSubmitForm('". $linksearch ."')"));
@@ -22,14 +25,20 @@
     // Xóa Tìm kiếm
     $linkclearsearch = $this->baseUrl($this->currentControlle.'/filter/type/search/key/0');
     $btnclearsearch  = $this->formButton('clear-button','Xóa tìm kiếm',array('onclick'=>"OnSubmitForm('". $linkclearsearch ."')"));
-    
+ 
+    //--------------- Tạo Form Select cho phần chọn group ---------------------//
+    $linkslbgroup = $this->baseUrl($this->currentControlle.'/filter/type/slbgroup');
+    $option = $this->selectboxgroup;
+    $slbgroup = $this->formSelect('group_id',$ssfilter['group_id'],array('onchange'=>"OnSubmitForm('". $linkslbgroup ."')"),$option); // Option đây là một mảng, mình chỉ lấy các value
+    // Option ở đây khi kiểm tra phần tử key của nó sẽ là value trong option
+    $selectboxgroup = 'Group: '.$slbgroup;
     // Sap xep
      
-    if($ssfilter['col'] != 'g.group_name'){
-        $linkOder =  $this->baseUrl($this->currentControlle . '/filter/type/order/col/g.group_name/by/DESC');
+    if($ssfilter['col'] != 'u.user_name'){
+        $linkOder =  $this->baseUrl($this->currentControlle . '/filter/type/order/col/u.user_name/by/DESC');
         $iconSort = $this->ImageURL . '/icon/arrow_down.png';
     }else{
-        if($ssfilter['order'] == 'DESC'){ 
+        if($ssfilter['order'] == 'DESC'){
             $by = 'ASC';
             $iconSort = $this->ImageURL . '/icon/arrow_down.png';
         }else{
@@ -38,17 +47,17 @@
         }
     
         $linkOder =  $this->baseUrl($this->currentControlle .
-            '/filter/type/order/col/g.group_name/by/' . $by);
+            '/filter/type/order/col/u.user_name/by/' . $by);
     }
-    
+     
     
 ?>
 <form name="appForm" method="post" action="">
 
-        <?php echo $this->render('toolbar/index.php') ?>
+        <?php echo $this->render('admin-user/toolbar/index.php') ?>
                         <div class="clr"></div>
                       
-                <?php echo $this->render('submenu/index.php') ?>
+                <?php echo $this->render('admin-user/submenu/index.php') ?>
         
                         <!-- BEGIN: CONTENT -->
                         <div id="element-box">
@@ -60,9 +69,13 @@
                             <div class="m">
                                 <!-- BEGIN: ELEMENT BOX -->
                                 <div id="search">
-                                    <div>
+                                    <div style="float:left">
                                         <?php echo $keysearch . ' ' . $btnsearch . ' ' .$btnclearsearch;?>
                                     </div>
+                                    <div style="float:right">
+                                        <?php echo $selectboxgroup;?>
+                                    </div>
+                                      <div class="clr"></div>
                                 </div>
                                 
                                 <!-- Area 4: In du lieu lay tu database -->
@@ -71,13 +84,13 @@
                                         <tr>
                                             <th width="43" ><input type="checkbox" name="checkbox" id="checkbox" onclick="checkedAll()"></th>
                                             <th>
-                                                <a href="<?php echo $linkOder;?>">Group Name</a>
+                                                <a href="<?php echo $linkOder;?>">User Name</a>
                                                 <br>
                                             	<img src="<?php echo $iconSort;?>">
                                             </th>
                                             <th width="89">Status</th>
-                                            <th width="83">ACP</th>
-                                            <th width="86">Order</th>						
+                                            <th width="83">Email</th>
+                                            <th width="86">Register Date</th>						
                                             <th width="77"><?php echo $lblMember;?></th>
                                             <th width="90">Control</th>
 
@@ -85,11 +98,12 @@
                                         </tr>
                                     </thead>
                                     <?php foreach ($this->Items as $key=>$value){
-                                        $groupname = $value['group_name'];
+                                        $username = $value['user_name'];
                                         $status    = $value['status'];
-                                        $groupacp  = $value['group_acp'];
-                                        $order     = $this->formText('order['.$value['id'].']',$value['order'],array('style'=>'width: 30px; text-align: center;'));
-                                        $member    = $value['members'];
+                                        $email     = $value['email'];
+                                        //$order     = $this->formText('order['.$value['id'].']',$value['order'],array('style'=>'width: 30px; text-align: center;'));
+                                        $registerdate = $value['register_date'];
+                                        $groupname    = $value['group_name'];
                                         $id        = $value['id'];
                                         if ($status == 1){
                                             $linkstatus =  $this->baseUrl($this->currentControlle.'/status/type/0/id/'.$id);
@@ -98,13 +112,13 @@
                                             $linkstatus =  $this->baseUrl($this->currentControlle.'/status/type/1/id/'.$id);
                                             $status = '<img src="'.$this->ImageURL.'/icon/inactive.png">';
                                         }
-                                        if ($groupacp == 1){
+                                       /*  if ($groupacp == 1){
                                             $linkgroupacp =  $this->baseUrl($this->currentControlle.'/status/type/0/idacp/'.$id);
                                             $groupacp = '<img src="'.$this->ImageURL.'/icon/active.png">';
                                         }else{
                                             $linkgroupacp =  $this->baseUrl($this->currentControlle.'/status/type/1/idacp/'.$id);
                                             $groupacp = '<img src="'.$this->ImageURL.'/icon/inactive.png">';
-                                        }
+                                        } */
                                         $linkinfogroup      = $this->baseUrl($this->currentControlle.'/info/id/'.$id);
                                         $linkEditGroup      = $this->baseUrl($this->currentControlle.'/edit/id/'.$id);
                                         $linkDeleteGroup    = $this->baseUrl($this->currentControlle.'/delete/id/'.$id);
@@ -113,23 +127,23 @@
                                     ?>
                                     <tr class="even">						
                                         <td align="center"><?php echo $checkbox;?></td>
-                                        <td align="left"><?php  echo $groupname;?></td>
+                                        <td align="left"><?php  echo $username;?></td>
                                         <td align="center">
                                             <a href="<?php echo $linkstatus;?>">
                                         	   <?php echo $status;?>
                                             </a>
                                         </td>
                                         <td align="center">
-                                            <a href="<?php echo $linkgroupacp;?>">
-                                        	   <?php echo $groupacp;?>
+                                            <a href="#?>">
+                                        	   <?php echo $email;?>
                                             </a>
                                         </td>
                                         
                                         <td align="center">
-                                        <?php echo $order;?>
+                                        <?php echo $registerdate;?>
                                         </td>
 
-                                        <td align="center"><?php echo $member;?></td>
+                                        <td align="center"><?php echo $groupname;?></td>
                                         <td align="center">
                                         <a href="<?php echo $linkinfogroup;?>">
                                         	<img src="<?php echo $this->ImageURL?>/icon_info.png" title="View Info"> 
@@ -150,8 +164,8 @@
                                                 <div class="container">
                                                     <div class="pagination">
                                                        <?php 
-                                                           $currentUrl = $this->baseUrl($this->currentControlle . '/index');
-                                                           echo $this->paginationControl($this->panigator,'Sliding','pagination.phtml',array('currentUrl'=>$currentUrl));
+                                                          $currentUrl = $this->baseUrl($this->currentControlle . '/index');
+                                                          echo $this->paginationControl($this->panigator,'Sliding','pagination.phtml',array('currentUrl'=>$currentUrl));
                                                        ?>
                                                         <div class="limit"></div>
                                                     </div>
