@@ -29,7 +29,7 @@ define('FILE_PATH', PUBLIC_PATH . '/files');
 define('SCRIPTS_PATH', PUBLIC_PATH . '/scripts');
 
 //Duong dan den thu muc ung dung    learnzend1/zend1book
-define('APPLICATION_URL','/zendmulty');
+define('APPLICATION_URL','/learnzend1/zend1book');
 define('SRCIPTS_URL', APPLICATION_URL . '/public/scripts');
 define('FILE_URL', APPLICATION_URL . '/public/files');
 

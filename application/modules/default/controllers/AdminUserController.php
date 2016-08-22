@@ -153,4 +153,42 @@ class AdminUserController extends Zendvn_Controller_Action{
          $this->redirect($this->_actionMain);
     }
     
+    public function infoAction(){
+        $this->view->Title = 'Member :: User manager :: Information';
+        $this->view->headTitle($this->view->Title,true);
+        $tableuser = new Default_Model_User();
+        $this->view->Items = $tableuser->getItem($this->_arrParam,array('task'=>'admin-info'));
+        echo '<pre>';
+        print_r($this->view->Items);
+        echo '</pre>';
+    }
+    
+    public function editAction(){
+        
+        $this->view->Title = 'Member :: User manager :: Edit';
+        $this->view->headTitle($this->view->Title,true);
+        
+        $tablegroup = new Default_Model_UserGroup();
+        $this->view->selectboxgroup = $tablegroup->itemInSelectbox();
+        
+        $tableuser = new Default_Model_User();
+        $this->view->Items = $tableuser->getItem($this->_arrParam,array('task'=>'admin-info'));
+        
+
+        if($this->_request->isPost()){
+            $validator = new Default_Form_ValidateUser($this->_arrParam);
+            if($validator->isError() == true){
+                $this->view->messageError = $validator->getMessageError();
+                $this->view->Items = $validator->getData();
+            }else{                                              // Trường hợp khi tất cả dữ liệu thõa điều kiện
+                $tableuser = new Default_Model_User();
+                $arrParam = $validator->getData(array('upload'=>true)); // Hàm getdata cho phép lấy hết tất cả trường hợp
+        
+                $tableuser->addItem($arrParam,array('task'=>'admin-edit'));
+                //$this->_redirect($this->_actionMain);
+        
+                //$tableuser->addItem();
+            }
+        }
+    }
 }

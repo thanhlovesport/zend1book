@@ -87,9 +87,9 @@ class Default_Model_User extends Zend_Db_Table{
     
     }
     public function addItem($arrParam = null,$option = null){
-        echo "<pre>";
-        print_r($arrParam);
-        echo "</pre>";
+            echo "<pre>";
+            print_r($arrParam);
+            echo "</pre>";
         if ($option['task'] == 'admin-add'){
             
             $row = $this->fetchNew();
@@ -103,6 +103,7 @@ class Default_Model_User extends Zend_Db_Table{
             $row->last_name 	= $arrParam['last_name'];
             $row->birthday 		= $arrParam['birthday'];
             $row->status 		= $arrParam['status'];
+            $row->user_avatar   = $arrParam['user_avatar'];
             $row->sign 			= $arrParam['sign'];
             $row->register_date	= date("Y-m-d");
             $row->register_ip	= $_SERVER['REMOTE_ADDR'];
@@ -112,7 +113,7 @@ class Default_Model_User extends Zend_Db_Table{
              
             $where = 'id = '.$arrParam['id'];
             $row = $this->fetchRow($where);
-            $row->group_name = $arrParam['group_name'];
+           /*  $row->group_name = $arrParam['group_name'];
             $row->avatar     = $arrParam['avatar'];
             $row->ranking 		= $arrParam['ranking'];
             $row->group_acp 	= $arrParam['group_acp'];
@@ -120,9 +121,9 @@ class Default_Model_User extends Zend_Db_Table{
             $row->modified 		= date("Y-m-d");
             $row->modified_by 	= 1;
             $row->status 		= $arrParam['status'];
-            $row->order 		= $arrParam['order'];
+            $row->order 		= $arrParam['order']; */
              
-            $row->save();
+            //$row->save();
         }
     
     }
@@ -137,12 +138,35 @@ class Default_Model_User extends Zend_Db_Table{
             $where = 'id = '.$arrParam['id'];
             $result = $this->fetchRow($where)->toArray();
         }
+        if($option['task'] == 'admin-infouser'){
+           $db = Zend_Registry::get('connectDb');
+           $select = $db->select()
+                         ->from('users AS u')
+                         ->joinLeft('user_group AS g','u.group_id = g.id',array('group_name'))
+                         ->where('u.id = ?',$arrParam['id'],INTEGER);
+            $result = $this->fetchRow($select);
+        }
         return $result;
     }
     public function getItem($arrParam = null,$option = null){
+        /* if($option['task'] == 'admin-info' || $option['task'] == 'admin-edit'){
+            $db = Zend_Registry::get('connectDb');
+            $select = $db->select()
+                         ->from('users AS u')
+                         ->joinLeft('user_group AS g','u.group_id = g.id',array('group_name'))
+                         ->where('u.id = ?',$arrParam['id'],INTEGER);
+            $result = $this->fetchRow($select);
+        }
+        return $result; */
         if($option['task'] == 'admin-info' || $option['task'] == 'admin-edit'){
-            $where = 'id = '.$arrParam['id'];
-            $result = $this->fetchRow($where)->toArray();
+            $db = Zend_Registry::get('connectDb');
+            //$db = Zend_Db::factory($adapter,$config);
+            $select = $db->select()
+            ->from('users as u')
+            ->joinLeft('user_group as g','u.group_id = g.id',array('group_name'))
+            ->where('u.id = ?', $arrParam['id'], @INTEGER );
+            	
+            $result = $db->fetchRow($select);
         }
         return $result;
     }

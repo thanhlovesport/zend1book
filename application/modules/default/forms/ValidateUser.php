@@ -8,12 +8,22 @@ class Default_Form_ValidateUser{
 	protected $_arrData;
 	
 	public function __construct($arrParam = array(),$options = null){
-		/* echo '<pre>';
+		echo '<pre>';
 		print_r($arrParam);
-		echo '</pre>';           */               
+		echo '</pre>';                  
 		//========================================
 		// KIEM TRA user_name
 		//========================================
+		
+	    
+/* 
+	    if($arrParam['action'] == 'add'){
+	        $options = array('table'=>'users','field'=>'user_name');
+	    }else if($arrParam['action'] == 'edit'){
+	        $clause = ' id !=' . $arrParam['id'];
+	        $options = array('table'=>'users','field'=>'user_name','exclude'=>$clause);
+	    } */
+	    
 		$validator = new Zend_Validate();
 		
 		$options = array('table'=>'users','field'=>'user_name');
@@ -50,13 +60,25 @@ class Default_Form_ValidateUser{
 		// KIEM TRA password
 		//========================================
 		
-		$validator = new Zend_Validate();
-		$validator->addValidator(new Zend_Validate_NotEmpty(),true) // Dung lai khi co loi
-		->addValidator(new Zend_Validate_StringLength(3,32),true)
-		->addValidator(new Zend_Validate_Regex('#^[a-zA-Z0-9@\#\$%\^&\*\-\+]+$#'),true);
-		if(!$validator->isValid($arrParam['password'])){
-		    $message = $validator->getMessages();
-		    $this->_messagesError['password'] = 'Password: ' . current($message);
+		$flag = false;
+		if($arrParam['action']== 'add'){
+		    $flag = true;
+		}else if($arrParam['action']== 'edit'){
+		    if(!empty($arrParam['password'])){
+		        $flag = true;
+		    }
+		}
+		
+		if ($flag == true){
+		    $validator = new Zend_Validate();
+		    $validator->addValidator(new Zend_Validate_NotEmpty(),true) // Dung lai khi co loi
+		    ->addValidator(new Zend_Validate_StringLength(3,32),true)
+		    ->addValidator(new Zend_Validate_Regex('#^[a-zA-Z0-9@\#\$%\^&\*\-\+]+$#'),true);
+		    if(!$validator->isValid($arrParam['password'])){
+		        $message = $validator->getMessages();
+		        $this->_messagesError['password'] = 'Password: ' . current($message);
+		    }
+		    
 		}
 		
 		//========================================
