@@ -28,9 +28,11 @@ define('FILE_PATH', PUBLIC_PATH . '/files');
 // Duong dan den thu muc chua ckeditor
 define('SCRIPTS_PATH', PUBLIC_PATH . '/scripts');
 
-//Duong dan den thu muc ung dung
-define('APPLICATION_URL','/learnzend1/zend1book');
+//Duong dan den thu muc ung dung    learnzend1/zend1book
+define('APPLICATION_URL','/zendmulty');
 define('SRCIPTS_URL', APPLICATION_URL . '/public/scripts');
+define('FILE_URL', APPLICATION_URL . '/public/files');
+
 
 //Duong dan den thu muc /templates
 define('TEMPLATE_URL',  'public/templates');

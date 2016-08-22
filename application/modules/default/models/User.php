@@ -87,18 +87,25 @@ class Default_Model_User extends Zend_Db_Table{
     
     }
     public function addItem($arrParam = null,$option = null){
+        echo "<pre>";
+        print_r($arrParam);
+        echo "</pre>";
         if ($option['task'] == 'admin-add'){
+            
             $row = $this->fetchNew();
-            $row->group_name = $arrParam['group_name'];
-            $row->avatar     = $arrParam['avatar'];
-            $row->ranking 		= $arrParam['ranking'];
-            $row->group_acp 	= $arrParam['group_acp'];
-            $row->group_default = $arrParam['group_default'];
-            $row->created 		= date("Y-m-d");
-            $row->created_by 	= 1;
+            
+            $encode  = new Zendvn_Encode();
+            $row->user_name 	= $arrParam['user_name'];
+            $row->password 		= $encode->password($arrParam['password']); // Gọi đến hàm password trong thư viện encode của Zendvn Encode
+            $row->email 		= $arrParam['email'];
+            $row->group_id 		= $arrParam['group_id'];
+            $row->first_name 	= $arrParam['first_name'];
+            $row->last_name 	= $arrParam['last_name'];
+            $row->birthday 		= $arrParam['birthday'];
             $row->status 		= $arrParam['status'];
-            $row->order 		= $arrParam['order'];
-    
+            $row->sign 			= $arrParam['sign'];
+            $row->register_date	= date("Y-m-d");
+            $row->register_ip	= $_SERVER['REMOTE_ADDR'];
             $row->save();
         }
         if ($option['task'] == 'admin-edit'){

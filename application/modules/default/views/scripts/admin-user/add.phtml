@@ -12,23 +12,23 @@
 	$order = $this->formText('order',10,array('class'=>'txtshort')); */
 	
     //-------------------INPUT ELEMENTS----------------
-    $user_name 		= $this->formText('user_name','',array('class'=>'txtmedium'));
+    $user_name 		= $this->formText('user_name',$this->Items['user_name'],array('class'=>'txtmedium'));
     $user_avatar 	= $this->formFile('user_avatar');
     $password 		= $this->formPassword('password','',array('class'=>'txtsort'));
-    $email			= $this->formText('email','',array('class'=>'txtmedium'));
-    $first_name		= $this->formText('first_name','',array('class'=>'txtmedium'));
-    $last_name		= $this->formText('last_name','',array('class'=>'txtmedium'));
-    $birthday		= $this->formText('birthday','',array('class'=>'txtsort'));
+    $email			= $this->formText('email',$this->Items['email'],array('class'=>'txtmedium'));
+    $first_name		= $this->formText('first_name',$this->Items['first_name'],array('class'=>'txtmedium'));
+    $last_name		= $this->formText('last_name',$this->Items['last_name'],array('class'=>'txtmedium'));
+    $birthday		= $this->formText('birthday',$this->Items['birthday'],array('class'=>'txtsort'));
     
     $options		= array('Inactive','Active');
     $status			= $this->formRadio('status','',null,$options, ' ');
     
     $options = $this->selectboxgroup;
     
-    $slbGroup = $this->formSelect('group_id','',array('style'=>"min-width: 200px"),$options);
-    // $sign = $this->cmsReplaceString($this->Item['sign']);
+    $slbGroup = $this->formSelect('group_id',$this->Items['group_id'],array('style'=>"min-width: 200px"),$options);
+    $sign = $this->cmsReplaceString($this->Item['sign']);
     
-    $sign = $this->cmsEditor('sign','',array('toolbar'=>'Default','language'=>'vi'));
+    $sign = $this->cmsEditor('sign',$sign,array('toolbar'=>'Default','language'=>'vi'));
     //echo $this->Item['sign'];
     $arrInput = array(
         array('label'=>'User name: ', 'input'=>$user_name),
@@ -43,19 +43,21 @@
         array('label'=>'Sign: ', 'input'=> $sign,'style'=>'margin-left: 175px;'),
     );
     //------------------------MESSAGES ERROR----------------------
-    /* if(count($this->messageError)>0){
+    $errors = '';
+    if(count($this->messageError)>0){
         $errors = $this->formErrors($this->messageError,array('id'=>'errors'));
     }
-	 */
+	
 ?>
-<form name="appForm" method="post" action="">
+<form name="appForm" method="post" action="" enctype="multipart/form-data">
 
 
         <?php echo $this->render('toolbar/add.php') ?>
                         <div class="clr"></div>
                       
                 <?php echo $this->render('submenu/index.php') ?>
-                <?php echo $this->abcd;?>
+                <?php echo $errors?>
+                
         
                         <!-- BEGIN: CONTENT -->
                         <div id="element-box">
@@ -67,8 +69,8 @@
                             <div class="m">
                                 <!-- BEGIN: ELEMENT BOX -->
                         
-<div id="adminfieldset">
-                             <div class="adminheader">Detail</div>
+                            <div id="adminfieldset">
+                                <div class="adminheader">Detail</div>
                              
 								<?php echo $this->partialLoop('rowadd.php',$arrInput);?>
                                 

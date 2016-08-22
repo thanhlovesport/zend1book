@@ -95,13 +95,28 @@ class AdminUserController extends Zendvn_Controller_Action{
         $tablegroup = new Default_Model_UserGroup();
         $this->view->selectboxgroup = $tablegroup->itemInSelectbox();
         
-        
-        /* if ($this->_request->isPost()){
-            $tablegroup = new Default_Model_UserGroup();
-            $this->view->Items = $tablegroup->addItem($this->_arrParam,array('task'=>'admin-add'));
-            $this->redirect($this->_actionMain);
-        } */
-         
+
+         if($this->_request->isPost()){
+            //var_dump(123);exit;
+            $validator = new Default_Form_ValidateUser($this->_arrParam);
+            if($validator->isError() == true){
+                $this->view->messageError = $validator->getMessageError();
+                $this->view->Items = $validator->getData();
+            }else{                                              // Trường hợp khi tất cả dữ liệu thõa điều kiện
+                $tableuser = new Default_Model_User();  
+                $arrParam = $validator->getData(array('upload'=>true)); // Hàm getdata cho phép lấy hết tất cả trường hợp
+                
+                // In mảng arrayPram ra kiểm tra có phần tử user_avatar hay không
+               /*  echo "<pre>";
+                print_r($arrParam);
+                echo "</pre>"; */
+                $tableuser->addItem($arrParam,array('task'=>'admin-add'));
+                $this->_redirect($this->_actionMain);
+                
+                //$tableuser->addItem();
+            }
+         }
+                      
         /* if ($this->_request->isPost()){
          echo "<pre>";
          print_r($this->_arrParam);
@@ -128,9 +143,7 @@ class AdminUserController extends Zendvn_Controller_Action{
         if ($this->_arrParam['type'] == 'slbgroup'){
             $sessionfilter->group_id     = $this->_arrParam['group_id']; // arrParam phần tử group_id ở đây là do mình nhấn select chọn, hk phải là gán
         } 
-        echo '<pre>';
-        print_r($this->_arrParam);
-        echo '</pre>';
+       
         /*   echo '<pre>';
          print_r($sessionfilter->getIterator());
          echo '</pre>';
