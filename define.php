@@ -16,6 +16,7 @@ dirname(__FILE__) . '/library',
 get_include_path(),
 )));
 
+// Khai báo đường dẫn public đến các thư mục
 //Duong dan den thu muc /public
 define('PUBLIC_PATH', realpath(dirname(__FILE__) . '/public'));
 //Duong dan den thu muc /templates
@@ -27,11 +28,15 @@ define('TEMP_PATH', PUBLIC_PATH . '/tmp');
 define('FILE_PATH', PUBLIC_PATH . '/files');
 // Duong dan den thu muc chua ckeditor
 define('SCRIPTS_PATH', PUBLIC_PATH . '/scripts');
+define('CAPTCHA_PATH', PUBLIC_PATH . '/captcha');
 
+
+// Khai báo đường dẫn URL đến các thư mục
 //Duong dan den thu muc ung dung    learnzend1/zend1book
-define('APPLICATION_URL','/learnzend1/zend1book');
+define('APPLICATION_URL','/zendmulty');
 define('SRCIPTS_URL', APPLICATION_URL . '/public/scripts');
 define('FILE_URL', APPLICATION_URL . '/public/files');
+define('CAPTCHA_URL', APPLICATION_URL . '/public/captcha');
 
 
 //Duong dan den thu muc /templates

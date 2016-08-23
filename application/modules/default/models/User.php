@@ -110,20 +110,27 @@ class Default_Model_User extends Zend_Db_Table{
             $row->save();
         }
         if ($option['task'] == 'admin-edit'){
-             
+            echo '<br>'.__METHOD__;
+            echo "<pre>";
+            print_r($arrParam);
+            echo "</pre>";
             $where = 'id = '.$arrParam['id'];
             $row = $this->fetchRow($where);
-           /*  $row->group_name = $arrParam['group_name'];
-            $row->avatar     = $arrParam['avatar'];
-            $row->ranking 		= $arrParam['ranking'];
-            $row->group_acp 	= $arrParam['group_acp'];
-            $row->group_default = $arrParam['group_default'];
-            $row->modified 		= date("Y-m-d");
-            $row->modified_by 	= 1;
+
+            $encode  = new Zendvn_Encode();
+            $row->user_name 	= $arrParam['user_name'];
+            if (!empty($arrParam['password'])){
+                $row->password 		= $encode->password($arrParam['password']); // Gọi đến hàm password trong thư viện encode của Zendvn Encode
+            }
+            $row->email 		= $arrParam['email'];
+            $row->group_id 		= $arrParam['group_id'];
+            $row->first_name 	= $arrParam['first_name'];
+            $row->last_name 	= $arrParam['last_name'];
+            $row->birthday 		= $arrParam['birthday'];
             $row->status 		= $arrParam['status'];
-            $row->order 		= $arrParam['order']; */
-             
-            //$row->save();
+            $row->user_avatar   = $arrParam['user_avatar'];
+            $row->sign 			= $arrParam['sign'];
+            $row->save();
         }
     
     }
@@ -148,6 +155,8 @@ class Default_Model_User extends Zend_Db_Table{
         }
         return $result;
     }
+    
+    // Lay thong tin mot group hay user
     public function getItem($arrParam = null,$option = null){
         /* if($option['task'] == 'admin-info' || $option['task'] == 'admin-edit'){
             $db = Zend_Registry::get('connectDb');
@@ -168,23 +177,65 @@ class Default_Model_User extends Zend_Db_Table{
             	
             $result = $db->fetchRow($select);
         }
+        if($option['task'] == 'delete'){
+			$where  = 'id = ' . $arrParam['id'];
+			$result = $this->fetchRow($where)->toArray();
+		}
         return $result;
     }
     public function deleteItem($arrParam = null,$option = null){
+        
         if($option['task'] == 'admin-delete'){
-            $where = 'id = '.$arrParam['id'];
+            	
+            //----------LAY TEN HINH ANH user_avatar --------------
+            $row = $this->getItem($arrParam,array('task'=>'delete'));
+            echo "<pre>";
+            print_r($row);
+            echo "</pre>";
+            //--------------XOA user_avatar -----------------------
+            // load ra su dung file URL Khi xoa hoac upload su dung filepath
+            $upload_dir = FILE_PATH . '/users';
+            $upload = new Zendvn_File_Upload();
+            $upload->removeFile($upload_dir . '/origin/' . $row['user_avatar']); // Xoa hinh anh di
+            $upload->removeFile($upload_dir . '/img100x100/' . $row['user_avatar']);
+            $upload->removeFile($upload_dir . '/img450x450/' . $row['user_avatar']);
+            	
+            $where = ' id = ' . $arrParam['id'];
             $this->delete($where);
         }
-        if($option['task'] == 'multy-delete'){
+        
+        if($option['task'] == 'admin-multi-delete'){
             $cid = $arrParam['cid'];
-            if (count($cid) > 0){
-                $dayid = implode(',', $cid);
-                $where = 'id IN ('.$dayid.') ';
+            	
+            if(count($cid)>0){
+                if($arrParam['type'] == 1){
+                    $status = 1;
+                }else{
+                    $status = 0;
+                }
+        
+                foreach ($cid as $key){
+                    echo '<br>'.$key;
+                    $arrParam['id'] = $key;
+                    	
+                    //----------LAY TEN HINH ANH user_avatar --------------
+                    $row = $this->getItem($arrParam,array('task'=>'delete'));
+                    	
+                    //--------------XOA user_avatar -----------------------
+                    $upload_dir = FILES_PATH . '/users';
+                    $upload = new Zendvn_File_Upload();
+                    $upload->removeFile($upload_dir . '/origin/' . $row['user_avatar']);
+                    $upload->removeFile($upload_dir . '/img100x100/' . $row['user_avatar']);
+                    $upload->removeFile($upload_dir . '/img450x450/' . $row['user_avatar']);
+                }
+                $ids = implode(',',$cid);
+                $where = 'id IN (' . $ids . ')';
                 $this->delete($where);
             }
-    
         }
     }
+    // Thay doi trang thai member
+   
     public function statusItem($arrParam = null,$option = null){
         $cid = $arrParam['cid'];
         if (count($cid) > 0){
@@ -193,7 +244,7 @@ class Default_Model_User extends Zend_Db_Table{
             }else{
                 $status = 0;
             }
-    
+            
             $dayid  = implode(',', $cid);
             $data   = array('status'=>$status);
             $where  = 'id IN ('.$dayid.')';

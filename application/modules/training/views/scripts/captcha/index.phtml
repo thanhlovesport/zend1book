@@ -1,0 +1,12 @@
+<?php
+  	$captcha = $this->captcha;
+	$txtCaptcha = $this->formText('captcha','');
+	$txtID = $this->formHidden('captchaID',$this->captcha_id);
+?>
+<form action="" method="post">
+<?php echo $captcha;?>
+<br></br>
+Nhap captcha: <?php echo $txtCaptcha . $txtID;?>
+<br></br>
+<input type="submit"></input>
+</form>	

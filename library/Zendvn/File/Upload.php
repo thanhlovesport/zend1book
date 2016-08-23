@@ -24,4 +24,8 @@ class Zendvn_File_Upload extends Zend_File_Transfer_Adapter_Http{
 		
 		return $newFileName;
 	}
+	
+	public function removeFile($filename){
+	    @unlink($filename);
+	}
 }

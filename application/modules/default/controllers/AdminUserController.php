@@ -185,10 +185,37 @@ class AdminUserController extends Zendvn_Controller_Action{
                 $arrParam = $validator->getData(array('upload'=>true)); // Hàm getdata cho phép lấy hết tất cả trường hợp
         
                 $tableuser->addItem($arrParam,array('task'=>'admin-edit'));
-                //$this->_redirect($this->_actionMain);
+                $this->_redirect($this->_actionMain);
         
                 //$tableuser->addItem();
             }
         }
+    }
+    
+    public function deleteAction(){
+        $this->view->Title = 'Member :: User manager :: Delete';
+        $this->view->headTitle($this->view->Title,true);
+        if ($this->_request->isPost()){
+            $tableuser = new Default_Model_User();
+            $tableuser->deleteItem($this->_arrParam,array('task'=>'admin-delete'));
+            $this->redirect($this->_actionMain);
+        }
+    }
+    
+    // Thay doi trang thai cua member
+    public function statusAction(){
+        $tblUser = new Default_Model_User();
+        $tblUser->statusItem($this->_arrParam);
+        $this->_redirect($this->_actionMain);
+        $this->_helper->viewRenderer->setNoRender();
+    }
+    public function multiDeleteAction(){
+    
+        if($this->_request->isPost()){
+            $tblUser = new Default_Model_User();
+            $tblUser->deleteItem($this->_arrParam,array('task'=>'admin-multi-delete'));
+            $this->_redirect($this->_actionMain);
+        }
+        $this->_helper->viewRenderer->setNoRender();
     }
 }

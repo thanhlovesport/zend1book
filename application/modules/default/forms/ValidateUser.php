@@ -8,25 +8,24 @@ class Default_Form_ValidateUser{
 	protected $_arrData;
 	
 	public function __construct($arrParam = array(),$options = null){
-		echo '<pre>';
+		/* echo '<pre>';
 		print_r($arrParam);
-		echo '</pre>';                  
+		echo '</pre>';    */               
 		//========================================
 		// KIEM TRA user_name
 		//========================================
 		
 	    
-/* 
+
 	    if($arrParam['action'] == 'add'){
 	        $options = array('table'=>'users','field'=>'user_name');
 	    }else if($arrParam['action'] == 'edit'){
 	        $clause = ' id !=' . $arrParam['id'];
 	        $options = array('table'=>'users','field'=>'user_name','exclude'=>$clause);
-	    } */
+	    } 
 	    
 		$validator = new Zend_Validate();
 		
-		$options = array('table'=>'users','field'=>'user_name');
 		$validator->addValidator(new Zend_Validate_NotEmpty(),true)
 				  ->addValidator(new Zend_Validate_StringLength(3,32),true) // true la dung lai neu gap loi
 				  ->addValidator(new Zend_Validate_Regex('#^[a-zA-Z0-9\-_\.\s]+$#'),true) // chap nhan khoang trang (s), xuat hien tu 1 den n lan (dau +), dung lai thong bao neu xay ra loi
@@ -85,8 +84,14 @@ class Default_Form_ValidateUser{
 		// KIEM TRA email
 		//========================================
 		
+		if($arrParam['action'] == 'add'){
+		    $options = array('table'=>'users','field'=>'email');
+		}else if($arrParam['action'] == 'edit'){
+		    $clause = ' id !=' . $arrParam['id'];
+		    $options = array('table'=>'users','field'=>'email','exclude'=>$clause);
+		}
+		
 		$validator = new Zend_Validate();
-		$options = array('table'=>'users','field'=>'email');
 		$validator->addValidator(new Zend_Validate_NotEmpty(),true)
 		->addValidator(new Zend_Validate_EmailAddress(),true)
 		->addValidator(new Zend_Validate_Db_NoRecordExists($options),true);
@@ -150,6 +155,7 @@ class Default_Form_ValidateUser{
 		//========================================
 		// KIEM TRA sign
 		//========================================
+		
 		$validator = new Zend_Validate();
 		$validator->addValidator(new Zend_Validate_NotEmpty(),true)
 		->addValidator(new Zend_Validate_StringLength(10),true);
@@ -215,6 +221,16 @@ class Default_Form_ValidateUser{
 	
         $thumb = Zendvn_File_Images::create($upload_dir . '/origin/' . $fileName); 
         $thumb->resize(450,450)->save($upload_dir . '/img450x450/' . $fileName);
+        
+        if($this->_arrData['action'] == 'edit'){
+            $upload->removeFile($upload_dir . '/origin/' . $this->_arrData['current_user_avatar']);
+            $upload->removeFile($upload_dir . '/img100x100/' . $this->_arrData['current_user_avatar']);
+            $upload->removeFile($upload_dir . '/img450x450/' . $this->_arrData['current_user_avatar']);
+        }
+	    }else{
+	        if($this->_arrData['action'] == 'edit'){
+	            $fileName = $this->_arrData['current_user_avatar'];
+	        }
 	    }
 	
 	    return $fileName;
