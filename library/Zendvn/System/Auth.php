@@ -30,6 +30,8 @@ class Zendvn_System_Auth{
 		//Lay ket qua truy van cua Zend_Auth
 		$result = $auth->authenticate($authAdapter);
 		
+		
+		
 		$flag = false;
 		if(!$result->isValid()){
 				$error = $result->getMessages();
@@ -44,7 +46,7 @@ class Zendvn_System_Auth{
 		return $flag;
 	}
 	
-	public function getError(){
+	public function getError(){                                                                    
 		return $this->_messageError;
 	}
 	

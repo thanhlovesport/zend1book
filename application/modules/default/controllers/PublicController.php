@@ -40,4 +40,32 @@ class PublicController extends Zendvn_Controller_Action{
         $this->view->messageError = $errors;
         
     }
+    public function noAccessAction(){
+        $this->view->Title = 'Không có quyền truy cập vào chức năng này!';
+        $this->view->headTitle($this->view->Title,true);
+        $errors[] = 'Chức năng này không tồn tại';
+        $this->view->messageError = $errors;
+        $this->_helper->viewRenderer('error.phtml');
+    }
+    public function loginAction(){
+        $this->view->Title = 'Login To The SysTem';
+        $this->view->headTitle($this->view->Title,true);
+        
+        if($this->_request->isPost()){
+            $auth = new Zendvn_System_Auth();
+            if($auth->login($this->_arrParam)){
+                $this->_redirect('default/admin-group/index');
+            }else{
+                $errors[] = $auth->getError();
+                $this->view->messageError = $errors;
+            }
+        }
+    }
+    public function logoutAction(){
+        
+    }
+    
+    
+    
+    
 }

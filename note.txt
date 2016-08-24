@@ -9,3 +9,6 @@ Ham nguyen ban cac button
 			
 ========= System ==============
 Trong library co phan system de chuyen xu li nhung van de ve he thong
+
+--------- Public Controller -----------------
+Có chứa chức năng login								
