@@ -99,7 +99,7 @@ class Training_AuthController extends Zendvn_Controller_Action{
             $encode  = new Zendvn_Encode();
             $user_name = $this->_arrParam['user_name'];
             $password = $encode->password($this->_arrParam['password']);
-            $authAdapter->setIdentity($user_name);  // Lấy cái này với cái ở dưới so sánh với 2 cái ở trênal
+            $authAdapter->setIdentity($user_name);  // Lấy cái này với cái ở dưới so sánh với 2 cái ở trên
             $authAdapter->setCredential($password);
             	
             //Lay ket qua truy van cua Zend_Auth

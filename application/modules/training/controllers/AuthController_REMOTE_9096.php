@@ -71,7 +71,7 @@ class Training_AuthController extends Zendvn_Controller_Action{
     }
     public function indexAction(){
 
-        //1. Goi ket noi voi Zend Db, kết nối với database từ trong Bootstrap
+        //1. Goi ket noi voi Zend Db
         $db = Zend_Registry::get('connectDb');
         
         //2.Khoi tao Zend Auth
@@ -88,9 +88,6 @@ class Training_AuthController extends Zendvn_Controller_Action{
         $select->where('status = 1');
         //->where('active_code = ?','',STRING);
         
-        echo '<pre>';
-        print_r($authAdapter);
-        echo '</pre>';
 
         if($this->_request->isPost()){
             echo "<pre>";
@@ -99,7 +96,7 @@ class Training_AuthController extends Zendvn_Controller_Action{
             $encode  = new Zendvn_Encode();
             $user_name = $this->_arrParam['user_name'];
             $password = $encode->password($this->_arrParam['password']);
-            $authAdapter->setIdentity($user_name);  // Lấy cái này với cái ở dưới so sánh với 2 cái ở trênal
+            $authAdapter->setIdentity($user_name);
             $authAdapter->setCredential($password);
             	
             //Lay ket qua truy van cua Zend_Auth
@@ -111,27 +108,16 @@ class Training_AuthController extends Zendvn_Controller_Action{
                 echo 'Ban login thanh cong';
                 //Lay thong tin cua tai khoan dua vao session cua Zend Auth
                 //$returnColumns = null, $omitColumns = null
-                //$returnscolumn = array('id','user_name','password');
-                //$data = $authAdapter->getResultRowObject($returnscolumn);
-                $omitColumns = array('password'); // loại bỏ những giá trị nào không lấy ra ngoài
-                $data = $authAdapter->getResultRowObject(null,$omitColumns); // Lấy dữ liệu trong kết quả tìm được
-                $auth->getStorage()->write($data); // Có dữ liệu đưa vào một session, lấy seeesion đưa vào dữ liệu $data
-                
-                /*
-                 echo $info->user_name;
-                 echo '<pre>';
-                 print_r($auth->getIdentity());
-                 echo '</pre>'; */
-                
-                
+                $omitColumns = array('password');
+                $data = $authAdapter->getResultRowObject(null,$omitColumns);
+                $auth->getStorage()->write($data);
             }
             	 
         }
     }
     public function loginAction(){
-        
         $auth = Zend_Auth::getInstance();
-        if($auth->hasIdentity()){ // Phương thức này xác nhận được hay chưa
+        if($auth->hasIdentity()){
             echo 'ban da login roi';
         }else{
             echo 'Ban chua login vao he thong';
@@ -139,7 +125,6 @@ class Training_AuthController extends Zendvn_Controller_Action{
         $this->_helper->viewRenderer->setNoRender();
     }
     public function logoutAction(){
-        
         $auth = Zend_Auth::getInstance();
         $auth->clearIdentity();
         $this->_redirect($this->_actionMain);

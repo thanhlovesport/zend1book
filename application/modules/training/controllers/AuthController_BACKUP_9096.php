@@ -99,7 +99,7 @@ class Training_AuthController extends Zendvn_Controller_Action{
             $encode  = new Zendvn_Encode();
             $user_name = $this->_arrParam['user_name'];
             $password = $encode->password($this->_arrParam['password']);
-            $authAdapter->setIdentity($user_name);  // Lấy cái này với cái ở dưới so sánh với 2 cái ở trênal
+            $authAdapter->setIdentity($user_name);  // Lấy cái này với cái ở dưới so sánh với 2 cái ở trên
             $authAdapter->setCredential($password);
             	
             //Lay ket qua truy van cua Zend_Auth
@@ -129,9 +129,14 @@ class Training_AuthController extends Zendvn_Controller_Action{
         }
     }
     public function loginAction(){
+<<<<<<< HEAD
         
         $auth = Zend_Auth::getInstance();
         if($auth->hasIdentity()){ // Phương thức này xác nhận được hay chưa
+=======
+        $auth = Zend_Auth::getInstance();
+        if($auth->hasIdentity()){
+>>>>>>> 581e1545200153d455350dc52d724a79c60d5acd
             echo 'ban da login roi';
         }else{
             echo 'Ban chua login vao he thong';
@@ -139,7 +144,10 @@ class Training_AuthController extends Zendvn_Controller_Action{
         $this->_helper->viewRenderer->setNoRender();
     }
     public function logoutAction(){
+<<<<<<< HEAD
         
+=======
+>>>>>>> 581e1545200153d455350dc52d724a79c60d5acd
         $auth = Zend_Auth::getInstance();
         $auth->clearIdentity();
         $this->_redirect($this->_actionMain);

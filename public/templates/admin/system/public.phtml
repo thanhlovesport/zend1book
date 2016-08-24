@@ -1,0 +1,28 @@
+<?php echo $this->doctype()?>    
+<head>
+       <?php echo $this->headTitle()?>
+       <?php echo $this->headMeta()?>
+
+        <?php echo $this->headLink()?>
+
+        <?php echo $this->headScript()?>
+        
+    </head>
+    <body id="minwidth-body">
+    <?php //echo $this->ImageURL?>
+      <?php echo $this->render('html/header.php')?>
+        <div id="content-box">
+            <div class="border">
+                <div class="padding">
+
+                    <?php echo $this->layout()->content;?>
+                    
+
+                    <div class="clr"></div>
+                </div>
+                <div class="clr"></div>
+            </div>
+        </div>
+        <?php echo $this->render('html/footer.php');?>
+    </body>
+</html> 
