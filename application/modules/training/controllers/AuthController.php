@@ -116,9 +116,18 @@ class Training_AuthController extends Zendvn_Controller_Action{
         }
     }
     public function loginAction(){
-        
+        $auth = Zend_Auth::getInstance();
+        if($auth->hasIdentity()){
+            echo 'ban da login roi';
+        }else{
+            echo 'Ban chua login vao he thong';
+        }
+        $this->_helper->viewRenderer->setNoRender();
     }
     public function logoutAction(){
-    
+        $auth = Zend_Auth::getInstance();
+        $auth->clearIdentity();
+        $this->_redirect($this->_actionMain);
+        $this->_helper->viewRenderer->setNoRender();
     }
 }

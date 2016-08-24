@@ -38,5 +38,15 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
         echo "</pre>"; */
     }
     
+    // Khi khoi tao ham nay, phan cau hinh trong tap tin application.ini se bi ghi de
+      public function _initfrontcontroller(){
+        $front = Zend_Controller_Front::getInstance();// goi den ham khoi tao
+        $front->addModuleDirectory(APPLICATION_PATH.'/modules');
+        $front->setDefaultModule('default');
+        //$front->registerPlugin(new Zendvn_Plugin_Test());
+        $errors = new Zend_Controller_Plugin_ErrorHandler(array('module'=>'default','controller'=>'public','action'=>'error'));
+        $front->registerPlugin($errors);
+        return $front;
+    }  
     
 }

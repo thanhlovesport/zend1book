@@ -6,3 +6,6 @@ Ham nguyen ban cac button
 			</div>
 
 			Thu muc scripts chua cac thu vien mo rong
+			
+========= System ==============
+Trong library co phan system de chuyen xu li nhung van de ve he thong
