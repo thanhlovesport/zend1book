@@ -19,6 +19,7 @@ class AdminGroupController extends Zendvn_Controller_Action{
     protected $_namespace;
      
     public function init(){
+        
         // Mảng tham số nhận được ở mỗi Action
         $this->_arrParam = $this->_request->getParams();
         
@@ -70,7 +71,8 @@ class AdminGroupController extends Zendvn_Controller_Action{
     public function indexAction(){
         //echo '<br>'.$this->_currentController ;
         //echo '<br>'.$this->_actionMain;
-        //var_dump(123);
+        //var_dump(123);exit;
+       
         
         $tablegroup = new Default_Model_UserGroup();
         $this->view->Items = $tablegroup->listItem($this->_arrParam,array('task'=>'admin-list'));

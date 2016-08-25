@@ -8,27 +8,29 @@ class Zendvn_System_Info{
 	}
 	
 	
-	//Tao thong cua nguoi dang nhap
+	//Tao, lay thong tin cua nguoi dang nhap
 	public function createInfo(){
-		echo '<br>' . __METHOD__;
+		//echo '<br>' . __METHOD__;
 		$auth = Zend_Auth::getInstance();
-		$infoAuth = $auth->getIdentity();
+		$infoAuth = $auth->getIdentity(); // Lay thong tin, thuoc tinh dua vao nhung gia tri ma minh POST
 		
-		return $infoAuth;
+		/* echo "<pre>";
+		print_r($infoAuth);
+		echo "</pre>"; */
 		
-		/* $this->setMemberInfo($infoAuth);
-		$this->setGroupInfo($infoAuth); */
+	    $this->setMemberInfo($infoAuth);
+		$this->setGroupInfo($infoAuth); 
 		
 		
 	}
-	/*
+	
 	//Huy thong tin nguoi khi logout
 	public function destroyInfo(){
-		$ns = new Zend_Session_Namespace('info');
+		$ns = new Zend_Session_Namespace('info'); // Hủy thông tin Session
 		$ns->unsetAll();
 	}
 	
-	//Thiet lap thong tin cua User khi ho login
+	//Thiet lap thong tin cua User khi ho login                                                                                                            
 	public function setMemberInfo($infoAuth){
 		$db = Zend_Registry::get('connectDb');
 		$select  = $db->select()
@@ -41,7 +43,7 @@ class Zendvn_System_Info{
 				  
 					  
 	}
-	
+
 	//Thiet lap thong tin cua nhom chua User khi ho login
 	public function setGroupInfo($infoAuth){
 		$db = Zend_Registry::get('connectDb');
@@ -53,16 +55,16 @@ class Zendvn_System_Info{
 		$ns->group = $result;
 	
 	}
-	
-	//Thiet lap thong phan quyen cua nhom
-	public function setPermission(){
+
+	//Thiet lap thong tin phan quyen cua nhom
+	/* public function setPermission(){
 		
-	}
+	} */
 	
-	//Lay thong phan quyen cua nhom
-	public function getPermission(){
+	//Lay thong tin phan quyen cua nhom
+	/* public function getPermission(){
 		
-	}
+	} */
 	
 	//Lay thong tin cua user da su he thong
 	public function getMemberInfo($part = null){
@@ -100,5 +102,5 @@ class Zendvn_System_Info{
 		$ns = new Zend_Session_Namespace('info');
 		$info = $ns->getIterator();
 		return $info;
-	} */
+	} 
 }

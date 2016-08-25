@@ -1,7 +1,7 @@
 <?php 
    
     //------------------------MESSAGES ERROR----------------------
-    //$errors = '';
+    $errors = '';
     if(count($this->messageError)>0){
         $errors = $this->formErrors($this->messageError,array('id'=>'errors'));
     }
@@ -27,6 +27,7 @@
                             <div id="adminfieldset">
                                 <div class="adminheader">Detail</div>
                                         <?php echo $errors?>
+                                        <?php echo $this->Notes;?>
                                 </div>
 
                                 <!-- END: ELEMENT BOX -->	

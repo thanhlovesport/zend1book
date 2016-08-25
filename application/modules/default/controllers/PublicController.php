@@ -55,10 +55,13 @@ class PublicController extends Zendvn_Controller_Action{
             $auth = new Zendvn_System_Auth();
             if($auth->login($this->_arrParam)){
                 $info = new Zendvn_System_Info();
-				$info->createInfo();
-				echo '<pre>';
-				print_r($info);
-				echo '</pre>';
+				$info->createInfo();    // Tạo ra Session Info
+				$abc = $info->getMemberInfo();
+				echo "<pre>";
+				print_r($abc);
+				echo "</pre>";
+			
+				$this->redirect('/default/admin-group/index');
             }else{
                 $errors[] = $auth->getError();
                 $this->view->messageError = $errors;
@@ -66,7 +69,20 @@ class PublicController extends Zendvn_Controller_Action{
         }
     }
     public function logoutAction(){
+        $this->view->Title = 'Logout the system';
+        $this->view->headTitle($this->view->Title,true);
+        $auth = new Zendvn_System_Auth();
+        $auth->logout();
         
+        $info = new Zendvn_System_Info();
+        $info->destroyInfo();
+        
+        $link = $this->view->baseUrl('/default/index/index');
+        $this->view->Notes = 'Ban da thoat he thong.
+							<a href="' . $link . '">Nhan vao day</a> de qua lai trang chu
+						';
+        
+        //$this->_helper->viewRenderer('error');
     }
     
     

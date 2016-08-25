@@ -43,7 +43,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
         $front = Zend_Controller_Front::getInstance();// goi den ham khoi tao
         $front->addModuleDirectory(APPLICATION_PATH.'/modules');
         $front->setDefaultModule('default');
-        $front->registerPlugin(new Zendvn_Plugin_Permission());
+        //$front->registerPlugin(new Zendvn_Plugin_Permission());
+        //$front->registerPlugin(new Zendvn_Plugin_Permission());
         //$errors = new Zend_Controller_Plugin_ErrorHandler(array('module'=>'default','controller'=>'public','action'=>'error'));
         //$front->registerPlugin($errors);
         return $front;

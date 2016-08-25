@@ -1,6 +1,6 @@
 <?php
 class Zendvn_System_Auth{
-	
+    
 	protected $_messageError = null;
 	
 	public function login($arrParam,$options = null){
@@ -53,5 +53,6 @@ class Zendvn_System_Auth{
 	public function logout($arrParam = null,$options = null){
 		$auth = Zend_Auth::getInstance();
 		$auth->clearIdentity();
-	}
+	} 
+    
 }

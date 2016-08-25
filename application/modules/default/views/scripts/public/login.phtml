@@ -5,7 +5,7 @@
     if(count($this->messageError)>0){
         @$errors = $this->formErrors($this->messageError,array('id'=>'errors'));
     }
-    echo $errors;
+    echo @$errors;
 ?>
 <form name="appForm" method="post" action="" enctype="multipart/form-data">
 
