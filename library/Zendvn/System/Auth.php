@@ -1,11 +1,11 @@
 <?php
 class Zendvn_System_Auth{
-    
+	
 	protected $_messageError = null;
 	
 	public function login($arrParam,$options = null){
 		
-		//1. Goi ket noi voi Zend Db, trong file bootstrap
+		//1. Goi ket noi voi Zend Db
 		$db = Zend_Registry::get('connectDb');
 		
 		//2.Khoi tao Zend Auth
@@ -30,8 +30,6 @@ class Zendvn_System_Auth{
 		//Lay ket qua truy van cua Zend_Auth
 		$result = $auth->authenticate($authAdapter);
 		
-		
-		
 		$flag = false;
 		if(!$result->isValid()){
 				$error = $result->getMessages();
@@ -46,13 +44,12 @@ class Zendvn_System_Auth{
 		return $flag;
 	}
 	
-	public function getError(){                                                                    
+	public function getError(){
 		return $this->_messageError;
 	}
 	
 	public function logout($arrParam = null,$options = null){
 		$auth = Zend_Auth::getInstance();
 		$auth->clearIdentity();
-	} 
-    
+	}
 }

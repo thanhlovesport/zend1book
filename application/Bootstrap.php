@@ -1,4 +1,5 @@
 <?php
+//require_once 'library/Zend/Controller/Front.php';
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
    
    /*  protected function _initFoo(){
@@ -39,15 +40,19 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
     }
     
     // Khi khoi tao ham nay, phan cau hinh trong tap tin application.ini se bi ghi de
-      public function _initfrontcontroller(){
-        $front = Zend_Controller_Front::getInstance();// goi den ham khoi tao
-        $front->addModuleDirectory(APPLICATION_PATH.'/modules');
-        $front->setDefaultModule('default');
-        //$front->registerPlugin(new Zendvn_Plugin_Permission());
-        //$front->registerPlugin(new Zendvn_Plugin_Permission());
-        //$errors = new Zend_Controller_Plugin_ErrorHandler(array('module'=>'default','controller'=>'public','action'=>'error'));
-        //$front->registerPlugin($errors);
-        return $front;
-    }  
+        protected function _initFrontcontroller(){
+        		$front = Zend_Controller_Front::getInstance();
+        		$front->addModuleDirectory(APPLICATION_PATH . '/modules');
+        		$front->setDefaultModule('default');
+        		//$front->registerPlugin(new Zendvn_Plugin_Permission(),null);
+        	
+        		/* $error = new Zend_Controller_Plugin_ErrorHandler(array('module'=>'default',
+        															   'controller'=>'public',
+        															   'action'=>'error',
+        																)); */
+        		//$front->registerPlugin($error);
+        		
+        		return $front;
+        	}
     
 }

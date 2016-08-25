@@ -56,12 +56,10 @@ class PublicController extends Zendvn_Controller_Action{
             if($auth->login($this->_arrParam)){
                 $info = new Zendvn_System_Info();
 				$info->createInfo();    // Tạo ra Session Info
-				$abc = $info->getMemberInfo();
-				echo "<pre>";
-				print_r($abc);
-				echo "</pre>";
+				//$abc = $info->getMemberInfo();
+				
 			
-				$this->redirect('/default/admin-group/index');
+				$this->redirect('/default/index');
             }else{
                 $errors[] = $auth->getError();
                 $this->view->messageError = $errors;
