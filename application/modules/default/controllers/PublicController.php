@@ -40,12 +40,14 @@ class PublicController extends Zendvn_Controller_Action{
         $this->view->messageError = $errors;
         
     }
-    public function noAccessAction(){
-        $this->view->Title = 'Không có quyền truy cập vào chức năng này!';
+    public function noaccessAction(){
+      
+        $this->view->Title = 'Not Permission';
         $this->view->headTitle($this->view->Title,true);
-        $errors[] = 'Chức năng này không tồn tại';
+        $errors[] = 'Khong Co Quyen Truy Cap Chuc Nang Nay';
         $this->view->messageError = $errors;
-        $this->_helper->viewRenderer('error.phtml');
+       
+        //$this->_helper->viewRenderer('error.phtml');
     }
     public function loginAction(){
         $this->view->Title = 'Login To The SysTem';
@@ -59,7 +61,7 @@ class PublicController extends Zendvn_Controller_Action{
 				//$abc = $info->getMemberInfo();
 				
 			
-				$this->redirect('/default/index');
+				$this->redirect('/default/admin-group/index');
             }else{
                 $errors[] = $auth->getError();
                 $this->view->messageError = $errors;
@@ -75,9 +77,9 @@ class PublicController extends Zendvn_Controller_Action{
         $info = new Zendvn_System_Info();
         $info->destroyInfo();
         
-        $link = $this->view->baseUrl('/default/index/index');
+        $link = $this->view->baseUrl('/default/public/login');
         $this->view->Notes = 'Ban da thoat he thong.
-							<a href="' . $link . '">Nhan vao day</a> de qua lai trang chu
+							<a href="' . $link . '">Nhan vao day</a> de qua lai trang dang nhap
 						';
         
         //$this->_helper->viewRenderer('error');

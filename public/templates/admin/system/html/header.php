@@ -9,6 +9,25 @@
  * </div>
  * </div>
  */
+/*  echo "<pre>";
+ print_r($this->arrParam);
+ echo "</pre>"; */
+ $actionname = $this->arrParam['action'];
+// echo '<br>'.$actionname;
+ $link = $this->baseUrl('/default/public/logout');
+ //echo '<br>'.$link;
+ $hmtlogout = '';
+ $auth = Zend_Auth::getInstance();
+ if($auth->hasIdentity() == true){
+     $hmtlogout = '<span class="logout"> <a
+				href="'.$link.'">Logout</a>
+			</span>';
+ }
+ /* if(($actionname != 'logout')&&($actionname != 'login')){
+     $hmtlogout = '<span class="logout"> <a
+				href="'.$link.'">Logout</a>
+			</span>';
+ } */
 ?>
  
 <?php echo $this->doctype()?>
@@ -33,9 +52,7 @@
 		<div id="module-status">
 			<span class="preview"> <a target="_blank" href="#">Preview</a>
 			</span> <a href="#"> <span class="no-unread-messages">0</span>
-			</a> <span class="loggedin-users">1</span> <span class="logout"> <a
-				href="<?php echo $this->baseUrl('/default/public/logout');?>">Logout</a>
-			</span>
+			</a> <span class="loggedin-users">1</span> <?php echo $hmtlogout;?>
 		</div>
 		<div id="module-menu">
 

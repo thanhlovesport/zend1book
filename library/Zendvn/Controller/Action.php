@@ -24,7 +24,7 @@ class Zendvn_Controller_Action extends Zend_Controller_Action{
          echo "<pre>";
          print_r($request);
          echo "</pre>"; */
-         echo $baseURL = $this->_request->getBaseUrl();   
+        $baseURL = $this->_request->getBaseUrl();   
         
         //echo'<br>'.$templateURL = $baseURL."/".$config['url'];
         $templateURL = $baseURL."/".$config['url'];

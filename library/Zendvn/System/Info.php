@@ -12,6 +12,7 @@ class Zendvn_System_Info{
 		//echo '<br>' . __METHOD__;
 		$auth = Zend_Auth::getInstance();
 		$infoAuth = $auth->getIdentity();
+		//print infoAuth 
 		
 		$this->setMemberInfo($infoAuth);
 		$this->setGroupInfo($infoAuth);
