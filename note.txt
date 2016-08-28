@@ -11,4 +11,14 @@ Ham nguyen ban cac button
 Trong library co phan system de chuyen xu li nhung van de ve he thong
 
 --------- Public Controller -----------------
-Có chứa chức năng login								
+Có chứa chức năng login		
+
+-----	Thu vien Zendvn->System->Recursive.php chua ham de xu ly cay thu muc(category)
+
+-----	Thu vien Zendvn->View->Helper->CmsSelect chua ham de in ra mot cay(category) su dung the select
+
+---- Trong Training Controller co Recursive controller, chay thu nghiem
+
+Cau truc cua bang Category giong group, Product giong user
+----- Nhung muc trong product_category can alay ----------
+id,name,status,parent,order,created,created_by
