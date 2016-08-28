@@ -20,7 +20,8 @@
     $status			= $this->formRadio('status','',null,$options, ' ');
     $picture 	    = $this->formFile('picture');
     $order	        = $this->formText('order',$this->Items['order'],array('class'=>'txtsort'));
-    $parents        = '';
+    $parents 		= $this->cmsSelect('parents',$this->Items['parents'],
+										$this->slbCategory,array('size'=>10,'style'=>'min-width: 200px;'));
         
     $arrInput = array(
         array('label'=>'Category Name: ', 'input'=>$namecate),

@@ -116,12 +116,13 @@ class Shopping_AdminCategoryController extends Zendvn_Controller_Action{
       $this->view->Title = 'Product :: Category manager :: Add';
       $this->view->headTitle($this->view->Title,true);
       $tablecategory = new Shopping_Model_Category();
-      
-      $this->view->Items = $tablecategory->itemInSelectbox();
-      echo '<pre>';
-      print_r( $this->view->Items);
-      echo '</pre>';
-      
+      //$this->view->Items = $tablecategory->listItem();
+      $this->view->slbCategory = $tablecategory->itemInSelectbox();
+     
+      if($this->_request->isPost()){
+          $tablecategory->addItem($this->_arrParam,array('task'=>'admin-add'));
+          $this->_redirect($this->_actionMain);
+      }
       
       
     }
@@ -132,26 +133,29 @@ class Shopping_AdminCategoryController extends Zendvn_Controller_Action{
         $this->view->Item = $tablegroup->infoItem($this->_arrParam,array('task'=>'admin-info'));
     }
     public function editAction(){
-        $this->view->Title = 'Member :: Group manager :: Edit';
+        $this->view->Title = 'Product :: Category Manager :: Edit';
         $this->view->headTitle($this->view->Title,true);
-        $tablegroup = new Default_Model_UserGroup();
-        $this->view->Item = $tablegroup->getItem($this->_arrParam,array('task'=>'admin-edit')); // Cho cái button edit thông tin một group
-        if ($this->_request->isPost()){ // Cho cái nút submit form tên là Edit
-            $tablegroup = new Default_Model_UserGroup();
-            $tablegroup->addItem($this->_arrParam,array('task'=>'admin-edit'));
-            $this->redirect($this->_actionMain);
-        }
+        $tablecategory = new Shopping_Model_Category();
+        $this->view->Items = $tablecategory->getItem($this->_arrParam,array('task'=>'admin-edit')); // Cho cái button edit thông tin một group
+        $this->view->slbCategory = $tablecategory->itemInSelectbox($this->_arrParam,array('task'=>'admin-edit'));
+      if ($this->_request->isPost()){ // Cho cái nút submit form tên là Edit
+             $tablecategory->addItem($this->_arrParam,array('task'=>'admin-edit'));
+             $this->_redirect($this->_actionMain);
+        } 
         
     }
     public function deleteAction(){
-        $this->view->Title = 'Member :: Group manager :: Delete';
-        $this->view->headTitle($this->view->Title,true);
-        if ($this->_request->isPost()){
-            $tablegroup = new Default_Model_UserGroup();
-            $tablegroup->deleteItem($this->_arrParam,array('task'=>'admin-delete'));
-            $this->redirect($this->_actionMain);
-        }
-    }
+		echo '<br>' . __METHOD__;
+		$this->view->Title = 'Product :: Category manager :: Delete';
+		$this->view->headTitle($this->view->Title,true);
+		if($this->_request->isPost()){
+			$tblCategory = new Shopping_Model_Category();
+			$tblCategory->deleteItem($this->_arrParam,array('task'=>'admin-delete'));
+			//$this->_redirect($this->_actionMain);
+		}
+		//$this->_helper->viewRenderer->setNoRender();
+	}
+   
     public function statusAction(){
         $this->_helper->viewRenderer->setNoRender(true);
         $tablegroup = new Default_Model_UserGroup();
@@ -160,13 +164,12 @@ class Shopping_AdminCategoryController extends Zendvn_Controller_Action{
        
     }
     public function multyDeleteAction(){
-        $this->_helper->viewRenderer->setNoRender(true);
-        if ($this->_request->isPost()){
-            $tablegroup = new Default_Model_UserGroup();
-            $tablegroup->deleteItem($this->_arrParam,array('task'=>'multy-delete'));
-            $this->redirect($this->_actionMain);
-        }
-        
+       if($this->_request->isPost()){
+			$tblCategory = new Shopping_Model_Category();
+			$tblCategory->deleteItem($this->_arrParam,array('task'=>'admin-multi-delete'));
+			$this->_redirect($this->_actionMain);
+		}
+		$this->_helper->viewRenderer->setNoRender();
     }
     public function sortAction(){
         $this->_helper->viewRenderer->setNoRender(true);

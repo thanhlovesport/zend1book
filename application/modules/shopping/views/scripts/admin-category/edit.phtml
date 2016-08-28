@@ -12,44 +12,24 @@
 	$order = $this->formText('order',10,array('class'=>'txtshort')); */
 	
     //-------------------INPUT ELEMENTS----------------
-    $user_name 		= $this->formText('user_name',$this->Items['user_name'],array('class'=>'txtmedium'));
     
-    $img_avatar = '';
-    if(!empty($this->Items['user_avatar'])){
-        $url_avatar 	= FILE_URL.'/users/img100x100/'.$this->Items['user_avatar'];   
-        $img_avatar    = '<br><img src="'.$url_avatar.'"> <br>'.$this->Items['user_avatar'];
-    }
+    // id,name,status,parent,order,created,created_by
+    $namecate		= $this->formText('name',$this->Items['name'],array('class'=>'txtmedium'));
     
-    $current_user_avatar = $this->formHidden('current_user_avatar',$this->Items['user_avatar']);
-    
-    $user_avatar 	= $this->formFile('user_avatar').$img_avatar.$current_user_avatar;
-    $password 		= $this->formPassword('password','',array('class'=>'txtsort'));
-    $email			= $this->formText('email',$this->Items['email'],array('class'=>'txtmedium'));
-    $first_name		= $this->formText('first_name',$this->Items['first_name'],array('class'=>'txtmedium'));
-    $last_name		= $this->formText('last_name',$this->Items['last_name'],array('class'=>'txtmedium'));
-    $birthday		= $this->formText('birthday',$this->Items['birthday'],array('class'=>'txtsort'));
-    
-    $options		= array('Inactive','Active');
+    $options		= array('Inactive','Active');   
     $status			= $this->formRadio('status','',null,$options, ' ');
-    
-    $options = $this->selectboxgroup;
-    
-    $slbGroup = $this->formSelect('group_id',$this->Items['group_id'],array('style'=>"min-width: 200px"),$options);
-    $sign = $this->cmsReplaceString($this->Item['sign']);
-    
-    $sign = $this->cmsEditor('sign',$sign,array('toolbar'=>'Default','language'=>'vi'));
-    //echo $this->Item['sign'];
+    $picture 	    = $this->formFile('picture');
+    $order	        = $this->formText('order',$this->Items['order'],array('class'=>'txtsort'));
+    $parents 		= $this->cmsSelect('parents',$this->Items['parents'],
+										$this->slbCategory,array('size'=>10,'style'=>'min-width: 200px;'));
+        
     $arrInput = array(
-        array('label'=>'User name: ', 'input'=>$user_name),
-        array('label'=>'Avatar: ', 'input'=>$user_avatar,'style'=>'margin-left: 175px;'),
-        array('label'=>'Password: ', 'input'=>$password),
-        array('label'=>'Email: ', 'input'=>$email),
-        array('label'=>'Group name: ', 'input'=>$slbGroup),
-        array('label'=>'First name: ', 'input'=>$first_name),
-        array('label'=>'Last name: ', 'input'=>$last_name),
-        array('label'=>'Birthday: ', 'input'=>$birthday),
+        array('label'=>'Category Name: ', 'input'=>$namecate),
         array('label'=>'Status: ', 'input'=>$status),
-        array('label'=>'Sign: ', 'input'=> $sign,'style'=>'margin-left: 175px;'),
+        array('label'=>'Picture: ', 'input'=>$picture),
+        array('label'=>'Order: ', 'input'=>$order),
+        array('label'=>'Parent: ', 'input'=>$parents),
+       
     );
     //------------------------MESSAGES ERROR----------------------
     $errors = '';
@@ -61,10 +41,10 @@
 <form name="appForm" method="post" action="" enctype="multipart/form-data">
 
 
-        <?php echo $this->render('toolbar/edit.php') ?>
+        <?php echo $this->render('admin-category/toolbar/add.php') ?>
                         <div class="clr"></div>
                       
-                <?php echo $this->render('submenu/index.php') ?>
+                <?php echo $this->render('admin-category/submenu/index.php') ?>
                 <?php echo $errors?>
                 
         

@@ -11,14 +11,27 @@ class Shopping_Model_Category extends Zend_Db_Table{
             ->order('pc.order ASC');
             
             $result = $db->fetchAll($select);
-            $sapxepcay = new Zendvn_System_Recursive($result); // Goi den thu vien sap xep lai cay
-            $result = $sapxepcay->buildArray(0); // Lay het tat ca nhung gi co trong category
             
-            /* 
-            $result = $db->fetchPairs($select); // fetchParis trả về một mảng, cột đầu tiên là khóa, cột thứ 2 là value
-            $result['0'] = '--Select a item--';
-            ksort($result); // Sắp xếp các phần tử trong mảng theo chiều tăng dần của keys */
+            
         }
+        
+        if($option['task'] == 'admin-edit'){
+            $id = $arrParam['id'];
+            $select = $db->select()
+            ->from('product_category AS pc',array('id','name','status','parents','order','created_by'))
+            ->where('id != ?', $id, INTEGER )
+            ->order('pc.order ASC');
+            	
+            $result  = $db->fetchAll($select);
+            	
+        }
+        
+        $sapxepcay = new Zendvn_System_Recursive($result); // Goi den thu vien sap xep lai cay
+        $result = $sapxepcay->buildArray(0); // Lay het tat ca nhung gi co trong category
+        
+        $tmp = array('id'=>0,'name'=>'Root category','level'=>1,'order'=>1,'parents'=>0);
+        array_unshift($result,$tmp);
+        
         return $result;
     }
     public function countItem($arrParam = null,$option = null){
@@ -45,7 +58,7 @@ class Shopping_Model_Category extends Zend_Db_Table{
         
         //$paginator = $arrParam['paginator'];
         
-        //$ssfilte = $arrParam['sessionfilter'];
+        $ssfilte = $arrParam['sessionfilter'];
         
         //$db = Zend_Db::factory($adapter,$config);
         if ($option['task'] == 'admin-list'){
@@ -88,36 +101,39 @@ class Shopping_Model_Category extends Zend_Db_Table{
         
     }
     public function addItem($arrParam = null,$option = null){
-        if ($option['task'] == 'admin-add'){
-            $row = $this->fetchNew();
-            $row->group_name = $arrParam['group_name'];
-            $row->avatar     = $arrParam['avatar'];
-            $row->ranking 		= $arrParam['ranking'];
-            $row->group_acp 	= $arrParam['group_acp'];
-            $row->group_default = $arrParam['group_default'];
-            $row->created 		= date("Y-m-d");
-            $row->created_by 	= 1;
-            $row->status 		= $arrParam['status'];
-            $row->order 		= $arrParam['order'];
+        
+        if($option['task'] == 'admin-add'){
+            $info =  new Zendvn_System_Info();
+            $created_by = $info->getMemberInfo('id'); // Lay ra id cua nguoi dang nhap
             
+            $row =  $this->fetchNew();
+            $row->name 			= $arrParam['name'];
+            $row->status 		= $arrParam['status'];
+            $row->parents 		= $arrParam['parents'];
+            $row->order 		= $arrParam['order'];
+            $row->picture 		= $arrParam['picture'];
+            	
+            $row->created 		= date("Y-m-d H:s:i");
+            $row->created_by 	= $created_by;
+            	
             $row->save();
         }
-        if ($option['task'] == 'admin-edit'){
-           
-            $where = 'id = '.$arrParam['id'];
-            $row = $this->fetchRow($where);
-            $row->group_name = $arrParam['group_name'];
-            $row->avatar     = $arrParam['avatar'];
-            $row->ranking 		= $arrParam['ranking'];
-            $row->group_acp 	= $arrParam['group_acp'];
-            $row->group_default = $arrParam['group_default'];
-            $row->modified 		= date("Y-m-d");        
-            $row->modified_by 	= 1;
-            $row->status 		= $arrParam['status'];
-            $row->order 		= $arrParam['order'];
-             
-            $row->save(); 
-        }
+        if($option['task'] == 'admin-edit'){
+			$where = 'id = ' . $arrParam['id'];
+			
+			$row =  $this->fetchRow($where);
+			$row->name 			= $arrParam['name'];
+			$row->status 		= $arrParam['status'];
+			$row->parents 		= $arrParam['parents'];
+			$row->order 		= $arrParam['order'];
+			$row->picture 		= $arrParam['picture'];
+			
+			$row->modified 		= date("Y-m-d H:s:i");
+			$row->modified_by 	= $created_by;
+			
+			$row->save();
+		}
+		
     
     }
     public function infoItem($arrParam = null,$option = null){
@@ -141,19 +157,56 @@ class Shopping_Model_Category extends Zend_Db_Table{
         return $result;
     }
     public function deleteItem($arrParam = null,$option = null){
-        if($option['task'] == 'admin-delete'){
-            $where = 'id = '.$arrParam['id'];
-            $this->delete($where);
-        }
-        if($option['task'] == 'multy-delete'){
-            $cid = $arrParam['cid'];
-            if (count($cid) > 0){
-                $dayid = implode(',', $cid);
-                $where = 'id IN ('.$dayid.') ';
-                $this->delete($where);
-            }
-            
-        }
+      
+         if($option['task'] == 'admin-delete'){
+			$db = Zend_Registry::get('connectDb');
+			$id = $arrParam['id'];
+			$select = $db->select()
+					 	  ->from('product_category AS pc',array('id','name','status','parents','order','created_by'));
+			$result  = $db->fetchAll($select);		
+			$system = new Zendvn_System_Recursive($result);		
+			$result = $system->buildArray($id);	 
+			array_unshift($result,array('id'=> $id));
+			
+			foreach($result as $key => $val){
+			    echo $val['id'].'<br>';
+				$where = ' id = ' . $val['id'];
+				$this->delete($where);
+			}
+		
+		}
+	   
+		if($option['task'] == 'admin-multi-delete'){
+		    $cid = $arrParam['cid'];
+		
+		    if(count($cid)>0){
+		
+		        $db = Zend_Registry::get('connectDb');
+		        $id = $arrParam['id'];
+		        $select = $db->select()
+		        ->from('product_category AS pc',array('id','name','status','parents','order','created_by'));
+		        $result  = $db->fetchAll($select);
+		
+		        $newArray = array();
+		        foreach ($cid as $key => $val){
+		            $id = $val;
+		            $newArray[] = array('id'=>$id);
+		            $system = new Zendvn_System_Recursive($result);
+		            $tmp = $system->buildArray($id);
+		            foreach ($tmp as $keyTmp => $valTmp){
+		                $newArray[] = $valTmp;
+		            }
+		        }
+		
+		        if(count($newArray)>0){
+		            foreach($newArray as $keyNew => $valNew){
+		                $where = ' id = ' . $valNew['id'];
+		                $this->delete($where);
+		            }
+		        }
+		    }
+		}
+		
     }
     public function statusItem($arrParam = null,$option = null){
             $cid = $arrParam['cid'];
