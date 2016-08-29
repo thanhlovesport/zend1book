@@ -57,13 +57,13 @@ class Shopping_AdminProductController extends Zendvn_Controller_Action{
         echo '</pre>';
          */
         // Truyền ra view
-    
+                                                                                                                                                 
         $this->view->arrParam = $this->_arrParam;
-        $this->view->currentControlle =  $this->_currentController;
+        $this->view->currentControlle =  $this->_currentController;     
         $this->view->actionMain = $this->_actionMain;
-    
-        $templatePath = TEMPLATE_PATH."/admin/system";
-        $this->loadTemplate(TEMPLATE_PATH."/admin/system",'template.ini','template');
+            
+        $templatePath = TEMPLATE_PATH."/admin/system";                                                  
+        $this->loadTemplate(TEMPLATE_PATH."/admin/system",'template.ini','template');                   
     
         
     }
@@ -76,9 +76,14 @@ class Shopping_AdminProductController extends Zendvn_Controller_Action{
         
 
         $tableproducts = new Shopping_Model_Product();
-        //$this->view->Items = $tableproducts->listItem($this->_arrParam,array('task'=>'admin-list'));
-       
+        $this->view->Items = $tableproducts->listItem($this->_arrParam,array('task'=>'admin-list'));
         
+        // Phan trang
+        $totalItems = $tableproducts->countItem($this->_arrParam,null);
+        
+         
+        $paginator = new Zendvn_Paginator();
+        $this->view->paginator = $paginator->createPaginator($totalItems,$this->_paginator);
      
     }
     public function addAction(){
@@ -198,10 +203,10 @@ class Shopping_AdminProductController extends Zendvn_Controller_Action{
     
     // Thay doi trang thai cua member
     public function statusAction(){
-        $tblUser = new Default_Model_User();
-        $tblUser->statusItem($this->_arrParam);
+        $tableproducts = new Shopping_Model_Product();  
+        $tableproducts->statusItem($this->_arrParam,null);
         $this->_redirect($this->_actionMain);
-        $this->_helper->viewRenderer->setNoRender();
+        $this->_helper->viewRenderer->setNoRender(true);
     }
     public function multiDeleteAction(){
     
@@ -211,5 +216,13 @@ class Shopping_AdminProductController extends Zendvn_Controller_Action{
             $this->_redirect($this->_actionMain);
         }
         $this->_helper->viewRenderer->setNoRender();
+    }
+    public function sortAction(){
+        $this->_helper->viewRenderer->setNoRender(true);
+        if ($this->_request->isPost()){
+            $tabelproduct = new Shopping_Model_Product();
+            $tabelproduct->sortItem($this->_arrParam,null);
+            $this->redirect($this->_actionMain);
+        }
     }
 }

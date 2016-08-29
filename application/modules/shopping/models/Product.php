@@ -2,7 +2,7 @@
 
 class Shopping_Model_Product extends Zend_Db_Table{
     
-    protected $_name = 'users';
+    protected $_name = 'products';
     protected $_primary = 'id';
     
     public function countItem($arrParam = null,$option = null){
@@ -12,7 +12,7 @@ class Shopping_Model_Product extends Zend_Db_Table{
     
     
         $select = $db->select()
-        ->from('users AS u',array('COUNT(u.id) AS TotalItem'));
+        ->from('products AS p',array('COUNT(p.id) AS TotalItem'));
     
         if(!empty($ssfilte['searchbox'])){
             //var_dump(123);exit;
@@ -39,16 +39,14 @@ class Shopping_Model_Product extends Zend_Db_Table{
         
         //$db = Zend_Db::factory($adapter,$config);
         if ($option['task'] == 'admin-list'){
-        
             $select = $db->select()
             // id,name,picture,price,sellof,status,special,order,CATEG0RY,created,created_by,modified,modified_by
-            ->from('products AS p',array('id','name','picture','price','sellof','status','special','order','created_by','modified'))
-            ->joinLeft('product_category AS pc','p.cat_id = pc.id','name'); // Name day la ten product
+            ->from('products AS p',array('id','name','picture','price','selloff','status','special','order','created_by','modified'))
+            ->joinLeft('product_category AS pc','p.cat_id = pc.id','pc.name AS catename'); // Name day la ten product
             //->group('g.id');
-           if (!empty($ssfilte['col']) && !empty($ssfilte['order'])){
+           /*  if (!empty($ssfilte['col']) && !empty($ssfilte['order'])){
                 @$select->order($ssfilte['col'],$ssfilte['order']);
-           
-            } 
+            }  */
             if ($paginator['itemCountPerPage'] > 0){
                 $page = $paginator['currentPage'];
                 $rowCount = $paginator['itemCountPerPage'];
@@ -63,7 +61,9 @@ class Shopping_Model_Product extends Zend_Db_Table{
             if($ssfilte['group_id'] > 0){
                 @$select->where('u.group_id = ?', $ssfilte['group_id'],INTEGER);
             }
-            echo $select;
+            //echo $select;
+            //var_dump(123);exit;
+            
            /* echo '<br>'; */
             $result = $db->fetchAll($select);
         }
@@ -238,7 +238,9 @@ class Shopping_Model_Product extends Zend_Db_Table{
     // Thay doi trang thai member
    
     public function statusItem($arrParam = null,$option = null){
-        $cid = $arrParam['cid'];
+        
+        //var_dump(123);exit;
+        @$cid = $arrParam['cid'];
         if (count($cid) > 0){
             if ($arrParam['type'] == 1){
                 $status = 1;
@@ -251,30 +253,36 @@ class Shopping_Model_Product extends Zend_Db_Table{
             $where  = 'id IN ('.$dayid.')';
             $this->update($data, $where);
             // update from user_group set status = 1 whe id in (day id)
-        }
-    
-        if (count($arrParam['id']) > 0) {
+        } 
+        
+         if (count($arrParam['id']) > 0) {
+                                       
             if ($arrParam['type'] == 1){
                 $status = 1;
             }else{
                 $status = 0;
             }
-    
+           
             $data   = array('status'=>$status);
             $where  = 'id ='.$arrParam['id'];
+            
             $this->update($data, $where);
-        }
-        if (count($arrParam['idacp']) > 0) {
+            
+        } 
+         if (count($arrParam['idspc']) > 0) {
+             
             if ($arrParam['type'] == 1){
-                $group_acp = 1;
+                $special = 1;
             }else{
-                $group_acp = 0;
+                $special = 0;
             }
-    
-            $data   = array('group_acp'=>$group_acp);
-            $where  = 'id ='.$arrParam['idacp'];
+            
+            //var_dump(123);exit;
+            $data   = array('special'=>$special);      
+            $where  = 'id = '.$arrParam['idspc'];
             $this->update($data, $where);
+            
         }
-    }
+   }
     
 }
