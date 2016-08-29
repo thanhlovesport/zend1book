@@ -1,6 +1,6 @@
 <?php
 
-class Default_Model_User extends Zend_Db_Table{
+class Shopping_Model_Product extends Zend_Db_Table{
     
     protected $_name = 'users';
     protected $_primary = 'id';
@@ -41,8 +41,9 @@ class Default_Model_User extends Zend_Db_Table{
         if ($option['task'] == 'admin-list'){
         
             $select = $db->select()
-            ->from('users AS u',array('id','user_name','status','email','register_date'))
-            ->joinLeft('user_group AS g','g.id = u.group_id','group_name');
+            // id,name,picture,price,sellof,status,special,order,CATEG0RY,created,created_by,modified,modified_by
+            ->from('products AS p',array('id','name','picture','price','sellof','status','special','order','created_by','modified'))
+            ->joinLeft('product_category AS pc','p.cat_id = pc.id','name'); // Name day la ten product
             //->group('g.id');
            if (!empty($ssfilte['col']) && !empty($ssfilte['order'])){
                 @$select->order($ssfilte['col'],$ssfilte['order']);

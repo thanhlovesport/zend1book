@@ -1,12 +1,14 @@
 <?php //$linkInfo = $this->baseUrl($this->currentControlle.'/info/id/'.$id)
     
-    
     $ssfilter = $this->arrParam['sessionfilter'];
-    
-    
     // Phan sap xep cua cac nhan
     $actionLink = $this->baseUrl($this->currentControlle.'/filter/type/order');
     
+    /* $lblID 	= $this->cmsLinkSort('ID','u.id',$ssfilter,
+        $this->ImageURL . '/icon',$actionLink);
+    
+    $lblMember	= $this->cmsLinkSort('Group Name','groupname',$ssfilter,
+        $this->ImageURL . '/icon',$actionLink); */
     
     // Key sau khi tim kiem, neu khong co se rong
     $keyaftersearch = $ssfilter['searchbox'];
@@ -20,15 +22,38 @@
     $linkclearsearch = $this->baseUrl($this->currentControlle.'/filter/type/search/key/0');
     $btnclearsearch  = $this->formButton('clear-button','Xóa tìm kiếm',array('onclick'=>"OnSubmitForm('". $linkclearsearch ."')"));
  
-   
+    //--------------- Tạo Form Select cho phần chọn group ---------------------//
+   /*  $linkslbgroup = $this->baseUrl($this->currentControlle.'/filter/type/slbgroup');
+    $option = $this->selectboxgroup;
+    $slbgroup = $this->formSelect('group_id',$ssfilter['group_id'],array('onchange'=>"OnSubmitForm('". $linkslbgroup ."')"),$option); */ // Option đây là một mảng, mình chỉ lấy các value
+    // Option ở đây khi kiểm tra phần tử key của nó sẽ là value trong option
+    //$selectboxgroup = 'Group: '.$slbgroup;
+    // Sap xep
+     
+   /*  if($ssfilter['col'] != 'u.user_name'){
+        $linkOder =  $this->baseUrl($this->currentControlle . '/filter/type/order/col/u.user_name/by/DESC');
+        $iconSort = $this->ImageURL . '/icon/arrow_down.png';
+    }else{
+        if($ssfilter['order'] == 'DESC'){
+            $by = 'ASC';
+            $iconSort = $this->ImageURL . '/icon/arrow_down.png';
+        }else{
+            $by = 'DESC';
+            $iconSort = $this->ImageURL. '/icon/arrow_up.png';
+        }
+    
+        $linkOder =  $this->baseUrl($this->currentControlle .
+            '/filter/type/order/col/u.user_name/by/' . $by);
+    }
+      */
     
 ?>
 <form name="appForm" method="post" action="">
 
-        <?php echo $this->render('admin-category/toolbar/index.php') ?>
+        <?php echo $this->render('admin-product/toolbar/index.php') ?>
                         <div class="clr"></div>
                       
-                <?php echo $this->render('admin-category/submenu/index.php') ?>
+                <?php echo $this->render('admin-product/submenu/index.php') ?>
         
                         <!-- BEGIN: CONTENT -->
                         <div id="element-box">
@@ -44,7 +69,7 @@
                                         <?php echo $keysearch . ' ' . $btnsearch . ' ' .$btnclearsearch;?>
                                     </div>
                                     <div style="float:right">
-                                        
+                                        <?php //echo $selectboxgroup;?>
                                     </div>
                                       <div class="clr"></div>
                                 </div>
@@ -54,38 +79,31 @@
                                     <thead>
                                         <tr>
                                             <th width="43" ><input type="checkbox" name="checkbox" id="checkbox" onclick="checkedAll()"></th>
-                                            <th>
-                                                <a href="#">Category Name</a>
-                                                
-                                            </th>
+                                            <th width="300"> Sport Name </th>
+                                            <th> Picture </th>
+                                            <th> Price </th>
+                                            <th> Sellof </th>
                                             <th width="89">Status</th>
-                                            <th width="83">Parent</th>
-                                            <th width="86">Order</th>						
-                                            <th width="77">Created_By</th>
-                                            <th width="90">ConTrol</th>
+                                            <th width="89">Special</th>
+                                            <th width="83">Order</th>
+                                            <th width="100">created_by</th>						
+                                            <th width="100"><?php //echo $lblMember;?> Categoryname</th>
+                                            <th width="120">Control</th>
 
-                                            <th width="34">ID</th>
+                                            <th width="34"><?php //echo $lblID;?>ID </th>
                                         </tr>
                                     </thead>
-                                    
                                     <?php 
-                                    if (count($this->Items > 0)){
-                                    foreach ($this->Items as $key=>$value){
-                                        $id        = $value['id'];
-                                        $namecate  = $value['name'];
-                                        if($value['level'] == 1){
-                                            $namecate = '<strong>+'.$namecate.'</strong>';
-                                        }else{
-                                            $padding  = ($value['level'] - 1) * 25;
-                                            $padding = 'padding-left: ' . $padding . 'px;';
-                                            $namecate = '<div style="' . $padding . '">- ' . $value['name'] . '</div>';
-                                        }
+                                    
+                                        if(!empty($this->Items)){
+                                        foreach ($this->Items as $key=>$value){
+                                        $username = $value['user_name'];
                                         $status    = $value['status'];
-                                        $parents     = $value['parents'];
-                                        $order     = $this->formText('order['.$value['id'].']',$value['order'],array('style'=>'width: 30px; text-align: center;'));
-                                        $created   = $value['created'];
-                                        $created_by   = $value['user_name'];
-                                      
+                                        $email     = $value['email'];
+                                        //$order     = $this->formText('order['.$value['id'].']',$value['order'],array('style'=>'width: 30px; text-align: center;'));
+                                        $registerdate = $value['register_date'];
+                                        $groupname    = $value['group_name'];
+                                        $id        = $value['id'];
                                         if ($status == 1){
                                             $linkstatus =  $this->baseUrl($this->currentControlle.'/status/type/0/id/'.$id);
                                             $status = '<img src="'.$this->ImageURL.'/icon/active.png">';
@@ -104,26 +122,27 @@
                                         $linkEditGroup      = $this->baseUrl($this->currentControlle.'/edit/id/'.$id);
                                         $linkDeleteGroup    = $this->baseUrl($this->currentControlle.'/delete/id/'.$id);
                                         $checkbox           = $this->formCheckbox('cid[]',$id);
-                  
                                         
                                     ?>
                                     <tr class="even">						
                                         <td align="center"><?php echo $checkbox;?></td>
-                                        <td align="left"><?php  echo $namecate;?></td>
+                                        <td align="left"><?php  echo $username;?></td>
                                         <td align="center">
                                             <a href="<?php echo $linkstatus;?>">
                                         	   <?php echo $status;?>
                                             </a>
                                         </td>
                                         <td align="center">
-                                            <?php echo $parents;?>
+                                            <a href="#?>">
+                                        	   <?php echo $email;?>
+                                            </a>
                                         </td>
                                         
                                         <td align="center">
-                                        <?php echo $order?>
+                                        <?php echo $registerdate;?>
                                         </td>
 
-                                        <td align="center"><?php echo $created_by;?></td>
+                                        <td align="center"><?php echo $groupname;?></td>
                                         <td align="center">
                                         <a href="<?php echo $linkinfogroup;?>">
                                         	<img src="<?php echo $this->ImageURL?>/icon_info.png" title="View Info"> 
@@ -137,9 +156,9 @@
                                         <td align="center"><?php echo $id;?></td>
                                     </tr>
                                     <?php 
+                                        }
                                             }
-                                        }   
-                                    ?>
+                                            ?>
                                     <!-- BEGIN: PAGINATION (FOOT) -->
                                     <tfoot>
                                         <tr>
@@ -147,8 +166,8 @@
                                                 <div class="container">
                                                     <div class="pagination">
                                                        <?php 
-                                                         /*  $currentUrl = $this->baseUrl($this->currentControlle . '/index');
-                                                          echo $this->paginationControl($this->panigator,'Sliding','pagination.phtml',array('currentUrl'=>$currentUrl)); */
+                                                          //$currentUrl = $this->baseUrl($this->currentControlle . '/index');
+                                                          //echo $this->paginationControl($this->panigator,'Sliding','pagination.phtml',array('currentUrl'=>$currentUrl));
                                                        ?>
                                                         <div class="limit"></div>
                                                     </div>

@@ -1,7 +1,8 @@
 <?php 
 
     $linkCancel = $this->baseUrl($this->currentControlle.'/index');
-    $linkEdit   =   $this->baseUrl($this->currentControlle.'/edit/id/'.$this->arrParam['id']);
+    echo $linkEdit   =   $this->baseUrl($this->currentControlle.'/edit/id/'.$this->arrParam['id']);
+    echo '<br>';
 ?>
 <div id="toolbar-box">
 	<div class="t">

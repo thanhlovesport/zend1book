@@ -19,8 +19,11 @@ Có chứa chức năng login
 
 ---- Trong Training Controller co Recursive controller, chay thu nghiem
 
+
 Cau truc cua bang Category giong group, Product giong user
 ----- Nhung muc trong product_category can alay ----------
 id,name,status,parent,order,created,created_by
 
+===== Nhung muc trong Product cần lấy
+id,name,picture,price,sellof,status,special,order,category,created,created_by,modified,modified_by,cat_id
 http://shopoli.vn/

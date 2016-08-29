@@ -1,6 +1,6 @@
 <?php 
-    echo $linkCancel = $this->baseUrl($this->currentControlle.'/index');
-    $linkDelete   =   $this->baseUrl($this->currentControlle.'/delete/id/'.$this->arrParam['id']);
+    $linkCancel = $this->baseUrl($this->currentControlle.'/index');
+    echo $linkDelete   =   $this->baseUrl($this->currentControlle.'/delete/id/'.$this->arrParam['id']);
 ?>
 <div id="toolbar-box">
 	<div class="t">

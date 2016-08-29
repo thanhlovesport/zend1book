@@ -85,7 +85,7 @@
 							href="<?php echo $this->baseUrl('/shopping/admin-category/index/');?>">Category
 								manager</a></li>
 						<li><a
-							href="<?php echo $this->baseUrl('/shopping/admin-item/index/');?>">Product
+							href="<?php echo $this->baseUrl('/shopping/admin-product/index/');?>">Product
 								manager</a></li>
 						<li><a
 							href="<?php echo $this->baseUrl('/shopping/admin-bill/index/');?>">Bill</a></li>

@@ -19,7 +19,7 @@ class Shopping_Model_Category extends Zend_Db_Table{
             $id = $arrParam['id'];
             $select = $db->select()
             ->from('product_category AS pc',array('id','name','status','parents','order','created_by'))
-            ->where('id != ?', $id, INTEGER )
+            ->where('id != ?', $id, @INTEGER )
             ->order('pc.order ASC');
             	
             $result  = $db->fetchAll($select);
@@ -102,23 +102,25 @@ class Shopping_Model_Category extends Zend_Db_Table{
     }
     public function addItem($arrParam = null,$option = null){
         
-        if($option['task'] == 'admin-add'){
-            $info =  new Zendvn_System_Info();
-            $created_by = $info->getMemberInfo('id'); // Lay ra id cua nguoi dang nhap
-            
-            $row =  $this->fetchNew();
-            $row->name 			= $arrParam['name'];
-            $row->status 		= $arrParam['status'];
-            $row->parents 		= $arrParam['parents'];
-            $row->order 		= $arrParam['order'];
-            $row->picture 		= $arrParam['picture'];
-            	
-            $row->created 		= date("Y-m-d H:s:i");
-            $row->created_by 	= $created_by;
-            	
-            $row->save();
-        }
-        if($option['task'] == 'admin-edit'){
+    
+		if($option['task'] == 'admin-add'){
+			$info =  new Zendvn_System_Info();
+			$created_by = $info->getMemberInfo('id');
+			
+			$row =  $this->fetchNew();
+			$row->name 			= $arrParam['name'];
+			$row->status 		= $arrParam['status'];
+			$row->parents 		= $arrParam['parents'];
+			$row->order 		= $arrParam['order'];
+			$row->picture 		= $arrParam['picture'];
+			
+			$row->created 		= date("Y-m-d H:s:i");
+			$row->created_by 	= $created_by;
+			
+			$row->save();
+		}
+		
+		if($option['task'] == 'admin-edit'){
 			$where = 'id = ' . $arrParam['id'];
 			
 			$row =  $this->fetchRow($where);
@@ -165,21 +167,19 @@ class Shopping_Model_Category extends Zend_Db_Table{
 					 	  ->from('product_category AS pc',array('id','name','status','parents','order','created_by'));
 			$result  = $db->fetchAll($select);		
 			$system = new Zendvn_System_Recursive($result);		
-			$result = $system->buildArray($id);	 
-			array_unshift($result,array('id'=> $id));
+			$resultfinal = $system->buildArray($id);	 
+			array_unshift($resultfinal,array('id'=> $id));
 			
-			foreach($result as $key => $val){
-			    echo $val['id'].'<br>';
+			foreach($resultfinal as $key => $val){
 				$where = ' id = ' . $val['id'];
 				$this->delete($where);
 			}
-		
 		}
 	   
 		if($option['task'] == 'admin-multi-delete'){
 		    $cid = $arrParam['cid'];
-		
-		    if(count($cid)>0){
+		    
+		    if(count($cid)>0){ // Hàm count đếm số phần tử có trong mảng
 		
 		        $db = Zend_Registry::get('connectDb');
 		        $id = $arrParam['id'];

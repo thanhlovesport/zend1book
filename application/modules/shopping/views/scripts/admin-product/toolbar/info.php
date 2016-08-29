@@ -1,6 +1,6 @@
 <?php 
-    $linkCancel = $this->baseUrl($this->currentControlle.'/index');
-    $linkSave   =   $this->baseUrl($this->currentControlle.'/add');
+    echo $linkBack = $this->baseUrl($this->currentControlle.'/index');
+    echo $linkEdit   =   $this->baseUrl($this->currentControlle.'/edit/id/'.$this->arrParam['id']);
 ?>
 <div id="toolbar-box">
 	<div class="t">
@@ -12,13 +12,13 @@
 		<div id="toolbar" class="toolbar">
             
             <div class="toolbar-button">
-				<a href="#" onclick="OnSubmitForm('<?php echo $linkSave;?>')"> <img
-					src="<?php echo $this->ImageURL?>/toolbar/icon-32-save.png"> <br> Save
+				<a href="#" onclick="OnSubmitForm('<?php echo $linkEdit;?>')"> <img
+					src="<?php echo $this->ImageURL?>/toolbar/icon-32-save.png"> <br> Edit
 				</a>
 			</div>
 			<div class="toolbar-button">
-				<a href="<?php echo $linkCancel;?>"> <img
-					src="<?php echo $this->ImageURL?>/toolbar/icon-32-cancel.png"> <br> Cancel
+				<a href="<?php echo $linkBack;?>"> <img
+					src="<?php echo $this->ImageURL?>/toolbar/icon-32-back.png"> <br> Cancel
 				</a>
 			</div>
 			

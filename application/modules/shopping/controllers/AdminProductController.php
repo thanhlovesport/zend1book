@@ -1,5 +1,5 @@
 <?php
-class AdminUserController extends Zendvn_Controller_Action{
+class Shopping_AdminProductController extends Zendvn_Controller_Action{
     
     // Mảng tham số nhận được ở mỗi Action
     protected $_arrParam;
@@ -69,22 +69,16 @@ class AdminUserController extends Zendvn_Controller_Action{
     }
     public function indexAction(){
         
-        $this->view->Title = 'Member :: User manager :: List';
+        echo '<br>'.__METHOD__;
+        
+        $this->view->Title = 'Product :: Product manager :: List';
         $this->view->headTitle($this->view->Title,true);
         
-        $tableuser = new Default_Model_User();
-        $this->view->Items = $tableuser->listItem($this->_arrParam,array('task'=>'admin-list'));
-        
-        $tablegroup = new Default_Model_UserGroup();
-        $this->view->selectboxgroup = $tablegroup->itemInSelectbox();
-        
-        // Phan trang
-        $totalItems = $tableuser->countItem($this->_arrParam,null);
-        echo $totalItems;
+
+        $tableproducts = new Shopping_Model_Product();
+        //$this->view->Items = $tableproducts->listItem($this->_arrParam,array('task'=>'admin-list'));
        
-        $paginator = new Zendvn_Paginator();
-        $this->view->paginator = $paginator->createPaginator($totalItems,$this->_paginator); 
-         
+        
      
     }
     public function addAction(){

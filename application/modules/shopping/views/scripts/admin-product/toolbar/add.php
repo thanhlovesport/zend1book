@@ -1,5 +1,5 @@
 <?php 
-    $linkCancel = $this->baseUrl($this->currentControlle.'/index');
+    echo $linkCancel = $this->baseUrl($this->currentControlle.'/index');
     $linkSave   =   $this->baseUrl($this->currentControlle.'/add');
 ?>
 <div id="toolbar-box">
