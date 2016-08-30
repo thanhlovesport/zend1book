@@ -156,7 +156,7 @@ class Training_ValidateController extends Zend_Controller_Action{
     
         $validate = new Zend_Validate_GreaterThan(15);
         
-        $input = 10;
+        $input = 10;                                        
         if (!$validate->isValid($input)){
             $message = $validate->getMessages();
             echo current($message);
@@ -189,7 +189,7 @@ class Training_ValidateController extends Zend_Controller_Action{
     }
     public function intAction(){
     
-        
+        //$validate = new Zend_Validate_GreaterThan(0);
     
         $validate = new Zend_Validate_Int();
     
@@ -290,7 +290,6 @@ class Training_ValidateController extends Zend_Controller_Action{
             }
         
         }
-        
     }
     public function passAction(){
         if($this->_request->isPost()){

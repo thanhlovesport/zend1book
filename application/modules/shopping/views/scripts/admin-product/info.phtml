@@ -12,40 +12,47 @@
 	$order = $this->formText('order',10,array('class'=>'txtshort')); */
 	
     //-------------------INPUT ELEMENTS----------------
-    $user_name 		= $this->Items['user_name'];
-    if(!empty($this->Items['user_avatar'])){
-        $user_avatar 	= FILE_URL.'/users/img100x100/'.$this->Items['user_avatar'];
-        $user_avatar    = '<img src="'.$user_avatar.'"> <br>'.$this->Items['user_avatar'];
+    $name 		    = $this->Items['name'];
+    if(!empty($this->Items['picture'])){
+        $picture 	= FILE_URL.'/products/img100x100/'.$this->Items['picture'];
+        $picturesau    = '<img src="'.$picture.'"> <br>'.$this->Items['picture'];
     }
-    
-    $email			= $this->Items['email'];
-    $first_name		= $this->Items['first_name'];
-    $last_name		= $this->Items['last_name'];
-    $birthday		= $this->Items['birthday'];
-    
+    //$picture 	    = $this->formFile('picture');
+    $price			= $this->Items['price'];
+    $selloff    	= $this->Items['selloff'];
+    $order		    = $this->Items['order'];
     $status			= $this->Items['status'];
     if ($status == 1){
         $status = '<img src="'.$this->ImageURL.'/icon/active.png">';
     }else{
         $status = '<img src="'.$this->ImageURL.'/icon/inactive.png">';
     }
-    echo $status;
+    $special		= $this->Items['special'];
+    if ($special == 1){
+        $special = '<img src="'.$this->ImageURL.'/icon/active.png">';
+    }else{
+        $special = '<img src="'.$this->ImageURL.'/icon/inactive.png">';
+    }
+       
+    $category 		= $this->Items['catename'];
     
-    $slbGroup = $this->Items['group_name'];
+    /* $options = $this->selectboxgroup;
     
-    $sign = $this->cmsReplaceString($this->Item['sign']);
+    $slbGroup = $this->formSelect('group_id',$this->Items['group_id'],array('style'=>"min-width: 200px"),$options);*/
+    //$sign = $this->cmsReplaceString($this->Item['sign']); 
     
+    //$sign = $this->cmsEditor('sign',$sign,array('toolbar'=>'Default','language'=>'vi'));
     //echo $this->Item['sign'];
     $arrInput = array(
-        array('label'=>'User name: ', 'input'=>$user_name),
-        array('label'=>'Avatar: ', 'input'=>$user_avatar,'style'=>'margin-left: 175px;'),
-        array('label'=>'Email: ', 'input'=>$email),
-        array('label'=>'Group name: ', 'input'=>$slbGroup),
-        array('label'=>'First name: ', 'input'=>$first_name),
-        array('label'=>'Last name: ', 'input'=>$last_name),
-        array('label'=>'Birthday: ', 'input'=>$birthday),
+        array('label'=>'Sport Name: ', 'input'=>$name),
+        array('label'=>'Picture: ', 'input'=>$picturesau,'style'=>'margin-left: 175px;'),
+        array('label'=>'Price: ', 'input'=>$price),
+        array('label'=>'SellOff: ', 'input'=>$selloff),
+        array('label'=>'Order: ', 'input'=>$order),
         array('label'=>'Status: ', 'input'=>$status),
-        array('label'=>'Sign: ', 'input'=> $sign,'style'=>'margin-left: 175px;'),   
+        array('label'=>'Special: ', 'input'=>$special),
+        array('label'=>'Category: ', 'input'=>$category),
+        
     );
     //------------------------MESSAGES ERROR----------------------
     $errors = '';
@@ -57,13 +64,13 @@
 <form name="appForm" method="post" action="" enctype="multipart/form-data">
 
 
-        <?php echo $this->render('toolbar/add.php') ?>
+        <?php echo $this->render('admin-product/toolbar/add.php') ?>
                         <div class="clr"></div>
                       
-                <?php echo $this->render('submenu/index.php') ?>
+                <?php echo $this->render('admin-product/submenu/index.php') ?>
                 <?php echo $errors?>
                 
-        
+                
                         <!-- BEGIN: CONTENT -->
                         <div id="element-box">
                             <div class="t">

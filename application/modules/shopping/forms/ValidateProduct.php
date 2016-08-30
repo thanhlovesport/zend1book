@@ -12,7 +12,8 @@ class Shopping_Form_ValidateProduct{
 	  
 		/* echo '<pre>';
 		print_r($arrParam);
-		echo '</pre>';    */               
+		echo '</pre>';  
+		var_dump(123);exit; */
 		//========================================
 		// KIEM TRA SportName
 		//========================================
@@ -30,7 +31,7 @@ class Shopping_Form_ValidateProduct{
 		
 		$validator->addValidator(new Zend_Validate_NotEmpty(),true)
 				  ->addValidator(new Zend_Validate_StringLength(3,32),true) // true la dung lai neu gap loi
-				  ->addValidator(new Zend_Validate_Regex('#^[a-zA-Z0-9\-_\.\s]+$#'),true) // chap nhan khoang trang (s), xuat hien tu 1 den n lan (dau +), dung lai thong bao neu xay ra loi
+				  //->addValidator(new Zend_Validate_Regex('#^[a-zA-Z0-9\-_\.\s]+$#'),true) // chap nhan khoang trang (s), xuat hien tu 1 den n lan (dau +), dung lai thong bao neu xay ra loi
 				  ->addValidator(new Zend_Validate_Db_NoRecordExists($options),true);
 		if(!$validator->isValid($arrParam['name'])){ // Neu xay ra loi khi nhap username, lay loi luu vao mang messageserror
 			$message = $validator->getMessages();
@@ -57,8 +58,40 @@ class Shopping_Form_ValidateProduct{
 		    }
 		}
 		
-		
-		
+		//========================================
+		// KIEM TRA Price
+		//========================================
+		$validator = new Zend_Validate();
+		$validator->addValidator(new Zend_Validate_NotEmpty(),true)
+		->addValidator(new Zend_Validate_GreaterThan(1),true);
+		if(!$validator->isValid($arrParam['price'])){
+		    $message = $validator->getMessages();
+		    $this->_messagesError['price'] = 'Price: ' . current($message);
+		    $arrParam['price'] = '';
+		}
+		    //========================================
+	    // KIEM TRA SellOFF
+	    //========================================
+	    $validator = new Zend_Validate();
+	    $validator->addValidator(new Zend_Validate_NotEmpty(),true);
+	    //->addValidator(new Zend_Validate_GreaterThan(1),true);
+	    if(!$validator->isValid($arrParam['selloff'])){
+	        $message = $validator->getMessages();
+	        $this->_messagesError['selloff'] = 'SellOFF: ' . current($message);
+	        $arrParam['selloff'] = '';
+	    }
+	    
+	    //========================================
+	    // KIEM TRA Order
+	    //========================================
+	    $validator = new Zend_Validate();
+	    $validator->addValidator(new Zend_Validate_NotEmpty(),true)
+	    ->addValidator(new Zend_Validate_GreaterThan(0),true);
+	    if(!$validator->isValid($arrParam['order'])){
+	        $message = $validator->getMessages();
+	        $this->_messagesError['order'] = 'Order: ' . current($message);
+	        $arrParam['order'] = '';
+	    }
 		//========================================
 		// KIEM TRA email
 		//========================================
@@ -145,8 +178,8 @@ class Shopping_Form_ValidateProduct{
 		//========================================
 		$this->_arrData = $arrParam;
 		
-	}
-		
+	   }
+
 	//Kiem tra Error 
 	//return true neu co loi xuat hien
 	public function isError(){		
@@ -177,20 +210,20 @@ class Shopping_Form_ValidateProduct{
 	 *========================================*/
 	public function uploadFile(){
 	    //Duong dan den thu muc upload
-	    $upload_dir = FILE_PATH . '/users';
+	    $upload_dir = FILE_PATH . '/products';
 	
 	    //========================================
 	    // UPLOAD FILE $user_avatar
 	    //========================================
 	
 	    $upload = new Zendvn_File_Upload();
-	    $fileInfo = $upload->getFileInfo('user_avatar');
-	    $fileName = $fileInfo['user_avatar']['name'];
+	    $fileInfo = $upload->getFileInfo('picture');
+	    $fileName = $fileInfo['picture']['name'];
 	    
 	    // Nếu như tồn tại filename
 	    if(!empty($fileName)){
-            $fileName = $upload->upload('user_avatar', $upload_dir . '/origin',
-	            array('task'=>'rename'),'user_');
+            $fileName = $upload->upload('picture', $upload_dir . '/origin',
+	            array('task'=>'rename'),'product_');
  	        $thumb = Zendvn_File_Images::create($upload_dir . '/origin/' . $fileName);
 	        $thumb->resize(100,100)->save($upload_dir . '/img100x100/' . $fileName);
 	
@@ -198,13 +231,13 @@ class Shopping_Form_ValidateProduct{
         $thumb->resize(450,450)->save($upload_dir . '/img450x450/' . $fileName);
         
         if($this->_arrData['action'] == 'edit'){
-            $upload->removeFile($upload_dir . '/origin/' . $this->_arrData['current_user_avatar']);
-            $upload->removeFile($upload_dir . '/img100x100/' . $this->_arrData['current_user_avatar']);
-            $upload->removeFile($upload_dir . '/img450x450/' . $this->_arrData['current_user_avatar']);
+            $upload->removeFile($upload_dir . '/origin/' . $this->_arrData['current_picture']);
+            $upload->removeFile($upload_dir . '/img100x100/' . $this->_arrData['current_picture']);
+            $upload->removeFile($upload_dir . '/img450x450/' . $this->_arrData['current_picture']);
         }
 	    }else{
 	        if($this->_arrData['action'] == 'edit'){
-	            $fileName = $this->_arrData['current_user_avatar'];
+	            $fileName = $this->_arrData['current_picture'];
 	        }
 	    }
 	

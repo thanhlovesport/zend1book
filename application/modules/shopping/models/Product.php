@@ -94,42 +94,38 @@ class Shopping_Model_Product extends Zend_Db_Table{
             
             $row = $this->fetchNew();
             
-            $encode  = new Zendvn_Encode();
-            $row->user_name 	= $arrParam['user_name'];
-            $row->password 		= $encode->password($arrParam['password']); // Gọi đến hàm password trong thư viện encode của Zendvn Encode
-            $row->email 		= $arrParam['email'];
-            $row->group_id 		= $arrParam['group_id'];
-            $row->first_name 	= $arrParam['first_name'];
-            $row->last_name 	= $arrParam['last_name'];
-            $row->birthday 		= $arrParam['birthday'];
+            
+            $row->name 	        = $arrParam['name'];
+            //$row->password 		= $encode->password($arrParam['password']); // Gọi đến hàm password trong thư viện encode của Zendvn Encode
+            $row->price		    = $arrParam['price'];
+            $row->selloff 	    = $arrParam['selloff'];
+            $row->order 	    = $arrParam['order'];
             $row->status 		= $arrParam['status'];
-            $row->user_avatar   = $arrParam['user_avatar'];
-            $row->sign 			= $arrParam['sign'];
-            $row->register_date	= date("Y-m-d");
-            $row->register_ip	= $_SERVER['REMOTE_ADDR'];
+            $row->special		= $arrParam['special'];
+            $row->picture       = $arrParam['picture'];
+            $row->cat_id        = $arrParam['category'];
+            
+           // $row->register_ip	= $_SERVER['REMOTE_ADDR'];
             $row->save();
         }
         if ($option['task'] == 'admin-edit'){
             echo '<br>'.__METHOD__;
-            echo "<pre>";
-            print_r($arrParam);
-            echo "</pre>";
+           
             $where = 'id = '.$arrParam['id'];
             $row = $this->fetchRow($where);
 
-            $encode  = new Zendvn_Encode();
-            $row->user_name 	= $arrParam['user_name'];
-            if (!empty($arrParam['password'])){
+            //$encode  = new Zendvn_Encode();
+            $row->name 	= $arrParam['name'];
+           /*  if (!empty($arrParam['password'])){
                 $row->password 		= $encode->password($arrParam['password']); // Gọi đến hàm password trong thư viện encode của Zendvn Encode
-            }
-            $row->email 		= $arrParam['email'];
-            $row->group_id 		= $arrParam['group_id'];
-            $row->first_name 	= $arrParam['first_name'];
-            $row->last_name 	= $arrParam['last_name'];
-            $row->birthday 		= $arrParam['birthday'];
-            $row->status 		= $arrParam['status'];
-            $row->user_avatar   = $arrParam['user_avatar'];
-            $row->sign 			= $arrParam['sign'];
+            } */
+            $row->price		    = $arrParam['price'];
+            $row->selloff 	    = $arrParam['selloff'];
+            $row->order 	    = $arrParam['order'];
+            $row->status 		= $arrParam['status'];   
+            $row->special		= $arrParam['special'];
+            $row->picture       = $arrParam['picture'];
+            $row->cat_id        = $arrParam['category'];
             $row->save();
         }
     
@@ -171,9 +167,9 @@ class Shopping_Model_Product extends Zend_Db_Table{
             $db = Zend_Registry::get('connectDb');
             //$db = Zend_Db::factory($adapter,$config);
             $select = $db->select()
-            ->from('users as u')
-            ->joinLeft('user_group as g','u.group_id = g.id',array('group_name'))
-            ->where('u.id = ?', $arrParam['id'], @INTEGER );
+            ->from('products as p')
+            ->joinLeft('product_category as pc','p.cat_id = pc.id',array('pc.name AS catename'))
+            ->where('p.id = ?', $arrParam['id'], @INTEGER );
             	
             $result = $db->fetchRow($select);
         }
@@ -194,11 +190,11 @@ class Shopping_Model_Product extends Zend_Db_Table{
             echo "</pre>";
             //--------------XOA user_avatar -----------------------
             // load ra su dung file URL Khi xoa hoac upload su dung filepath
-            $upload_dir = FILE_PATH . '/users';
+            $upload_dir = FILE_PATH . '/products';
             $upload = new Zendvn_File_Upload();
-            $upload->removeFile($upload_dir . '/origin/' . $row['user_avatar']); // Xoa hinh anh di
-            $upload->removeFile($upload_dir . '/img100x100/' . $row['user_avatar']);
-            $upload->removeFile($upload_dir . '/img450x450/' . $row['user_avatar']);
+            $upload->removeFile($upload_dir . '/origin/' . $row['picture']); // Xoa hinh anh di
+            $upload->removeFile($upload_dir . '/img100x100/' . $row['picture']);
+            $upload->removeFile($upload_dir . '/img450x450/' . $row['picture']);
             	
             $where = ' id = ' . $arrParam['id'];
             $this->delete($where);
@@ -208,11 +204,11 @@ class Shopping_Model_Product extends Zend_Db_Table{
             $cid = $arrParam['cid'];
             	
             if(count($cid)>0){
-                if($arrParam['type'] == 1){
+                /* if($arrParam['type'] == 1){
                     $status = 1;
                 }else{
                     $status = 0;
-                }
+                } */
         
                 foreach ($cid as $key){
                     echo '<br>'.$key;
@@ -222,11 +218,12 @@ class Shopping_Model_Product extends Zend_Db_Table{
                     $row = $this->getItem($arrParam,array('task'=>'delete'));
                     	
                     //--------------XOA user_avatar -----------------------
-                    $upload_dir = FILES_PATH . '/users';
+                    $upload_dir = FILE_PATH . '/products';
                     $upload = new Zendvn_File_Upload();
-                    $upload->removeFile($upload_dir . '/origin/' . $row['user_avatar']);
-                    $upload->removeFile($upload_dir . '/img100x100/' . $row['user_avatar']);
-                    $upload->removeFile($upload_dir . '/img450x450/' . $row['user_avatar']);
+                    
+                    $upload->removeFile($upload_dir . '/origin/' . $row['picture']);
+                    $upload->removeFile($upload_dir . '/img100x100/' . $row['picture']);
+                    $upload->removeFile($upload_dir . '/img450x450/' . $row['picture']);
                 }
                 $ids = implode(',',$cid);
                 $where = 'id IN (' . $ids . ')';
