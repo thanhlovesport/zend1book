@@ -38,35 +38,34 @@ class Shopping_AdminProductController extends Zendvn_Controller_Action{
         // Lưu các dữ liệu Filter vào Session , namespace lưu trữ tên session
         // Đặt tên SESSION
         $this->_namespace = $this->_arrParam['module'].'-'.$this->_arrParam['controller'];
-        $sessionfilte = new Zend_Session_Namespace($this->_namespace);
+        $sessionfilte = new Zend_Session_Namespace($this->_namespace);  
         //$sessionfilte->unsetAll();
         if (empty($sessionfilte->col)){
-            $sessionfilte->searchbox = ''; // Kieu truyen trong session, khai bao cac session
+            $sessionfilte->searchbox1 = ''; // Kieu truyen trong session, khai bao cac session
             $sessionfilte->col = 'u.id';
             $sessionfilte->order = 'DESC';
-            $sessionfilte->group_id = 0;
             
         }
         
-        $this->_arrParam['sessionfilter']['searchbox']  = $sessionfilte->searchbox;
-        $this->_arrParam['sessionfilter']['col']        = $sessionfilte->col;
-        $this->_arrParam['sessionfilter']['order']      = $sessionfilte->order; 
-        $this->_arrParam['sessionfilter']['group_id']   = $sessionfilte->group_id;
+        $this->_arrParam['sessionfilter']['searchproduct']  = $sessionfilte->searchbox1;
+        $this->_arrParam['sessionfilter']['col']            = $sessionfilte->col;
+        $this->_arrParam['sessionfilter']['order']          = $sessionfilte->order;
         /* echo '<pre>';
-        print_r($sessionfilte->getIterator());
-        echo '</pre>';
+         print_r($sessionfilte->getIterator());
+         echo '</pre>';
          */
         // Truyền ra view
-                                                                                                                                                 
-        $this->view->arrParam = $this->_arrParam;
-        $this->view->currentControlle =  $this->_currentController;     
-        $this->view->actionMain = $this->_actionMain;
-            
-        $templatePath = TEMPLATE_PATH."/admin/system";                                                  
-        $this->loadTemplate(TEMPLATE_PATH."/admin/system",'template.ini','template');                   
     
-        
+        $this->view->arrParam = $this->_arrParam;
+        $this->view->currentControlle =  $this->_currentController;
+        $this->view->actionMain = $this->_actionMain;
+    
+        $templatePath = TEMPLATE_PATH."/admin/system";
+        $this->loadTemplate(TEMPLATE_PATH."/admin/system",'template.ini','template');
+    
+    
     }
+    
     public function indexAction(){
         
         echo '<br>'.__METHOD__;
@@ -75,8 +74,13 @@ class Shopping_AdminProductController extends Zendvn_Controller_Action{
         $this->view->headTitle($this->view->Title,true);
         
 
-        $tableproducts = new Shopping_Model_Product();
+        $tableproducts = new Shopping_Model_Product();                                                                                   
         $this->view->Items = $tableproducts->listItem($this->_arrParam,array('task'=>'admin-list'));
+        
+        
+        //$tablecategory  = new Shopping_Model_Category();
+        //$this->view->selectboxgroup = $tablecategory->categoryInSelectbox();
+        
         
         // Phan trang
         $totalItems = $tableproducts->countItem($this->_arrParam,null);
@@ -87,40 +91,26 @@ class Shopping_AdminProductController extends Zendvn_Controller_Action{
      
     }
     public function addAction(){
-        $this->view->Title = 'Member :: User manager :: Add';
+        
+        echo '<br>'.__METHOD__;
+        $this->view->Title = 'Product :: Product manager :: Add';
         $this->view->headTitle($this->view->Title,true);
         
-
-        $tablegroup = new Default_Model_UserGroup();
-        $this->view->selectboxgroup = $tablegroup->itemInSelectbox();
+       $tablecategory = new Shopping_Model_Category();
+       $this->view->slbCategory = $tablecategory->itemInSelectbox();
         
 
          if($this->_request->isPost()){
-            //var_dump(123);exit;
-            $validator = new Default_Form_ValidateUser($this->_arrParam);
-            if($validator->isError() == true){
-                $this->view->messageError = $validator->getMessageError();
-                $this->view->Items = $validator->getData();
-            }else{                                              // Trường hợp khi tất cả dữ liệu thõa điều kiện
-                $tableuser = new Default_Model_User();  
-                $arrParam = $validator->getData(array('upload'=>true)); // Hàm getdata cho phép lấy hết tất cả trường hợp
-                
-                // In mảng arrayPram ra kiểm tra có phần tử user_avatar hay không
-               /*  echo "<pre>";
-                print_r($arrParam);
-                echo "</pre>"; */
-                $tableuser->addItem($arrParam,array('task'=>'admin-add'));
-                $this->_redirect($this->_actionMain);
-                
-                //$tableuser->addItem();
-            }
+             
+          $validate = new Shopping_Form_ValidateProduct($this->_arrParam);
+          if($validate->isError() == true){
+              $this->view->messageError = $validate->getMessageError();
+              $this->view->Items = $validate->getData();
+          }
+           
          }
                       
-        /* if ($this->_request->isPost()){
-         echo "<pre>";
-         print_r($this->_arrParam);
-         echo "</pre>";
-         } */
+        
     }
     public function filterAction(){
         //$this->_helper->layout()->disableLayout();
@@ -129,9 +119,9 @@ class Shopping_AdminProductController extends Zendvn_Controller_Action{
         $sessionfilter = new Zend_Session_Namespace($this->_namespace);
         if ($this->_arrParam['type'] == 'search'){
             if ($this->_arrParam['key'] == 1){
-                $sessionfilter->searchbox = $this->_arrParam['searchbox'];  // searchbox đây tên phần từ ô textbox
+                $sessionfilter->searchbox1 =  $this->_arrParam['searchbox'];  // searchbox đây tên phần từ ô textbox
             }else {
-                $sessionfilter->searchbox = '';
+                $sessionfilter->searchbox1 = '';
             }
         }
         if ($this->_arrParam['type'] == 'order'){
@@ -139,16 +129,12 @@ class Shopping_AdminProductController extends Zendvn_Controller_Action{
             $sessionfilter->order    = $this->_arrParam['by'];
         }
          
-        if ($this->_arrParam['type'] == 'slbgroup'){
-            $sessionfilter->group_id     = $this->_arrParam['group_id']; // arrParam phần tử group_id ở đây là do mình nhấn select chọn, hk phải là gán
+        if ($this->_arrParam['type'] == 'slbcate'){
+            $sessionfilter->cate_id     = $this->_arrParam['cate_id']; // arrParam phần tử group_id ở đây là do mình nhấn select chọn, hk phải là gán
         } 
        
-        /*   echo '<pre>';
-         print_r($sessionfilter->getIterator());
-         echo '</pre>';
-         echo "<pre>";
-         print_r($this->_arrParam);
-         echo "</pre>";*/
+        
+         
          $this->redirect($this->_actionMain);
     }
     
@@ -208,11 +194,11 @@ class Shopping_AdminProductController extends Zendvn_Controller_Action{
         $this->_redirect($this->_actionMain);
         $this->_helper->viewRenderer->setNoRender(true);
     }
-    public function multiDeleteAction(){
+    public function multyDeleteAction(){
     
         if($this->_request->isPost()){
-            $tblUser = new Default_Model_User();
-            $tblUser->deleteItem($this->_arrParam,array('task'=>'admin-multi-delete'));
+            $tableproducts = new Shopping_Model_Product(); 
+            $tableproducts->deleteItem($this->_arrParam,array('task'=>'admin-multi-delete'));
             $this->_redirect($this->_actionMain);
         }
         $this->_helper->viewRenderer->setNoRender();

@@ -1,19 +1,16 @@
 <?php //$linkInfo = $this->baseUrl($this->currentControlle.'/info/id/'.$id)
     
     $ssfilter = $this->arrParam['sessionfilter'];
+    echo "<pre>";
+    print_r($ssfilter);
+    echo "</pre>";
+    
     // Phan sap xep cua cac nhan                                                    
     $actionLink = $this->baseUrl($this->currentControlle.'/filter/type/order');     
     
-    /* $lblID 	= $this->cmsLinkSort('ID','u.id',$ssfilter,
-        $this->ImageURL . '/icon',$actionLink);
-    
-    $lblMember	= $this->cmsLinkSort('Group Name','groupname',$ssfilter,
-        $this->ImageURL . '/icon',$actionLink); */
-    
-    // Key sau khi tim kiem, neu khong co se rong
-    $keyaftersearch = $ssfilter['searchbox'];
+    $keyaftersearch = $ssfilter['searchproduct'];
     $keysearch  = $this->formText('searchbox',$keyaftersearch,array('class'=>'txtsearch'));
-
+    
     // Tìm Kiếm
     $linksearch = $this->baseUrl($this->currentControlle.'/filter/type/search/key/1');
     $btnsearch  = $this->formButton('search-button','Tìm Kiếm',array('onclick'=>"OnSubmitForm('". $linksearch ."')"));
@@ -21,38 +18,13 @@
     // Xóa Tìm kiếm
     $linkclearsearch = $this->baseUrl($this->currentControlle.'/filter/type/search/key/0');
     $btnclearsearch  = $this->formButton('clear-button','Xóa tìm kiếm',array('onclick'=>"OnSubmitForm('". $linkclearsearch ."')"));
-    
-    //--------------- Tạo Form Select cho phần chọn group ---------------------//
-   /*  $linkslbgroup = $this->baseUrl($this->currentControlle.'/filter/type/slbgroup');
-    $option = $this->selectboxgroup;
-    $slbgroup = $this->formSelect('group_id',$ssfilter['group_id'],array('onchange'=>"OnSubmitForm('". $linkslbgroup ."')"),$option); */ // Option đây là một mảng, mình chỉ lấy các value
-    // Option ở đây khi kiểm tra phần tử key của nó sẽ là value trong option
-    //$selectboxgroup = 'Group: '.$slbgroup;
-    // Sap xep
-     
-   /*  if($ssfilter['col'] != 'u.user_name'){
-        $linkOder =  $this->baseUrl($this->currentControlle . '/filter/type/order/col/u.user_name/by/DESC');
-        $iconSort = $this->ImageURL . '/icon/arrow_down.png';
-    }else{
-        if($ssfilter['order'] == 'DESC'){
-            $by = 'ASC';
-            $iconSort = $this->ImageURL . '/icon/arrow_down.png';
-        }else{
-            $by = 'DESC';
-            $iconSort = $this->ImageURL. '/icon/arrow_up.png';
-        }
-    
-        $linkOder =  $this->baseUrl($this->currentControlle .
-            '/filter/type/order/col/u.user_name/by/' . $by);
-    }
-      */
-    
+ 
 ?>
 <form name="appForm" method="post" action="">
 
         <?php echo $this->render('admin-product/toolbar/index.php') ?>
                         <div class="clr"></div>
-                      
+                                                                                                            
                 <?php echo $this->render('admin-product/submenu/index.php') ?>
         
                         <!-- BEGIN: CONTENT -->
@@ -69,7 +41,7 @@
                                         <?php echo $keysearch . ' ' . $btnsearch . ' ' .$btnclearsearch;?>
                                     </div>
                                     <div style="float:right">
-                                        <?php //echo $selectboxgroup;?>
+                                        
                                     </div>
                                       <div class="clr"></div>
                                 </div>
@@ -108,7 +80,7 @@
                                         $special        = $value['special'];
                                         
                                         $order          = $this->formText('order['.$value['id'].']',$value['order'],array('style'=>'width: 30px; text-align: center;'));
-                                        $created_by     = $value['created_by'];
+                                        $created_by     = $value['created_boi'];
                                         $categoryname   = $value['catename'];
                                         $id             = $value['id'];
                                         if ($status == 1){

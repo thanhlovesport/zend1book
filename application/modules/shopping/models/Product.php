@@ -9,8 +9,7 @@ class Shopping_Model_Product extends Zend_Db_Table{
         $db = Zend_Registry::get('connectDb');
     
         $ssfilte = $arrParam['sessionfilter'];
-    
-    
+      
         $select = $db->select()
         ->from('products AS p',array('COUNT(p.id) AS TotalItem'));
     
@@ -20,7 +19,7 @@ class Shopping_Model_Product extends Zend_Db_Table{
             @$select->where('u.user_name LIKE ?',$keywords,STRING);
         }
         
-        if($ssfilte['group_id'] > 0){
+        if(@$ssfilte['cate_id'] > 0){
             @$select->where('u.group_id = ?', $ssfilte['group_id'],INTEGER);
         }
         
@@ -36,38 +35,38 @@ class Shopping_Model_Product extends Zend_Db_Table{
     
         $ssfilte = $arrParam['sessionfilter'];
         
-        
+       /*  echo "<pre>";
+        print_r($ssfilte);
+        echo "</pre>";
+        var_dump(123);exit;
+         */
         //$db = Zend_Db::factory($adapter,$config);
         if ($option['task'] == 'admin-list'){
             $select = $db->select()
             // id,name,picture,price,sellof,status,special,order,CATEG0RY,created,created_by,modified,modified_by
-            ->from('products AS p',array('id','name','picture','price','selloff','status','special','order','created_by','modified'))
-            ->joinLeft('product_category AS pc','p.cat_id = pc.id','pc.name AS catename'); // Name day la ten product
+            ->from('products AS p',array('id','name','picture','price','selloff','status','special','order','modified'))
+            ->joinLeft('product_category AS pc','p.cat_id = pc.id','pc.name AS catename') // Name day la ten product
+            ->joinLeft('users AS u','u.id = p.created_by','u.user_name AS created_boi');
             //->group('g.id');
-           /*  if (!empty($ssfilte['col']) && !empty($ssfilte['order'])){
-                @$select->order($ssfilte['col'],$ssfilte['order']);
-            }  */
+           
             if ($paginator['itemCountPerPage'] > 0){
                 $page = $paginator['currentPage'];
                 $rowCount = $paginator['itemCountPerPage'];
                 $select->limitPage($page,$rowCount);
             }  
   
-            if(!empty($ssfilte['searchbox'])){
+            if(!empty($ssfilte['searchproduct'])){
                 //var_dump(123);exit;
-                $keywords = '%'.$ssfilte['searchbox'].'%';
-                @$select->where('u.user_name LIKE ?',$keywords,STRING);
+                $keywords = '%'.$ssfilte['searchproduct'].'%';
+                $select->where('p.name LIKE ?',$keywords,@STRING);
             } 
-            if($ssfilte['group_id'] > 0){
-                @$select->where('u.group_id = ?', $ssfilte['group_id'],INTEGER);
-            }
-            //echo $select;
-            //var_dump(123);exit;
-            
-           /* echo '<br>'; */
+            //echo $select;    
+                 
             $result = $db->fetchAll($select);
+            
         }
         return $result;
+       
     }
     public function filterItem($arrParam = null,$option = null){
         $db = Zend_Registry::get('connectDb');

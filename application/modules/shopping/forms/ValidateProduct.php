@@ -1,5 +1,5 @@
 <?php
-class Default_Form_ValidateUser{
+class Shopping_Form_ValidateProduct{
 	
 	//CHUA NHUNG THONG BAO LOI CUA FORM
 	protected $_messagesError = null;
@@ -8,18 +8,22 @@ class Default_Form_ValidateUser{
 	protected $_arrData;
 	
 	public function __construct($arrParam = array(),$options = null){
-		          
+	    
+	  
+		/* echo '<pre>';
+		print_r($arrParam);
+		echo '</pre>';    */               
 		//========================================
-		// KIEM TRA user_name
+		// KIEM TRA SportName
 		//========================================
 		
 	    
 
 	    if($arrParam['action'] == 'add'){
-	        $options = array('table'=>'users','field'=>'user_name');
+	        $options = array('table'=>'products','field'=>'name');
 	    }else if($arrParam['action'] == 'edit'){
 	        $clause = ' id !=' . $arrParam['id'];
-	        $options = array('table'=>'users','field'=>'user_name','exclude'=>$clause);
+	        $options = array('table'=>'products','field'=>'name','exclude'=>$clause);
 	    } 
 	    
 		$validator = new Zend_Validate();
@@ -28,61 +32,38 @@ class Default_Form_ValidateUser{
 				  ->addValidator(new Zend_Validate_StringLength(3,32),true) // true la dung lai neu gap loi
 				  ->addValidator(new Zend_Validate_Regex('#^[a-zA-Z0-9\-_\.\s]+$#'),true) // chap nhan khoang trang (s), xuat hien tu 1 den n lan (dau +), dung lai thong bao neu xay ra loi
 				  ->addValidator(new Zend_Validate_Db_NoRecordExists($options),true);
-		if(!$validator->isValid($arrParam['user_name'])){ // Neu xay ra loi khi nhap username, lay loi luu vao mang messageserror
+		if(!$validator->isValid($arrParam['name'])){ // Neu xay ra loi khi nhap username, lay loi luu vao mang messageserror
 			$message = $validator->getMessages();
-			$this->_messagesError['user_name'] = 'User name: ' . current($message); 
-			$arrParam['user_name'] = '';
+			$this->_messagesError['name'] = 'Name : ' . current($message); 
+			$arrParam['name'] = '';
 		}		
 		
 
 		//========================================
-		// KIEM TRA user_avatar
+		// KIEM TRA Picture
 		//========================================
 		$upload = new Zend_File_Transfer_Adapter_Http();
-		$fileInfo = $upload->getFileInfo('user_avatar');
-		$fileName = $fileInfo['user_avatar']['name'];
+		$fileInfo = $upload->getFileInfo('picture');
+		$fileName = $fileInfo['picture']['name'];
 		
 		if(!empty($fileName)){
 		
 		    $upload->addValidator('Extension',true,array('jpg','gif','png'),'user_avatar');// true dung lai khi gap loi
-		    $upload->addValidator('Size',true,array('min'=>'2KB','max'=>'1000KB'),'user_avatar');
-		    if(!$upload->isValid('user_avatar')){
+		    $upload->addValidator('Size',true,array('min'=>'2KB','max'=>'1000KB'),'picture');
+		    if(!$upload->isValid('picture')){
 		        $message = $upload->getMessages();
-		        $this->_messagesError['user_avatar'] = 'Avatar: ' . current($message);
+		        $this->_messagesError['picture'] = 'Picture: ' . current($message);
 		
 		    }
 		}
 		
-		//========================================
-		// KIEM TRA password
-		//========================================
 		
-		$flag = false;
-		if($arrParam['action']== 'add'){
-		    $flag = true;
-		}else if($arrParam['action']== 'edit'){
-		    if(!empty($arrParam['password'])){
-		        $flag = true;
-		    }
-		}
-		
-		if ($flag == true){
-		    $validator = new Zend_Validate();
-		    $validator->addValidator(new Zend_Validate_NotEmpty(),true) // Dung lai khi co loi
-		    ->addValidator(new Zend_Validate_StringLength(3,32),true)
-		    ->addValidator(new Zend_Validate_Regex('#^[a-zA-Z0-9@\#\$%\^&\*\-\+]+$#'),true);
-		    if(!$validator->isValid($arrParam['password'])){
-		        $message = $validator->getMessages();
-		        $this->_messagesError['password'] = 'Password: ' . current($message);
-		    }
-		    
-		}
 		
 		//========================================
 		// KIEM TRA email
 		//========================================
 		
-		if($arrParam['action'] == 'add'){
+		/* if($arrParam['action'] == 'add'){
 		    $options = array('table'=>'users','field'=>'email');
 		}else if($arrParam['action'] == 'edit'){
 		    $clause = ' id !=' . $arrParam['id'];
@@ -97,51 +78,42 @@ class Default_Form_ValidateUser{
 		    $message = $validator->getMessages();
 		    $this->_messagesError['email'] = 'Email: ' . current($message);
 		    $arrParam['email'] = '';
-		}
+		} */
+		
 		//========================================
-		// KIEM TRA group_id, nguoi dung co chon group hay khong
+		// KIEM TRA Category, nguoi dung co chon Category hay khong
 		//========================================
-		if($arrParam['group_id'] == 0){
-		    $this->_messagesError['group_id'] = 'Group: Please select a group';
+		if($arrParam['category'] == 0){
+		    $this->_messagesError['category'] = 'Group: Please select a Category';
 		}
 		
 		//========================================
 		// KIEM TRA first_name
 		//========================================
 		
-		$validator = new Zend_Validate();
+		/* $validator = new Zend_Validate();
 		$validator->addValidator(new Zend_Validate_NotEmpty(),true)
 		->addValidator(new Zend_Validate_StringLength(2),true);
 		if(!$validator->isValid($arrParam['first_name'])){
 		    $message = $validator->getMessages();
 		    $this->_messagesError['first_name'] = 'First name: ' . current($message);
 		    $arrParam['first_name'] = '';
-		}
+		} */
 		
 		//========================================
 		// KIEM TRA last_name
 		//========================================
 		
-		$validator = new Zend_Validate();
+		/* $validator = new Zend_Validate();
 		$validator->addValidator(new Zend_Validate_NotEmpty(),true)
 		->addValidator(new Zend_Validate_StringLength(2),true);
 		if(!$validator->isValid($arrParam['last_name'])){
 		    $message = $validator->getMessages();
 		    $this->_messagesError['last_name'] = 'Last name: ' . current($message);
 		    $arrParam['last_name'] = '';
-		}
+		} */
 		
-		//========================================
-		// KIEM TRA birthday
-		//========================================
-		$validator = new Zend_Validate();
-		$validator->addValidator(new Zend_Validate_NotEmpty(),true)
-		->addValidator(new Zend_Validate_Date(array('format'=>'YYYY-mm-dd')),true);
-		if(!$validator->isValid($arrParam['birthday'])){
-		    $message = $validator->getMessages();
-		    $this->_messagesError['birthday'] = 'Birthday: ' . current($message);
-		    $arrParam['birthday'] = '';
-		}
+		
 		
 		//========================================
 		// KIEM TRA status
@@ -149,12 +121,17 @@ class Default_Form_ValidateUser{
 		if(empty($arrParam['status']) || !isset($arrParam['status'])){
 		    $arrParam['status'] = 0;
 		}
-		
+		//========================================
+		// KIEM TRA special
+		//========================================
+		if(empty($arrParam['special']) || !isset($arrParam['special'])){
+		    $arrParam['special'] = 0;
+		}
 		//========================================
 		// KIEM TRA sign
 		//========================================
 		
-		$validator = new Zend_Validate();
+		/* $validator = new Zend_Validate();
 		$validator->addValidator(new Zend_Validate_NotEmpty(),true)
 		->addValidator(new Zend_Validate_StringLength(10),true);
 		if(!$validator->isValid($arrParam['sign'])){
@@ -162,7 +139,7 @@ class Default_Form_ValidateUser{
 		    $this->_messagesError['sign'] = 'Sign: ' . current($message);
 		    $arrParam['sign'] = '';
 		}
-		
+		 */
 		//========================================
 		// TRUYEN CAC GIA TRI DUNG VAO MANG $_arrData
 		//========================================
@@ -188,7 +165,7 @@ class Default_Form_ValidateUser{
 	//Tra ve mot mang du lieu sau khi kiem tra
 	public function getData($options = null){
 	    if($options['upload'] == true){
-	        $this->_arrData['user_avatar'] = $this->uploadFile();
+	        $this->_arrData['picture'] = $this->uploadFile();
 	    }
 	    return $this->_arrData;
 	}

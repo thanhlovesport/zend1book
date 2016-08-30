@@ -34,6 +34,37 @@ class Shopping_Model_Category extends Zend_Db_Table{
         
         return $result;
     }
+    public function categoryInSelectbox($arrParam = null,$option = null){
+        
+        $db = Zend_Registry::get('connectDb');
+        if ($option == null){
+            $select  = $db->select()
+            ->from('product_category',array('id','name'));
+        
+            $result = $db->fetchPairs($select); // fetchParis trả về một mảng, cột đầu tiên là khóa, cột thứ 2 là value
+            $result['0'] = '--Select a item--';
+            ksort($result); // Sắp xếp các phần tử trong mảng theo chiều tăng dần của keys
+            //var_dump(123);exit;
+            
+        }
+        return $result;
+       
+        
+    }
+    public function recursive($sourceArr,$parents = 0,$level = 1,&$resultArr){
+		if(count($sourceArr)>0){
+			foreach ($sourceArr as $key => $value){
+				if($value['parents'] == $parents){
+					$value['level'] = $level;
+					$resultArr[] = $value;
+					$newParents = $value['id'];
+					unset($sourceArr[$key]);
+					$this->recursive($sourceArr,$newParents, $level + 1,$resultArr);
+				}
+			}
+		}
+		return $resultArr;
+	}
     public function countItem($arrParam = null,$option = null){
         $db = Zend_Registry::get('connectDb');
         

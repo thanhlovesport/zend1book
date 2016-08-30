@@ -8,7 +8,7 @@ class Zendvn_Plugin_Permission extends Zend_Controller_Plugin_Abstract{
 		$moduleName = $this->_request->getModuleName();
 	
 		$controllerName  = $this->_request->getControllerName();
-		echo'<br>'.$controllerName;
+		//echo'<br>'.$controllerName;
 		//echo'<br>'.$moduleName;
 		
 		/* if($controllerName == 'admin'){
@@ -53,9 +53,9 @@ class Zendvn_Plugin_Permission extends Zend_Controller_Plugin_Abstract{
 				}else{
 					$info = new Zendvn_System_Info();
 					$group_acp = $info->getGroupInfo('group_acp');
-					echo "<pre>";
+					/* echo "<pre>";
 					print_r($group_acp);
-					echo "</pre>";
+					echo "</pre>"; */
 					
 					 if($group_acp != 1){
 					    //var_dump(123);exit;

@@ -11,7 +11,7 @@
 <div id="submenu-box">
 	<div style="border: 1px solid #CCCCCC; padding: 5px">
 		<ul id="submenu">
-		    <?php echo $this->baseURL();?>
+		    <?php //echo $this->baseURL();?>
 			<li><a href="<?php echo $linkGroupManage; ?>" >Group manager</a></li>
 			<li><a href="#" class="active">Member manager</a></li>
 			<li><a href="<?php echo $linkPermission;?>">Permission</a></li>
