@@ -42,15 +42,15 @@ class Shopping_AdminProductController extends Zendvn_Controller_Action{
         //$sessionfilte->unsetAll();
         if (empty($sessionfilte->col)){
             $sessionfilte->searchbox1 = ''; // Kieu truyen trong session, khai bao cac session
-            $sessionfilte->col = 'u.id';
+            $sessionfilte->col = 'u.id';    
             $sessionfilte->order = 'DESC';
             
         }
-        
+                                                                                                
         $this->_arrParam['sessionfilter']['searchproduct']  = $sessionfilte->searchbox1;
         $this->_arrParam['sessionfilter']['col']            = $sessionfilte->col;
         $this->_arrParam['sessionfilter']['order']          = $sessionfilte->order;
-        /* echo '<pre>';
+         /* echo '<pre>';
          print_r($sessionfilte->getIterator());
          echo '</pre>';
          */

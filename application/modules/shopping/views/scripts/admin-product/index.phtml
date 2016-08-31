@@ -70,9 +70,13 @@
                                     
                                         foreach ($this->Items as $key=>$value){
                                         //var_dump(123);exit;
-                                       
+                                        
                                         $productname    = $value['name'];
-                                        $picture        = '';
+                                        //$picture        = '';
+                                        if(!empty($value['picture'])){
+                                            $picture 	= FILE_URL.'/products/img100x100/'.$value['picture'];
+                                            $picturesau = '<img src="'.$picture.'"> <br>'.$value['picture'];
+                                        }
                                         $price          = $value['price'];
                                         $selloff        = $value['selloff'];
                                         
@@ -108,7 +112,7 @@
                                         <td align="center"><?php echo $checkbox;?></td>
                                         <td align="left"><?php  echo $productname;?></td>
                                         <td align="center">
-                                        <?php echo $picture;?>
+                                        <?php echo $picturesau;?>
                                         </td>
                                         <td align="center"><?php echo $price;?></td>
                                         <td align="center"><?php echo $selloff;?></td>

@@ -41,17 +41,19 @@ class Shopping_AdminCategoryController extends Zendvn_Controller_Action{
         // Đặt tên SESSION
         $this->_namespace = $this->_arrParam['module'].'-'.$this->_arrParam['controller'];
         $sessionfilte = new Zend_Session_Namespace($this->_namespace);
-        //$sessionfilte->unsetAll();
-        if (empty($sessionfilte->col)){
-            $sessionfilte->searchbox = ''; // Kieu truyen trong session, khai bao cac session
+        $sessionfilte->unsetAll();
+         if (empty($sessionfilte->col)){
+            $sessionfilte->searchbox2 = ''; // Kieu truyen trong session, khai bao cac session
+            $sessionfilte->col = 'u.id';    
+            $sessionfilte->order = 'DESC';
+            
         }
+                                                                                                
+        $this->_arrParam['sessionfilter']['searchcategory']  = $sessionfilte->searchbox2;
+        $this->_arrParam['sessionfilter']['col']             = $sessionfilte->col;
+        $this->_arrParam['sessionfilter']['order']           = $sessionfilte->order;
         
-        $this->_arrParam['sessionfilter']['searchbox']  = $sessionfilte->searchbox;
-     
-        /* echo '<pre>';
-        print_r($sessionfilte->getIterator());
-        echo '</pre>';
-         */
+        
         // Truyền ra view   
         
         $this->view->arrParam = $this->_arrParam;
@@ -65,12 +67,8 @@ class Shopping_AdminCategoryController extends Zendvn_Controller_Action{
        
     }
     public function indexAction(){
-        //echo '<br>'.$this->_currentController ;
-        //echo '<br>'.$this->_actionMain;
-        //var_dump(123);exit;
         //$this->_helper->layout->disableLayout();
         //$this->_helper->viewRenderer->setNoRender(true);        
-        //echo '<h3 style = "color:red;font-weight:bold">'. __METHOD__.'</h3>';
         $this->view->Title = 'Product :: Category manager :: List';
         $this->view->headTitle($this->view->Title,true);
         $tablecategory = new Shopping_Model_Category();
@@ -91,9 +89,10 @@ class Shopping_AdminCategoryController extends Zendvn_Controller_Action{
         $sessionfilter = new Zend_Session_Namespace($this->_namespace);
         if ($this->_arrParam['type'] == 'search'){
             if ($this->_arrParam['key'] == 1){
-                $sessionfilter->searchbox = $this->_arrParam['searchbox'];  // searchbox đây tên phần từ ô textbox
+                $sessionfilter->searchbox2 = $this->_arrParam['searchbox'];  // searchbox đây tên phần từ ô textbox
+                //var_dump($sessionfilter->searchbox1);exit;
             }else {
-                $sessionfilter->searchbox = '';
+                $sessionfilter->searchbox2 = '';    
             }
         }
          if ($this->_arrParam['type'] == 'order'){

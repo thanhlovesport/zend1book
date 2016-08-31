@@ -3,15 +3,13 @@
     
     $ssfilter = $this->arrParam['sessionfilter'];
     
-    
     // Phan sap xep cua cac nhan
     $actionLink = $this->baseUrl($this->currentControlle.'/filter/type/order');
     
-    
     // Key sau khi tim kiem, neu khong co se rong
-    $keyaftersearch = $ssfilter['searchbox'];
+    $keyaftersearch = $ssfilter['searchcategory'];
     $keysearch  = $this->formText('searchbox',$keyaftersearch,array('class'=>'txtsearch'));
-
+    
     // Tìm Kiếm
     $linksearch = $this->baseUrl($this->currentControlle.'/filter/type/search/key/1');
     $btnsearch  = $this->formButton('search-button','Tìm Kiếm',array('onclick'=>"OnSubmitForm('". $linksearch ."')"));
@@ -71,6 +69,7 @@
                                     <?php 
                                     if (count($this->Items > 0)){
                                     foreach ($this->Items as $key=>$value){
+                                        
                                         $id        = $value['id'];
                                         $namecate  = $value['name'];
                                         if($value['level'] == 1){

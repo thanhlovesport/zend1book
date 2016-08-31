@@ -1,6 +1,6 @@
 <?php 
     // BaseURL tương đương baseUrl
-    $linkProductManager =  $this->baseURL('/shopping/admin-item/index');
+    $linkProductManager =  $this->baseURL('/shopping/admin-product/index');
     // $linkGroupManage =  $this->baseURL('/admin-group/index'); vẫn hiểu do cấu hình module mặc định là default
     $linkPill           =  $this->baseUrl('/default/admin-bill/index');
     $searchbox       = 	$this->formText('searchbox','',array('class'=>'txtmedium'));

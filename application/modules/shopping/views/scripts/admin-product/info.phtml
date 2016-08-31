@@ -63,7 +63,7 @@
 ?>
 <form name="appForm" method="post" action="" enctype="multipart/form-data">
 
-
+       
         <?php echo $this->render('admin-product/toolbar/add.php') ?>
                         <div class="clr"></div>
                       
@@ -84,7 +84,9 @@
                             <div id="adminfieldset">
                                 <div class="adminheader">Detail</div>
                              
-								<?php echo $this->partialLoop('rowadd.php',$arrInput);?>
+								<?php
+								    echo $this->partialLoop('rowadd.php',$arrInput);
+								?>
                                 
 							</div>
 

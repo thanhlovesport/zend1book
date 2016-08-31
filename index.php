@@ -2,7 +2,7 @@
 include_once 'define.php';
 
 //Goi lop Zend Application
-require_once 'Zend/Application.php';
+require_once 'Zend/Application.php'; // trong library
 $environment = APPLICATION_ENV;
 $options = APPLICATION_PATH . '/configs/application.ini';
 $application = new Zend_Application($environment, $options);

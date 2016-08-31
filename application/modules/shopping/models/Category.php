@@ -99,11 +99,11 @@ class Shopping_Model_Category extends Zend_Db_Table{
                            ->joinLeft('users AS u','u.id = pc.created_by',array('user_name'))
                            ->order('pc.order');
            
-            /* if(!empty($ssfilte['searchbox'])){
+            if(!empty($ssfilte['searchcategory'])){
                 //var_dump(123);exit;
-                $keywords = '%'.$ssfilte['searchbox'].'%';
-                @$select->where('g.group_name LIKE ?',$keywords);
-            } */
+                $keywords = '%'.$ssfilte['searchcategory'].'%';
+                @$select->where('pc.name LIKE ?',$keywords);
+            } 
             
             $result = $db->fetchAll($select);
             $sapxepcay = new Zendvn_System_Recursive($result); // Goi den thu vien sap xep lai cay
