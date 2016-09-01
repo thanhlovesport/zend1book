@@ -56,7 +56,7 @@ class Zendvn_Plugin_Permission extends Zend_Controller_Plugin_Abstract{
 					/* echo "<pre>";
 					print_r($group_acp);
 					echo "</pre>"; */
-					
+					 
 					 if($group_acp != 1){
 					    //var_dump(123);exit;
 						$this->_request->setModuleName('default');

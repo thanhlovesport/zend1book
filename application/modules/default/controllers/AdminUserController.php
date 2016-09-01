@@ -71,8 +71,8 @@ class AdminUserController extends Zendvn_Controller_Action{
         
         $this->view->Title = 'Member :: User manager :: List';
         $this->view->headTitle($this->view->Title,true);
-        
         $tableuser = new Default_Model_User();
+        
         $this->view->Items = $tableuser->listItem($this->_arrParam,array('task'=>'admin-list'));
         
         $tablegroup = new Default_Model_UserGroup();

@@ -50,6 +50,7 @@ class PublicController extends Zendvn_Controller_Action{
         //$this->_helper->viewRenderer('error.phtml');
     }
     public function loginAction(){
+        //$this->_helper->layout()->disableLayout();
         $this->view->Title = 'Login To The SysTem';
         $this->view->headTitle($this->view->Title,true);
         
@@ -60,7 +61,6 @@ class PublicController extends Zendvn_Controller_Action{
 				$info->createInfo();    // Tạo ra Session Info
 				//$abc = $info->getMemberInfo();
 				
-			
 				$this->redirect('/default/admin-group/index');
             }else{
                 $errors[] = $auth->getError();

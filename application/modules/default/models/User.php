@@ -46,7 +46,6 @@ class Default_Model_User extends Zend_Db_Table{
             //->group('g.id');
            if (!empty($ssfilte['col']) && !empty($ssfilte['order'])){
                 @$select->order($ssfilte['col'],$ssfilte['order']);
-                
             } 
             if ($paginator['itemCountPerPage'] > 0){
                 $page = $paginator['currentPage'];
