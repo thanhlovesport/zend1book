@@ -83,7 +83,7 @@ class Shopping_Model_Product extends Zend_Db_Table{
                 $this->update($data, $where);
             }
         }
-    
+        
     
     }
     public function addItem($arrParam = null,$option = null){
