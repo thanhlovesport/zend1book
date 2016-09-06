@@ -209,7 +209,7 @@ class AdminUserController extends Zendvn_Controller_Action{
         $this->_redirect($this->_actionMain);
         $this->_helper->viewRenderer->setNoRender();
     }
-    public function multiDeleteAction(){
+    public function multyDeleteAction(){
     
         if($this->_request->isPost()){
             $tblUser = new Default_Model_User();

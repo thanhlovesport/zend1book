@@ -213,7 +213,7 @@ class Shopping_AdminProductController extends Zendvn_Controller_Action{
         }
         $this->_helper->viewRenderer->setNoRender();
     }
-    public function sortAction(){
+    public function sortAction(){                               
         $this->_helper->viewRenderer->setNoRender(true);
         if ($this->_request->isPost()){
             $tabelproduct = new Shopping_Model_Product();
