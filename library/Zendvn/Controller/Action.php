@@ -17,8 +17,7 @@ class Zendvn_Controller_Action extends Zend_Controller_Action{
         $section = $sectionconfig;
         $config = new Zend_Config_Ini($filename,$section);
         $config = $config->toArray();
-       
-        
+             
         
         /*  $request = $this->_request;
          echo "<pre>";
@@ -79,7 +78,7 @@ class Zendvn_Controller_Action extends Zend_Controller_Action{
           print_r($config);
           echo '</pre>'; 
          */
-        $option = array('layoutPath'=>$template_Path,'layout'=>'index');
+        $option = array('layoutPath'=>$template_Path,'layout'=>'index2');
         Zend_Layout::startMvc($option);
        // echo '<br>'.__METHOD__;
         
