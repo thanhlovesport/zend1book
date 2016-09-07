@@ -31,6 +31,7 @@ define('PRODUCTS_PATH', PUBLIC_PATH . '/files');
 // Duong dan den thu muc chua ckeditor
 define('SCRIPTS_PATH', PUBLIC_PATH . '/scripts');
 define('CAPTCHA_PATH', PUBLIC_PATH . '/captcha');
+define('BLOCK_PATH',APPLICATION_PATH . '/blocks');
 
 
 // Khai báo đường dẫn URL đến các thư mục

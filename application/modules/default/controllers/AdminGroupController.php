@@ -73,7 +73,6 @@ class AdminGroupController extends Zendvn_Controller_Action{
         //echo '<br>'.$this->_actionMain;
         //var_dump(123);exit;
        
-        
         $tablegroup = new Default_Model_UserGroup();
         $this->view->Items = $tablegroup->listItem($this->_arrParam,array('task'=>'admin-list'));
         $this->view->Title = 'Member :: Group manager :: List';
