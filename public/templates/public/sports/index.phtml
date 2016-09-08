@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from demo.harnishdesign.net/html/bigshop/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 13 Aug 2015 08:26:01 GMT -->
+<head>
+<?php echo $this->headTitle()?>
+<link href="<?php echo $this->ImageURL;?>/favicon.png" rel="icon" />
+<?php echo $this->headMeta()?>
+<!-- CSS Part Start-->
+<?php echo TEMPLATE_PATH;?>
+<?php echo $this->headLink()?>
+<!-- CSS Part End-->
+<!-- JS Part Start-->
+
+<?php echo $this->headScript()?>
+<!-- JS Part End-->
+</head>
+<body>
+<div class="main-wrapper">
+  <!-- Header Parts Start-->
+  <?php echo $this->render('html/header.php')?>  <!--Top Navigation Start-->
+  <div id="menu"><span>Menu</span>
+    <ul>
+      <li class="home"><a  title="Home" href="index-2.html"><span>Home</span></a></li>
+      <li><a href="category.html">Electronics</a>
+        <div>
+          <ul>
+            <li><a href="category.html">Cameras</a></li>
+            <li><a href="category.html">Phones</a></li>
+            <li><a href="category.html">Tablets</a></li>
+          </ul>
+        </div>
+      </li>
+      <li><a href="category.html">Accessories</a> </li>
+      <li><a href="category.html">Shoes</a>
+        <div>
+          <ul>
+            <li><a href="category.html">Casual shoes</a></li>
+            <li><a href="category.html">Fancy shoes</a></li>
+            <li><a href="category.html">Sports shoes</a></li>
+          </ul>
+        </div>
+      </li>
+      <li><a href="category.html">Books</a>
+        <div>
+          <ul>
+            <li><a href="category.html">Audio Books</a></li>
+            <li><a href="category.html">Comedy Book</a></li>
+            <li><a href="category.html">Comics Books</a></li>
+            <li><a href="category.html">Computer Book</a></li>
+            <li><a href="category.html">Cookies Books</a></li>
+          </ul>
+          <ul>
+            <li><a href="category.html">English Books</a></li>
+            <li><a href="category.html">Fashion Books</a></li>
+            <li><a href="category.html">Games Books</a></li>
+            <li><a href="category.html">God Books</a></li>
+            <li><a href="category.html">Journal Book</a></li>
+          </ul>
+          <ul>
+            <li><a href="category.html">Knowledge Books</a></li>
+            <li><a href="category.html">Magic Books</a></li>
+            <li><a href="category.html">Management Books</a></li>
+            <li><a href="category.html">Student Books</a></li>
+            <li><a href="category.html">Teachers Books</a></li>
+          </ul>
+          <ul>
+            <li><a href="category.html">Toys Books</a></li>
+            <li><a href="category.html">Travel Books</a></li>
+            <li><a href="category.html">Video Books</a></li>
+          </ul>
+        </div>
+      </li>
+      <li><a href="category.html">Clothing</a>
+        <div>
+          <ul>
+            <li><a href="category.html">Women Clothing</a></li>
+            <li><a href="category.html">Men Clothing</a></li>
+          </ul>
+        </div>
+      </li>
+      <li><a href="category.html">Furniture</a> </li>
+      <li><a href="category.html">Beauty &amp; Health Care</a> </li>
+    </ul>
+  </div>
+  <!--Top Navigation Start-->
+  <div id="container">
+    <!--Left Part-->
+    <div id="column-left">
+      <!--Categories Part Start-->
+      <?php echo $this->blkcategory();?>
+      <!--Categories Part End-->
+      <!--Latest Product Start-->
+     <?php echo $this->blklatest();?>
+      <!--Latest Product End-->
+      <!--Specials Product Start-->
+      <?php echo $this->blkspecials();?>
+      <!--Specials Product End-->
+    </div>
+    <!--Left End-->
+    <!--Middle Part Start-->
+    <?php echo $this->layout()->content;?>
+    <!--Middle Part End-->
+    <!-- Pagination Start -->
+        <div class="pagination">
+        <div class="links"> <b>1</b> <a href="#">2</a> <a href="#">&gt;</a> <a href="#">&gt;|</a></div>
+        <div class="results">Showing 1 to 15 of 16 (2 Pages)</div>
+      </div>
+    <!-- Pagination End -->
+    <div class="clear"></div>
+    
+  </div>
+</div>
+<!--Footer Part Start-->
+<?php echo $this->render('html/footer.php');?>
+<!--Footer Part End-->
+</body>
+
+<!-- Mirrored from demo.harnishdesign.net/html/bigshop/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 13 Aug 2015 08:26:01 GMT -->
+</html>
