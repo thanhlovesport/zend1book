@@ -78,7 +78,7 @@ class Zendvn_Controller_Action extends Zend_Controller_Action{
           print_r($config);
           echo '</pre>'; 
          */
-        $option = array('layoutPath'=>$template_Path,'layout'=>'index2');
+        $option = array('layoutPath'=>$template_Path,'layout'=>'index');
         Zend_Layout::startMvc($option);
        // echo '<br>'.__METHOD__;
         

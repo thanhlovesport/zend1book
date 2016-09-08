@@ -1,7 +1,6 @@
-$(document).ready(function(){
 
-/******** Menu Show Hide Sub Menu ********/
-$('#menu > ul > li').mouseover(function() {
+$(document).ready(function() {
+	$('#menu > ul > li').mouseover(function() {
 			$screensize = $(window).width();
 			if ($screensize > 801) {
 			$(this).find('> div').css('display', 'block');

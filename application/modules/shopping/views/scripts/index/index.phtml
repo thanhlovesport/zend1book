@@ -1,4 +1,16 @@
-<?php 
-    echo'<br>'.__FILE__;
-    //var_dump(123);exit;
-?>
+<div id="content">
+      <p class="welcome">" The clean and modern look allows you to&nbsp; use the theme for every kind of eCommerce online shop. Great Looks on Desktops, Tablets and Mobiles."</p>
+      <!--Slideshow Part Start-->
+      <div class="slider-wrapper">
+        <div id="slideshow" class="nivoSlider"> <a href="#"><img src="<?php echo $this->ImageURL;?>/slider/slider-1.jpg" alt="slideshow-1" /></a> <a href="#"><img src="<?php echo $this->ImageURL;?>/slider/slider-2.jpg" alt="slideshow-2" /></a> <a href="#"><img src="<?php echo $this->ImageURL;?>/slider/slider-3.jpg" alt="slideshow-3" /></a> <a href="#"><img src="<?php echo $this->ImageURL;?>/slider/slider-4.jpg" alt="slideshow-4" /></a> </div>
+      </div>
+      <script type="text/javascript">
+$(document).ready(function() {
+	$('#slideshow').nivoSlider();
+});
+</script>
+      <!--Slideshow Part End-->
+      <!--Featured Product Part Start-->
+      <?php echo $this->blkfeatured();?>
+      <!--Featured Product Part End-->
+    </div>
