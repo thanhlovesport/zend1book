@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <!-- Mirrored from demo.harnishdesign.net/html/bigshop/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 13 Aug 2015 08:26:01 GMT -->
 <head>
 <?php echo $this->headTitle()?>
@@ -21,7 +20,7 @@
   <?php echo $this->render('html/header.php')?>  <!--Top Navigation Start-->
   <div id="menu"><span>Menu</span>
     <ul>
-      <li class="home"><a  title="Home" href="index-2.html"><span>Home</span></a></li>
+      <li class="home"><a  title="Home" href="<?php echo $this->baseUrl('/shopping/index/index')?>"><span>Home</span></a></li>
       <li><a href="category.html">Electronics</a>
         <div>
           <ul>
@@ -94,7 +93,7 @@
      <?php echo $this->blklatest();?>
       <!--Latest Product End-->
       <!--Specials Product Start-->
-      <?php echo $this->blkspecials();?>
+      <?php echo $this->blktopproducts();?>
       <!--Specials Product End-->
     </div>
     <!--Left End-->

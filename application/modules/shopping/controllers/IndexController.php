@@ -72,6 +72,14 @@ class Shopping_IndexController extends Zendvn_Controller_Action{
            //$this->_helper->layout()->disableLayout();
             
         }
+        public function categoryAction(){
+            echo '<br>'.__METHOD__;
+             $this->_helper->viewRenderer->setNoRender();
+        }
+        public function detailAction(){
+            echo '<br>'.__METHOD__;
+            $this->_helper->viewRenderer->setNoRender();
+        }
         public function viewAction(){
             echo "<br>".__METHOD__;
             $this->_helper->viewRenderer->setNoRender();

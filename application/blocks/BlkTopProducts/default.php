@@ -1,10 +1,11 @@
- <div class="box">
-        <div class="box-heading">Featured(HOT)</div>
+<?php ?>
+<div class="box">
+        <div class="box-heading">Top Products</div>
         <div class="box-content">
           <div class="box-product">
-          <?php  // Lặp số lần tùy theo result
-            foreach($result as $key=>$value){
-                $imageURL = FILE_URL.'/products/img450x450/'.$value['picture'].'';
+          <?php 
+            foreach ($result as $key=>$value){
+                $imageURL = FILE_URL.'/products/img100x100/'.$value['picture'].'';
                 $productimage = '<img src="'.$imageURL.'" />';
                 $productname = $value['name'];
                 if($value['selloff'] > 0){
@@ -24,12 +25,12 @@
                 // cid: checkid, tcat: title category
           ?>
             <div>
-              <div class="image"><a href="<?php echo $linkDetail;?>"><?php echo $productimage;?></a></div>
+              <div class="image"><a href="<?php echo $linkDetail;?>"><?php echo $productimage?></a></div>
               <div class="name"><a href="<?php echo $linkDetail;?>"><?php echo $productname;?></a></div>
-              <div class="price"> <?php echo $price;?> </div>
+              <div class="price"> <span class="price-old"></span> <span class="price-new"><?php echo $price;?></span> </div>
               <div class="rating"><img src="<?php echo $view->ImageURL;?>/stars-0.png" alt="Based on 0 reviews." /></div>
               <div class="cart">
-                <input type="button" value="Add to Cart" onClick="addToCart('40');" class="button" />
+                <input type="button" value="Add to Cart" onClick="addToCart('42');" class="button" />
               </div>
             </div>
             <?php }?>
