@@ -2,7 +2,8 @@
 class Block_BlkCategory extends Zend_View_Helper_Abstract{
     
     public function blkcategory(){
-        $view = $this->view;
+        
+        $view = $this->view;        // View ở đây là một zend View Helper
         /* echo "<pre>";
         print_r($view->ImageURL);
         echo "</pre>"; */
@@ -13,31 +14,40 @@ class Block_BlkCategory extends Zend_View_Helper_Abstract{
                      ->where('status = 1')
                      ->order('order ASC');
         $result = $db->fetchAll($select);
-       
+        
         $strMenu = $this->createMenu($result,0,$view);
-      
-        require_once (BLOCK_PATH.'/BlkCategory/default.php');
+        // Đường dẫn đúng /zendmulty/shopping/index/category/5/name
+        
+        require_once (BLOCK_PATH.'/BlkCategory/default.php');   // Quan Trọng
         
     }
     
     public function createMenu($sourcearray,$parent = 0,$viewObj){
         
         //$newMenu = ''; 
-        $this->recursiveMenu($sourcearray, $parent = 0,$newMenu);
+        $this->recursiveMenu($sourcearray, $parent = 0,$newMenu,$viewObj);
         return $newMenu;
         //return str_replace('<ul></ul>','', $newMenu);
-        
     }
     
-   public function recursiveMenu($sourceArr,$parents = 0,&$newMenu){
+   public function recursiveMenu($sourceArr,$parents = 0,&$newMenu,$viewObj){
 		if(count($sourceArr)>0){
 			$newMenu .= '<ul>';
 			foreach ($sourceArr as $key => $value){                                                              
 				if($value['parents'] == $parents){
-					$newMenu .= '<li><a class="cuuchild " href="#">' . $value['name'].'</a><span class="down"></span>';
+				    //
+				    if($value['parents'] == 0 || ($value['id'] == $value['parents'])){
+				        $link = '#';
+				        $newMenu .= '<li><a  href="'.$link.'">' . $value['name'].'</a><span class="down"></span>';
+				    }else{
+				        $link = $viewObj->baseURL('/shopping/index/category/'.$value['id'].'/'.$value['name']);
+				        $newMenu .= '<li><a  href="'.$link.'">' . $value['name'].'</a>';
+				        
+				    }
+					//$newMenu .= '<li><a  href="'.$link.'">' . $value['name'].'</a><span class="down"></span>';
 					$newParents = $value['id'];
 					unset($sourceArr[$key]);
-					$this->recursiveMenu($sourceArr,$newParents, $newMenu);
+					$this->recursiveMenu($sourceArr,$newParents,$newMenu,$viewObj);
 					$newMenu .='</li>';
 				}
 			}
