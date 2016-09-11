@@ -31,6 +31,14 @@ class Block_BlkCategory extends Zend_View_Helper_Abstract{
     }
     
    public function recursiveMenu($sourceArr,$parents = 0,&$newMenu,$viewObj){
+       
+       $filter = new Zend_Filter();
+       $multiFilter = $filter->addFilter(new Zend_Filter_StringToLower(array('encoding'=>'UTF-8')))
+       ->addFilter(new Zend_Filter_Alnum(true))
+       ->addFilter(new Zend_Filter_PregReplace(array('match'=>'#\s+#','replace'=>'-')))
+       ->addFilter(new Zend_Filter_Word_SeparatorToDash())
+       ->addFilter(new Zendvn_Filter_RemoveCircumflex());
+       
 		if(count($sourceArr)>0){
 			$newMenu .= '<ul>';
 			foreach ($sourceArr as $key => $value){                                                              
@@ -40,7 +48,7 @@ class Block_BlkCategory extends Zend_View_Helper_Abstract{
 				        $link = '#';
 				        $newMenu .= '<li><a  href="'.$link.'">' . $value['name'].'</a><span class="down"></span>';
 				    }else{
-				        $link = $viewObj->baseURL('/shopping/index/category/'.$value['id'].'/'.$value['name']);
+				        $link = $viewObj->baseURL('/shopping/index/category/cid/'.$value['id'].'/name/'.$multiFilter->filter($value['name']));
 				        $newMenu .= '<li><a  href="'.$link.'">' . $value['name'].'</a>';
 				        
 				    }

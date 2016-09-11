@@ -16,12 +16,12 @@
                 
                 $filter = new Zend_Filter();
                 $multiFilter = $filter->addFilter(new Zend_Filter_StringToLower(array('encoding'=>'UTF-8')))
-                ->addFilter(new Zend_Filter_Alnum(true))
-                ->addFilter(new Zend_Filter_PregReplace(array('match'=>'#\s+#','replace'=>'-')))
-                ->addFilter(new Zend_Filter_Word_SeparatorToDash())
-                ->addFilter(new Zendvn_Filter_RemoveCircumflex());
-                
-                $linkDetail = $view->baseURL('/shopping/index/detail/cid/'.$value['cat_id'].'/tcat/'.$filter->filter($value['category_name']).'/id/'.$value['id'].'/title/'.$filter->filter($value['name']).'');
+                                       ->addFilter(new Zend_Filter_Alnum(true))
+                                       ->addFilter(new Zend_Filter_PregReplace(array('match'=>'#\s+#','replace'=>'-')))
+                                       ->addFilter(new Zend_Filter_Word_SeparatorToDash())
+                                       ->addFilter(new Zendvn_Filter_RemoveCircumflex());
+                                    
+                $linkDetail = $view->baseURL('/shopping/index/detail/cid/'.$value['cat_id'].'/tcat/'.$multiFilter->filter($value['category_name']).'/id/'.$value['id'].'/title/'.$multiFilter->filter($value['name']).'');
                 // cid: checkid, tcat: title category
           ?>
             <div>

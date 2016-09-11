@@ -11,6 +11,48 @@ $(document).ready(function() {
 </script>
       <!--Slideshow Part End-->
       <!--Featured Product Part Start-->
-      <?php echo $this->blkfeatured();?>                                        
+      <?php //echo $this->blkfeatured();?>  
+       <div class="box">
+        <div class="box-heading">Featured(HOT)</div>
+        <div class="box-content">
+          <div class="box-product">
+          <?php  // Lặp số lần tùy theo result
+            foreach($this->Items as $key=>$value){
+                $imageURL = FILE_URL.'/products/img450x450/'.$value['picture'].'';
+                $productimage = '<img src="'.$imageURL.'" />';
+                $productname = $value['name'];
+                if($value['selloff'] > 0){
+                    $price = $value['price'].'$ - $'.$value['selloff'];
+                }else{
+                    $price = $value['price'].'$';
+                }
+                
+                $filter = new Zend_Filter();
+                $multiFilter = $filter->addFilter(new Zend_Filter_StringToLower(array('encoding'=>'UTF-8')))
+                ->addFilter(new Zend_Filter_Alnum(true))
+                ->addFilter(new Zend_Filter_PregReplace(array('match'=>'#\s+#','replace'=>'-')))
+                ->addFilter(new Zend_Filter_Word_SeparatorToDash())
+                ->addFilter(new Zendvn_Filter_RemoveCircumflex());
+                
+                $linkDetail = $this->baseURL('/shopping/index/detail/cid/'.$value['cat_id'].'/tcat/'.$filter->filter($value['category_name']).'/id/'.$value['id'].'/title/'.$filter->filter($value['name']).'');
+                // cid: checkid, tcat: title category
+          ?>
+            <div>
+              <div class="image"><a href="<?php echo $linkDetail;?>"><?php echo $productimage;?></a></div>
+              <div class="name"><a href="<?php echo $linkDetail;?>"><?php echo $productname;?></a></div>
+              <div class="price"> <?php echo $price;?> </div>
+              <div class="rating"><img src="<?php echo $this->ImageURL;?>/stars-0.png" alt="Based on 0 reviews." /></div>
+              <div class="cart">
+                <input type="button" value="Add to Cart" onClick="addToCart('40');" class="button" />
+              </div>
+            </div>
+            <?php }?>
+          </div>
+        </div>
+      </div>                                      
       <!--Featured Product Part End-->
-    </div>                                              
+    </div>
+<?php 
+          $currentUrl = $this->baseUrl($this->currentControlle . '/index');
+          echo $this->paginationControl($this->panigator,'Sliding','pagination.phtml',array('currentUrl'=>$currentUrl));
+ ?>                                                 

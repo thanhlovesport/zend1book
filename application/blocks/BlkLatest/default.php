@@ -2,36 +2,31 @@
         <div class="box-heading">Latest</div>
         <div class="box-content">
           <div class="box-product">
+           <?php 
+            foreach($result as $key=>$value){
+                $imageURL = FILE_URL.'/products/img100x100/'.$value['picture'].'';
+                $productimage = '<img src="'.$imageURL.'" />';
+                $productname = $value['name'];
+                $price = $value['price'];
+                
+                $filter = new Zend_Filter();
+                $multiFilter = $filter->addFilter(new Zend_Filter_StringToLower(array('encoding'=>'UTF-8')))
+                ->addFilter(new Zend_Filter_Alnum(true))
+                ->addFilter(new Zend_Filter_PregReplace(array('match'=>'#\s+#','replace'=>'-')))
+                ->addFilter(new Zend_Filter_Word_SeparatorToDash())
+                ->addFilter(new Zendvn_Filter_RemoveCircumflex());
+                
+                $linkDetail = $view->baseURL('/shopping/index/detail/cid/'.$value['cat_id'].'/tcat/'.$filter->filter($value['category_name']).'/id/'.$value['id'].'/title/'.$filter->filter($value['name']).'');
+            ?>
             <div>
-              <div class="image"><a href="product.html"><img src="<?php echo $view->ImageURL;?>/product/samsung_tab_1-60x60.jpg" alt="Chair Swing" /></a></div>
-              <div class="name"><a href="product.html">Chair Swing</a></div>
-              <div class="price"> $236.99 </div>
+              <div class="image"><a href="<?php echo $linkDetail;?>"><?php echo $productimage?></a></div>
+              <div class="name"><a href="product.html"><?php echo $productname;?></a></div>
+              <div class="price"><?php echo $price;?> </div>
               <div class="rating"><img src="<?php echo $view->ImageURL;?>/stars-3.png" alt="Based on 1 reviews." /></div>
             </div>
-            <div>
-              <div class="image"><a href="product.html"><img src="<?php echo $view->ImageURL;?>/product/ipod_classic_1-60x60.jpg" alt="iPad Classic" /></a></div>
-              <div class="name"><a href="product.html">iPad Classic</a></div>
-              <div class="price"> $119.50 </div>
-              <div class="rating"><img src="<?php echo $view->ImageURL;?>/stars-0.png" alt="Based on 0 reviews." /></div>
-            </div>
-            <div>
-              <div class="image"><a href="product.html"><img src="<?php echo $view->ImageURL;?>/product/hp_1-60x60.jpg" alt="Casual Saddle Shoes" /></a></div>
-              <div class="name"><a href="product.html">Casual Saddle Shoes</a></div>
-              <div class="price"> $119.50 </div>
-              <div class="rating"><img src="<?php echo $view->ImageURL;?>/stars-3.png" alt="Based on 3 reviews." /></div>
-            </div>
-            <div>
-              <div class="image"><a href="product.html"><img src="<?php echo $view->ImageURL;?>/product/sony_vaio_1-60x60.jpg" alt="Silver Cuff Bracelet" /></a></div>
-              <div class="name"><a href="product.html">Silver Cuff Bracelet</a></div>
-              <div class="price"> $1,177.00 </div>
-              <div class="rating"><img src="<?php echo $view->ImageURL;?>/stars-0.png" alt="Based on 0 reviews." /></div>
-            </div>
-            <div>
-              <div class="image"><a href="product.html"><img src="<?php echo $view->ImageURL;?>/product/macbook_pro_1-60x60.jpg" alt="MacBook Pro" /></a></div>
-              <div class="name"><a href="product.html">MacBook Pro</a></div>
-              <div class="price"> $2,000.00 </div>
-              <div class="rating"><img src="<?php echo $view->ImageURL;?>/stars-5.png" alt="Based on 5 reviews." /></div>
-            </div>
+            <?php 
+                }
+            ?>
           </div>
         </div>
       </div>

@@ -6,11 +6,11 @@ echo $this->currentUrl;*/
 	
 	$linkPrevious = '#';
 	if(isset($this->previous)){
-		$linkPrevious 	= $this->currentUrl . '/page/' . $this->previous;
+	    $linkPrevious 	= $this->currentUrl . '/page/' . $this->previous;
 	}
 	$linkNext = '#';
 	if(isset($this->next)){
-		$linkNext 		= $this->currentUrl . '/page/' . $this->next;
+	    $linkNext 		= $this->currentUrl . '/page/' . $this->next;
 	}
 	
 	$linkEnd 		= $this->currentUrl . '/page/' . $this->last;
@@ -18,7 +18,7 @@ echo $this->currentUrl;*/
 	$strPage  = '';
 	foreach ($this->pagesInRange as $key){
 		if($this->current == $key){
-			$strPage .= '<span>' . $key .'</span>';
+			$strPage .= '<b>' . $key .'</b>';
 		}else{
 			$linkPage = $this->currentUrl . '/page/' . $key;
 			$strPage .= '<a href="' . $linkPage . '">' . $key .'</a>'; 
@@ -27,37 +27,22 @@ echo $this->currentUrl;*/
 
 	$page = 'Page ' . $this->current .' Of ' . $this->last;
 ?>
-<div class="button2-right">
-	<div class="start">		
-		<a href="<?php echo $linkStart;?>" title="Start">Start</a>		
-	</div>
-</div>
 
-<div class="button2-right">
-	<div class="prev">
-		<a href="<?php echo $linkPrevious;?>" title="Prev" >Prev</a>
-	</div>
+<div class="pagination">
+          <div class="links">
+            <a href="<?php echo $linkStart;?>" title="Start">Start</a>
+          </div>
+          <div class="links">
+            <a href="<?php echo $linkPrevious;?>" title="Prev">Previous</a>
+          </div>
+        <div class="links">
+        <?php echo $strPage;?>
+         </div>
+          <div class="links">
+            <a href="<?php echo $linkNext;?>" title="Next">Next</a>
+          </div>
+          <div class="links">
+            <a href="<?php echo $linkEnd;?>" title="End">End</a>
+          </div>
+       <!--  <div class="results">Showing 1 to 15 of 16 (2 Pages)</div> -->
 </div>
-
-<div class="button2-left">
-	<div class="page">
-		<?php echo $strPage;?>
-	
-	</div>
-</div>
-
-<div class="button2-left">
-	<div class="end">
-		<a href="<?php echo $linkNext;?>" title="Next" >Next</a>
-	</div>
-</div>
-
-<div class="button2-left">
-	<div class="end">
-		<a href="<?php echo $linkEnd;?>" title="End" >End</a>
-	</div>
-</div>
-<div class="limit">
-	<?php echo $page;?>
-</div>
-
