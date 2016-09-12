@@ -54,7 +54,7 @@ class Shopping_Model_Product extends Zend_Db_Table{
                 $rowCount = $paginator['itemCountPerPage'];
                 $select->limitPage($page,$rowCount);
             }  
-  
+            
             if(!empty($ssfilte['searchproduct'])){
                 //var_dump(123);exit;
                 $keywords = '%'.$ssfilte['searchproduct'].'%';

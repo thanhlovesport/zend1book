@@ -13,7 +13,12 @@ $(document).ready(function() {
       <!--Featured Product Part Start-->
       <?php //echo $this->blkfeatured();?>  
        <div class="box">
-        <div class="box-heading">Category</div>
+        <div class="box-heading"><!-- Category Name -->
+        <?php foreach ($this->Items as $key1=>$value1){
+            echo $value1['category_name'];
+            break;
+        }?>
+        </div>
         <div class="box-content">
           <div class="box-product">
           <?php  // Lặp số lần tùy theo result
@@ -53,6 +58,9 @@ $(document).ready(function() {
       <!--Featured Product Part End-->
     </div>
 <?php 
-         //$currentUrl = $this->baseUrl($this->currentControlle . '/index');
-          //echo $this->paginationControl($this->panigator,'Sliding','pagination.phtml',array('currentUrl'=>$currentUrl));
+       /*   echo "<pre>";
+         print_r($this->arrParam);
+         echo "</pre>"; */
+         $currentUrl = $this->baseUrl($this->currentControlle . '/'.$this->arrParam['action'].'/cid/'.$this->arrParam['cid'].'/name/'.$this->arrParam['name']);
+         echo $this->paginationControl($this->panigator,'Sliding','pagination.phtml',array('currentUrl'=>$currentUrl));
  ?>                                                 

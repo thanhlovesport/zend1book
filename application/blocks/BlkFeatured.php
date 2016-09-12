@@ -11,7 +11,7 @@ class Block_BlkFeatured extends Zend_View_Helper_Abstract{
         ->from('products AS p',array('id','name','picture','price','selloff','cat_id'))
         ->join('product_category AS pc','pc.id = p.cat_id',array('name AS category_name'))
         ->where('p.special = 1')
-        ->limit(8,0)                                           
+        //->limit(8,0)                                           
         ->order('RAND()');
         //echo $select;
         $result = $db->fetchAll($select);

@@ -22,9 +22,9 @@
         </ul>
       </div>
       <a href="login.html">login</a> <a href="register.html">create an account</a> </div>
-    <div id="logo"><a href="index-2.html"><img src="<?php echo $this->ImageURL;?>/logo.png" title="ecommerce Html Template" alt="ecommerce Html Template" /></a></div>
+    <div id="logo"><a href="<?php echo $this->baseURL('/shopping/index/index')?>"><img src="<?php echo $this->ImageURL;?>/logo.png" title="ecommerce Html Template" alt="ecommerce Html Template" /></a></div>
     <div id="search">
-      <div class="button-search"></div>
+      <div class="button-search"><a href="<?php echo $this->baseURL('/default/index/index')?>"></a></div>
       <input type="text" value="" placeholder="" id="filter_name" name="search">
     </div>
     <!--Mini Cart Start-->

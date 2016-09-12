@@ -49,7 +49,7 @@ class Shopping_Form_ValidateProduct{
 		
 		if(!empty($fileName)){
 		
-		    $upload->addValidator('Extension',true,array('jpg','gif','png'),'user_avatar');// true dung lai khi gap loi
+		    $upload->addValidator('Extension',true,array('jpg','gif','png'),'picture');// true dung lai khi gap loi
 		    $upload->addValidator('Size',true,array('min'=>'2KB','max'=>'1000KB'),'picture');
 		    if(!$upload->isValid('picture')){
 		        $message = $upload->getMessages();
@@ -57,6 +57,8 @@ class Shopping_Form_ValidateProduct{
 		
 		    }
 		}
+		
+		
 		
 		//========================================
 		// KIEM TRA Price
@@ -201,6 +203,7 @@ class Shopping_Form_ValidateProduct{
 	        $this->_arrData['picture'] = $this->uploadFile();
 	    }
 	    return $this->_arrData;
+	    
 	}
 	
 	/*========================================

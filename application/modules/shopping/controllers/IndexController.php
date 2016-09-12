@@ -11,7 +11,7 @@ class Shopping_IndexController extends Zendvn_Controller_Action{
         protected $_actionMain;
         
         protected $_paginator = array(
-            'itemCountPerPage' => 10,
+            'itemCountPerPage' => 15,
             'pageRange' => 3,
         );
         
@@ -85,7 +85,12 @@ class Shopping_IndexController extends Zendvn_Controller_Action{
         public function categoryAction(){
             $tableproducts = new Shopping_Model_Items();
             $this->view->Items = $tableproducts->listItem($this->_arrParam,array('task'=>'public-category'));
-            echo '<br>'.__METHOD__;
+            
+            $totalItems = $tableproducts->countItem($this->_arrParam,array('task'=>'public-category'));
+            echo '<br>'.$totalItems;
+            $paginator = new Zendvn_Paginator();
+            $this->view->paginator = $paginator->createPaginator($totalItems,$this->_paginator);
+           
         }
         public function detailAction(){
             echo '<br>'.__METHOD__;

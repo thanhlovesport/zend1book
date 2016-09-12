@@ -14,6 +14,7 @@
     //-------------------INPUT ELEMENTS----------------
     $name 		    = $this->formText('name',$this->Items['name'],array('class'=>'txtmedium'));
     $picture 	    = $this->formFile('picture');
+    //$multipicture   =  '<input type="file" name="multyfile" id="filer_input" multiple="multiple">';
     $price			= $this->formText('price',$this->Items['price'],array('class'=>'txtmedium'));
     $selloff    	= $this->formText('selloff',$this->Items['selloff'],array('class'=>'txtmedium'));
     $order		    = $this->formText('order',$this->Items['order'],array('class'=>'txtmedium'));
@@ -33,9 +34,10 @@
     
     //$sign = $this->cmsEditor('sign',$sign,array('toolbar'=>'Default','language'=>'vi'));
     //echo $this->Item['sign'];
-    $arrInput = array(
+    $arrInput = array(   
         array('label'=>'Sport Name: ', 'input'=>$name),
         array('label'=>'Picture: ', 'input'=>$picture),
+        //array('label'=>'Multi Picture: ', 'input'=>$multipicture),
         array('label'=>'Price: ', 'input'=>$price),
         array('label'=>'SellOff: ', 'input'=>$selloff),
         array('label'=>'Order: ', 'input'=>$order),
