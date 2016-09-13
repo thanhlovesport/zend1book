@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+	<div class="main-wrapper">
+		<!-- Header Parts Start-->
+        
+			<!-- Top Right part Links-->
+			
+		</div>
+		<?php 
+		  $productname    = $this->Items['name'];
+		  $categoryname   = $this->Items['category_name'];
+		  $price          = $this->Items['price'];
+		  $imageURL = FILE_URL.'/products/img450x450/'.$this->Items['picture'].'';
+		  $productimage = '<img src="'.$imageURL.'" />';
+		  
+		?>
+		<div id="container">
+			<!--Middle Part Start-->
+			<div id="content">
+				<!--Breadcrumb Part Start-->
+				<div class="breadcrumb">
+					<a href="index-2.html">Home</a> » <a href="#"><?php echo $productname;?></a>
+				</div>
+				<!--Breadcrumb Part End-->
+				<div class="product-info">
+					<div class="left">
+						<div class="image">
+							<a href="<?php echo $imageURL;?>" title="<?php echo $productname;?>"
+								class="cloud-zoom colorbox" id='zoom1'
+								rel="adjustX: 0, adjustY:0, tint:'#000000',tintOpacity:0.2, zoomWidth:360, position:'inside', showTitle:false">
+								<img src="<?php echo $imageURL;?>" title="#" alt="#"
+								id="image" /><span id="zoom-image"><i class="zoom_bttn"></i>
+									Zoom</span>
+							</a>
+						</div>
+						<div class="image-additional">
+							<a href="image/product/iphone_1.jpg" title="#"
+								class="cloud-zoom-gallery"
+								rel="useZoom: 'zoom1', smallImage: 'image/product/iphone_1_350x350.jpg' ">
+								<img src="image/product/iphone_1-62x62.jpg" width="62" title="#"
+								alt="#" />
+							</a> <a href="image/product/htc_touch_hd_1.jpg" title="#"
+								class="cloud-zoom-gallery"
+								rel="useZoom: 'zoom1', smallImage: 'image/product/htc_touch_hd_1_350x350.jpg' ">
+								<img src="image/product/htc_touch_hd_1_62x62.jpg" width="62"
+								title="#" alt="#" />
+							</a> <a href="image/product/htc_touch_hd_11.jpg" title="#"
+								class="cloud-zoom-gallery"
+								rel="useZoom: 'zoom1', smallImage: 'image/product/htc_touch_hd_11_350x350.jpg' ">
+								<img src="image/product/htc_touch_hd_11_62x62.jpg" width="62"
+								title="#" alt="#" />
+							</a> <a href="image/product/iphone_2.jpg" title="#"
+								class="cloud-zoom-gallery"
+								rel="useZoom: 'zoom1', smallImage: 'image/product/iphone_2_350x350.jpg' ">
+								<img src="image/product/iphone_2_62x62.jpg" width="62" title="#"
+								alt="#" />
+							</a>
+						</div>
+					</div>
+					<div class="right">
+						<h1><?php echo $productname;?></h1>
+						<div class="description">
+							<span>Category:</span> <a href="#"><?php echo $categoryname;?></a><br> <span>Product Code:</span>
+							product 11<br> <span>Status:</span> In Stock
+						</div>
+						<div class="price">
+							Price: <span class="price-old">$119.50</span>
+							<div class="price-tag"><?php echo '$'.$price;?></div>
+							<br> <span class="price-tax">Ex Tax: $101.00</span><br>
+						</div>
+						<div class="cart">
+							<div>
+								<div class="qty">
+									<strong>Qty:</strong> <a href="javascript:void(0);"
+										class="qtyBtn mines">-</a> <input type="text" value="1"
+										size="2" name="quantity" class="w30" id="qty"> <a
+										href="javascript:void(0);" class="qtyBtn plus">+</a>
+									<div class="clear"></div>
+								</div>
+								<input type="button" class="button" id="button-cart"
+									value="Add to Cart">
+							</div>
+							<div>
+								<span>&nbsp;&nbsp;&nbsp;- OR -&nbsp;&nbsp;&nbsp;</span>
+							</div>
+							<div>
+								<a href="#" class="wishlist">Add to Wish List</a><br> <a
+									href="#" class="wishlist">Add to Compare</a>
+							</div>
+						</div>
+						<div class="review">
+							<div>
+								<img alt="0 reviews" src="image/stars-3.png">&nbsp;&nbsp;<a
+									onClick="$('a[href=\'#tab-review\']').trigger('click');">0
+									reviews</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a
+									onClick="$('a[href=\'#tab-review\']').trigger('click');">Write
+									a review</a>
+							</div>
+						</div>
+						<!-- AddThis Button BEGIN -->
+						<div class="addthis_toolbox addthis_default_style ">
+							<a class="addthis_button_facebook_like"
+								fb:like:layout="button_count"></a> <a
+								class="addthis_button_tweet"></a> <a
+								class="addthis_button_pinterest_pinit"></a> <a
+								class="addthis_counter addthis_pill_style"></a>
+						</div>
+						<script type="text/javascript"
+							src="../../../s7.addthis.com/js/300/addthis_widget.js#pubid=xa-506f325f57fbfc95"></script>
+						<!-- AddThis Button END -->
+						<div class="tags">
+							<b>Tags:</b> <a href="#">Apple</a>, <a href="#">Mobile</a>, <a
+								href="#">Latest</a>
+						</div>
+					</div>
+				</div>
+				<!-- Tabs Start -->
+				<div id="tabs" class="htabs">
+					<a href="#tab-description">Description</a> <a href="#tab-review">Reviews</a>
+				</div>
+				<div id="tab-description" class="tab-content">
+					<p>iPhone is a revolutionary new mobile phone that allows you to
+						make a call by simply tapping a name or number in your address
+						book, a favorites list, or a call log. It also automatically syncs
+						all your contacts from a PC, Mac, or Internet service. And it lets
+						you select and listen to voicemail messages in whatever order you
+						want just like email.</p>
+					<h3>Features:</h3>
+					<p>Unrivaled display performance</p>
+					<ul>
+						<li>30-inch (viewable) active-matrix liquid crystal display
+							provides breathtaking image quality and vivid, richly saturated
+							color.</li>
+						<li>Support for 2560-by-1600 pixel resolution for display of high
+							definition still and video imagery.</li>
+						<li>Wide-format design for simultaneous display of two full pages
+							of text and graphics.</li>
+						<li>Industry standard DVI connector for direct attachment to Mac-
+							and Windows-based desktops and notebooks</li>
+						<li>Incredibly wide (170 degree) horizontal and vertical viewing
+							angle for maximum visibility and color performance.</li>
+						<li>Lightning-fast pixel response for full-motion digital video
+							playback.</li>
+						<li>Support for 16.7 million saturated colors, for use in all
+							graphics-intensive applications.</li>
+					</ul>
+				</div>
+				<div class="tab-content" id="tab-review">
+					<div class="review-list">
+						<div class="author">
+							<b>Harnish</b> on 13/02/2013
+						</div>
+						<div class="rating">
+							<img alt="1 reviews" src="image/stars-3.png">
+						</div>
+						<div class="text">Lorem Ipsum is simply dummy text of the printing
+							and typesetting industry. Lorem Ipsum has been the industry's
+							standard dummy text ever since the 1500s, when an unknown printer
+							took a galley of type and scrambled.</div>
+					</div>
+					<h2 id="review-title">Write a review</h2>
+					<br> <b>Your Name:</b><br> <input type="text" value="" name="name">
+					<br> <br> <b>Your Review:</b>
+					<textarea style="width: 98%;" rows="8" cols="40" name="text"></textarea>
+					<span style="font-size: 11px;"><span style="color: #FF0000;">Note:</span>
+						HTML is not translated!</span><br> <br> <b>Rating:</b>&nbsp; <input
+						type="radio" value="1" name="rating"> &nbsp; <input type="radio"
+						value="2" name="rating"> &nbsp; <input type="radio" value="3"
+						name="rating"> &nbsp; <input type="radio" value="4" name="rating">
+					&nbsp; <input type="radio" value="5" name="rating"> <br> <br>
+					<div class="buttons">
+						<div class="right">
+							<a class="button" id="button-review">Continue</a>
+						</div>
+					</div>
+				</div>
+				<!-- Tabs End -->
+				<!-- Related Products Start -->
+				<div class="box">
+					<div class="box-heading">Related Products (4)</div>
+					<div class="box-content">
+						<div class="box-product">
+						<?php 
+						      foreach ($this->ItemsRelate as $key1=>$value1){
+						        $namerelate  = $value1['name'];
+						        $pricerelate = $value1['price'];
+						        $imageURLRelate = FILE_URL.'/products/img450x450/'.$value1['picture'].'';
+						        $productimagerelate = '<img src="'.$imageURLRelate.'" />';
+						        
+						        $filter = new Zend_Filter();
+						        $multiFilter = $filter->addFilter(new Zend_Filter_StringToLower(array('encoding'=>'UTF-8')))
+						        ->addFilter(new Zend_Filter_Alnum(true))
+						        ->addFilter(new Zend_Filter_PregReplace(array('match'=>'#\s+#','replace'=>'-')))
+						        ->addFilter(new Zend_Filter_Word_SeparatorToDash())
+						        ->addFilter(new Zendvn_Filter_RemoveCircumflex());
+						        
+						        $linkDetail = $this->baseURL('/shopping/index/detail/cid/'.$value1['cat_id'].'/tcat/'.$filter->filter($value1['category_name']).'/id/'.$value1['id'].'/title/'.$filter->filter($value1['name']).'');
+						        
+						        
+						?>
+							<div>
+								<div class="image">
+									<a href="<?php echo $linkDetail;?>"><?php echo $productimagerelate;?></a>
+								</div>
+								<div class="name">
+									<a href="<?php echo $linkDetail; ?>"><?php echo $namerelate; ?></a>
+								</div>
+								<div class="price">
+									<span class="price-old">$119.50</span> <span class="price-new"><?php echo $pricerelate.'$';?></span>
+								</div>
+								<a class="button">Add to Cart</a>
+							</div>
+						<?php 
+						      }
+						?>	
+							
+						</div>
+					</div>
+				</div>
+				<!-- Related Products End -->
+			</div>
+			<!--Middle Part End-->
+			<div class="clear"></div>
+	
+		</div>
+	</div>
+	
+</body>
+
+<!-- Mirrored from demo.harnishdesign.net/html/bigshop/product.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 13 Aug 2015 08:26:18 GMT -->
+</html>

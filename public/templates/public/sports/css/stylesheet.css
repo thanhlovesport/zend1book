@@ -164,7 +164,7 @@ a.button:hover, input.button:hover { background:#444; color:#fff; -webkit-transi
 .tab-content ul { margin-left:20px; }
 
 /************ box ************/
-.box { margin-bottom: 20px; }
+.box { margin-bottom: 20px;}
 .box .box-heading{text-transform:uppercase; padding:0px 0px 0px 0px; margin-bottom:20px;  font-size: 16px; line-height: 16px; color:#333; border-bottom:1px solid #eee;}
 .box .box-heading span{padding:0 50px 0 0; border-bottom:2px solid #F15A23; height:30px; line-height:30px; display:inline-block;}
 .box .box-content { padding:0px; }

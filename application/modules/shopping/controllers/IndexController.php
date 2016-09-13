@@ -70,7 +70,7 @@ class Shopping_IndexController extends Zendvn_Controller_Action{
            //var_dump(123);exit;
            $tableproducts = new Shopping_Model_Items();
            $this->view->Items = $tableproducts->listItem($this->_arrParam,array('task'=>'public-list'));
-          
+           
            //var_dump(4566);exit;
            $totalItems = $tableproducts->countItem($this->_arrParam,array('task'=>'public-index'));
            $paginator = new Zendvn_Paginator();
@@ -93,8 +93,20 @@ class Shopping_IndexController extends Zendvn_Controller_Action{
            
         }
         public function detailAction(){
-            echo '<br>'.__METHOD__;
-            $this->_helper->viewRenderer->setNoRender();
+            
+            $tableproduct = new Shopping_Model_Items();
+            $this->view->Items = $tableproduct->getItem($this->_arrParam,array('task'=>'product-info'));
+            
+            $this->view->ItemsRelate = $tableproduct->getItem($this->_arrParam,array('task'=>'relate-info'));
+            $this->view->Title = $this->view->Items['name'];
+            $this->view->headTitle($this->view->Title,true);
+            
+           /*  echo '<pre>';
+            print_r($this->view->Items);
+            echo '</pre>';
+            exit;
+            echo '<br>'.__METHOD__; */
+           
         }
         public function viewAction(){
             echo "<br>".__METHOD__;

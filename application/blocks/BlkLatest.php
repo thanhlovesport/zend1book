@@ -3,9 +3,9 @@ class Block_BlkLatest extends Zend_View_Helper_Abstract{
     
     public function blklatest(){
         $view = $this->view;
-        echo "<pre>";
+        /* echo "<pre>";
         print_r($view->ImageURL);
-        echo "</pre>";
+        echo "</pre>"; */
         
         $db = Zend_Registry::get('connectDb');
         $select = $db->select()

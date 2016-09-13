@@ -92,6 +92,34 @@ class Shopping_Model_Items extends Zend_Db_Table{
         //echo $select;
         return $result;
     }
-  
+    
+    public function getItem($arrParam,$option = null){
+        if($option['task'] == 'product-info'){
+            $db = Zend_Registry::get('connectDb');
+            //$db = Zend_Db::factory($adapter,$config);
+            $select = $db->select()
+            ->from('products as p',array('id','name','picture','price','selloff','cat_id'))
+            ->joinLeft('product_category as pc','p.cat_id = pc.id',array('name AS category_name'))
+            ->where('p.id = ?', $arrParam['id'], @INTEGER );
+             
+            $result = $db->fetchRow($select);
+        }
+        
+        if($option['task'] == 'relate-info'){
+            $db = Zend_Registry::get('connectDb');
+            //$db = Zend_Db::factory($adapter,$config);
+            $select = $db->select()
+            ->from('products as p',array('id','name','picture','price','selloff','cat_id'))
+            ->joinLeft('product_category as pc','p.cat_id = pc.id',array('name AS category_name'))
+            ->where('p.cat_id = ?', $arrParam['cid'], @INTEGER );
+            
+            echo $select;
+            $result = $db->fetchAll($select);
+        }
+        return $result;
+        
+    }
+    
+   
     
 }

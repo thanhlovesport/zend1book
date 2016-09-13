@@ -6,7 +6,7 @@ class Block_BlkCategory extends Zend_View_Helper_Abstract{
         $view = $this->view;        // View ở đây là một zend View Helper
         /* echo "<pre>";
         print_r($view->ImageURL);
-        echo "</pre>"; */
+        echo "</pre>";  */
         
         $db = Zend_Registry::get('connectDb');
         $select = $db->select()
