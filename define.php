@@ -36,7 +36,7 @@ define('BLOCK_PATH',APPLICATION_PATH . '/blocks');
 
 // Khai báo đường dẫn URL đến các thư mục
 //Duong dan den thu muc ung dung    learnzend1/zend1book
-define('APPLICATION_URL','/zendmulty');
+define('APPLICATION_URL','/learnzend1/zend1book');
 define('SRCIPTS_URL', APPLICATION_URL . '/public/scripts');
 define('FILE_URL', APPLICATION_URL . '/public/files');
 define('CAPTCHA_URL', APPLICATION_URL . '/public/captcha');
