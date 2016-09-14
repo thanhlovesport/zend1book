@@ -1,5 +1,6 @@
 <?php
 class Shopping_Model_Items extends Zend_Db_Table{
+    
     protected $_name = 'products';
     protected $_primary = 'id';
     protected $_cid;
@@ -121,5 +122,4 @@ class Shopping_Model_Items extends Zend_Db_Table{
     }
     
    
-    
 }
