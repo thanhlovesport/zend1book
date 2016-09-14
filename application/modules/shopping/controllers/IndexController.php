@@ -115,7 +115,11 @@ class Shopping_IndexController extends Zendvn_Controller_Action{
         public function viewCartAction(){
             
         }
-        public function addItemAction(){
-            
+        public function addCartAction(){
+            echo "<pre>";
+            print_r($this->_arrParam);
+            echo "</pre>";
+            echo'<br>'.var_dump(123);exit;
+            $this->_helper->viewRenderer->setNoRender();
         }
 }

@@ -12,7 +12,7 @@
 		  $productname    = $this->Items['name'];
 		  $categoryname   = $this->Items['category_name'];
 		  $price          = $this->Items['price'];
-		  $imageURL = FILE_URL.'/products/img450x450/'.$this->Items['picture'].'';
+		  $imageURL       = FILE_URL.'/products/img450x450/'.$this->Items['picture'].'';
 		  $productimage = '<img src="'.$imageURL.'" />';
 		  
 		?>
@@ -37,7 +37,7 @@
 						</div>
 						<div class="image-additional">
 							<a href="image/product/iphone_1.jpg" title="#"
-								class="cloud-zoom-gallery"
+								class="cloud-zoom-gallery"                                                                                                
 								rel="useZoom: 'zoom1', smallImage: 'image/product/iphone_1_350x350.jpg' ">
 								<img src="image/product/iphone_1-62x62.jpg" width="62" title="#"
 								alt="#" />
@@ -79,8 +79,10 @@
 										href="javascript:void(0);" class="qtyBtn plus">+</a>
 									<div class="clear"></div>
 								</div>
-								<input type="button" class="button" id="button-cart"
-									value="Add to Cart">
+								<?php //'<input type="button" class="button" id="button-cart" 
+									//value="Add to Cart">' ?>
+							
+						     <a class="button" id="button-cart" href="<?php echo $this->baseUrl('/shopping/index/add-cart/id/'.$this->arrParam['id'].'')?>"> Add to Cart </a>
 							</div>
 							<div>
 								<span>&nbsp;&nbsp;&nbsp;- OR -&nbsp;&nbsp;&nbsp;</span>
